@@ -11,12 +11,12 @@ const md5 = require("md5")
 require('../public/js/utils')
 // 首页
 router.get('/recommend', async (ctx, next) => {
-  const res = await Goods.find({})
-  ctx.body = res[0]
+  const res = await Goods.findOne({})
+  ctx.body = res
   if (res) {
     ctx.body = {
       code: 200,
-      data: res[0]
+      data: res
     }
   } else {
     ctx.body = {
@@ -47,11 +47,11 @@ router.get('/classification', async (ctx, next) => {
 // 获取单个商品详情
 router.get('/goods/one', async (ctx, next) => {
   const { id } = ctx.query
-  const res = await GoodsList.find({ id: id })
-  if (res && res.length) {
+  const res = await GoodsList.findOne({ id: id })
+  if (res) {
     ctx.body = {
       code: 200,
-      goodsOne: res[0]
+      goodsOne: res
     }
   } else {
     ctx.body = {
@@ -142,75 +142,54 @@ router.post('/loginOut', async (ctx, next) => {
 // 保存收货地址
 router.post('/address', async (ctx, next) => {
   const data = ctx.request.body
-  if (ctx.session.login != 1) { // 没有登录
+  const username = ctx.session.username
+  if (data.id) {    // 说明是更新地址
+    await userTest.findOneAndUpdate({ username, 'addressList.id': data.id }, {
+      $set: {
+        'addressList.$': data
+      }
+    })
     ctx.body = {
-      status: -1,
-      msg: '请先登录'
+      status: 200,
+      msg: '更新成功'
     }
-  } else {
-    const username = ctx.session.username
-    if (data.id) {    // 说明是更新地址
-      await userTest.findOneAndUpdate({ username, 'addressList.id': data.id }, {
-        $set: {
-          'addressList.$': data
-        }
-      })
-      ctx.body = {
-        status: 200,
-        msg: '更新成功'
+  } else {  // 新增地址
+    const data2 = Object.assign(data, {
+      id: String(+Date.now())
+    })    // 地址id
+    await userTest.findOneAndUpdate({ username }, {
+      $push: {
+        'addressList': data2
       }
-    } else {  // 新增地址
-      const data2 = Object.assign(data, {
-        id: String(+Date.now())
-      })    // 地址id
-      await userTest.findOneAndUpdate({ username }, {
-        $push: {
-          'addressList': data2
-        }
-      })
-      ctx.body = {
-        status: 200,
-        msg: '添加成功'
-      }
+    })
+    ctx.body = {
+      status: 200,
+      msg: '添加成功'
     }
   }
 })
 
 // 查询地址
 router.get('/getAddress', async (ctx, next) => {
-  if (ctx.session.login != 1) { // 没有登录
-    ctx.body = {
-      status: -1,
-      msg: '请先登录'
-    }
-  } else {
-    const res = await userTest.findOne({ username: ctx.session.username }).exec()
-    ctx.body = {
-      status: 200,
-      address: res.addressList
-    }
+  const res = await userTest.findOne({ username: ctx.session.username }).exec()
+  ctx.body = {
+    status: 200,
+    address: res.addressList
   }
 })
 
 // 删除地址
 router.post('/deleteAddress', async (ctx, next) => {
-  if (ctx.session.login != 1) { // 没有登录
-    ctx.body = {
-      status: -1,
-      msg: '请先登录'
-    }
-  } else {
-    await userTest.findOneAndUpdate({ username: ctx.session.username }, {
-      $pull: {
-        'addressList': {
-          'id': ctx.request.body.id
-        }
+  await userTest.findOneAndUpdate({ username: ctx.session.username }, {
+    $pull: {
+      'addressList': {
+        'id': ctx.request.body.id
       }
-    })
-    ctx.body = {
-      code: 200,
-      msg: '删除成功'
     }
+  })
+  ctx.body = {
+    code: 200,
+    msg: '删除成功'
   }
 })
 
@@ -218,51 +197,37 @@ router.post('/deleteAddress', async (ctx, next) => {
 router.post('/isCollection', async (ctx, next) => {
   const res = ctx.request.body
   const username = ctx.session.username
-  if (ctx.session.login != 1) { // 没有登录
-    ctx.body = {
-      status: -1,
-      msg: '请先登录'
-    }
+  const result = await userTest.findOne({ username }).exec()
+  let isCollection
+  if (!res || !res.id) {
+    isCollection = 0  // 未收藏
   } else {
-    const result = await userTest.findOne({ username }).exec()
-    let isCollection
-    if (!res || !res.id) {
-      isCollection = 0  // 未收藏
-    } else {
-      if (result.collections.length) {
-        for (let i = 0; i < result.collections.length; i++) {
-          if (result.collections[i].id === res.id) {
-            isCollection = 1
-            break
-          } else {
-            isCollection = 0
-          }
+    if (result.collections.length) {
+      for (let i = 0; i < result.collections.length; i++) {
+        if (result.collections[i].id === res.id) {
+          isCollection = 1
+          break
+        } else {
+          isCollection = 0
         }
-      } else {
-        isCollection = 0
       }
+    } else {
+      isCollection = 0
     }
-    ctx.body = {
-      status: 200,
-      isCollection
-    }
+  }
+  ctx.body = {
+    status: 200,
+    isCollection
   }
 })
 
 // 查询用户收藏列表
 router.get('/collection/list', async (ctx, next) => {
   const username = ctx.session.username
-  if (ctx.session.login != 1) { // 没有登录
-    ctx.body = {
-      status: -1,
-      msg: '请先登录'
-    }
-  } else {
-    const result = await userTest.findOne({ username }).exec()
-    ctx.body = {
-      status: 200,
-      collection: result.collections || []
-    }
+  const result = await userTest.findOne({ username }).exec()
+  ctx.body = {
+    status: 200,
+    collection: result.collections || []
   }
 
 })
@@ -271,43 +236,29 @@ router.get('/collection/list', async (ctx, next) => {
 router.post('/collection', async (ctx, next) => {
   const data = ctx.request.body
   const username = ctx.session.username
-  if (ctx.session.login != 1) {
-    ctx.body = {
-      status: -1,
-      msg: '请先登录'
+  await userTest.findOneAndUpdate({ username }, {
+    $push: {
+      'collections': data
     }
-  } else {
-    await userTest.findOneAndUpdate({ username }, {
-      $push: {
-        'collections': data
-      }
-    })
-    ctx.body = {
-      status: 200,
-      msg: '收藏成功'
-    }
+  })
+  ctx.body = {
+    status: 200,
+    msg: '收藏成功'
   }
 })
 
 // 取消收藏
 router.post('/cancelCollection', async (ctx, next) => {
-  if (ctx.session.login != 1) {
-    ctx.body = {
-      status: -1,
-      msg: '请先登录'
-    }
-  } else {
-    await userTest.findOneAndUpdate({ username: ctx.session.username }, {
-      $pull: {
-        'collections': {
-          'id': ctx.request.body.id
-        }
+  await userTest.findOneAndUpdate({ username: ctx.session.username }, {
+    $pull: {
+      'collections': {
+        'id': ctx.request.body.id
       }
-    })
-    ctx.body = {
-      status: 200,
-      msg: '取消收藏成功'
     }
+  })
+  ctx.body = {
+    status: 200,
+    msg: '取消收藏成功'
   }
 })
 
@@ -363,13 +314,6 @@ router.post('/addShop', async (ctx, next) => {
 // 查询购物车
 router.get('/getCard', async (ctx, next) => {
   const username = ctx.session.username
-  if (!username) {
-    ctx.body = {
-      status: -1,
-      msg: '请登录'
-    }
-    return
-  }
   const res = await userTest.findOne({ username })
   ctx.body = {
     status: 200,
