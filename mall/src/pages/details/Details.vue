@@ -238,8 +238,10 @@ export default {
 
     // 立即购买
     PurchaseImmediately() {
-      console.log(this.newCount);
-      console.log(this.goods);
+      if (!this.userName) {
+        this.$router.push({path:'/user/login'})
+        return
+      }
       let goods = [{
         check:true,
         count: this.newCount,
