@@ -66,6 +66,8 @@ export default {
 
     methods: {
         item(val,i) {
+            console.log(1234);
+            
             this.active = 0
             this.list = val.bxMallSubDto
             if (this.leftTabIndex == i) return
@@ -90,6 +92,7 @@ export default {
                 if (res.data.code == 200) {
                     this.showFlag = false
                     this.dataList =  res.data.dataList
+                    // this.list = val.bxMallSubDto
                 }
             })
         },
@@ -108,6 +111,15 @@ export default {
     },
 
     created() {
+        const id = this.$route.params.id
+        const index = this.$route.params.index
+        const val = this.$route.params.val
+        if (id) {
+            this.list = val.bxMallSubDto
+            this.leftTabIndex = index
+            this.getList(id)
+            return
+        }        
         this.getList(this.defaultId)
     },
 }
@@ -121,7 +133,7 @@ export default {
     left 0
     right: 0
     bottom: 0
-    background: #EFEFEF
+    // background: #EFEFEF
     .left
         flex: 0 0 80px
         background: #F1F8FF

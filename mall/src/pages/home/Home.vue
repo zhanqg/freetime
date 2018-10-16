@@ -25,14 +25,14 @@
                     <van-row>
                         <van-swipe :autoplay="6000">
                             <van-swipe-item v-for="(val, index) in recommend.slides" :key="val.goodsId">
-                                <img :src="val.image" class="swiper-img" @click="details(val)"/>
+                                <img :src="val.image" class="swiper-img"/>
                             </van-swipe-item>
                         </van-swipe>
                     </van-row>    
                 </div>
                 <div class="panl">
                     <ul v-show="recommend.category && recommend.category.length">
-                        <li v-for="val of recommend.category" :key="val.mallCategoryId">
+                        <li v-for="(val,index) of recommend.category" :key="val.mallCategoryId" @click="item(val,index)">
                             <img :src="val.image" alt="" srcset="">
                             <p>{{val.mallCategoryName}}</p>
                         </li>
@@ -197,6 +197,19 @@ export default {
                     this.advertesPicture = data.advertesPicture.PICTURE_ADDRESS
                     this.floorName = data.floorName
                     this.setTab(data.category)
+                }
+            })
+        },
+
+        // 跳转到商品分类
+        item(val,index) {
+            const id = val.bxMallSubDto[0].mallSubId
+            this.$router.push({
+                name: `Category`,
+                params: {
+                    id,
+                    index,
+                    val
                 }
             })
         }

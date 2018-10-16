@@ -56,8 +56,8 @@ export default {
     } else {
       this.active = 0
     }
-
-    if (fullPath === '/user/address' || fullPath === '/user/addressEdit' || fullPath === '/user/collection' || fullPath === '/my/browse') {
+    const arr = ['/user/address','/user/addressEdit','/user/collection','/my/browse','/my/order']
+    if (arr.includes(fullPath)) {
       this.active = 3
     }else if(fullPath=== '/shoppingCart/ShoppingPayMent') {
         this.payMent = false
@@ -72,6 +72,12 @@ export default {
     $route(to,from){
       if (to.path === '/home' || to.path == '/') {
         this.active = 0
+      }
+      if (to.path === '/shoppingCart') {
+        this.active = 2
+      }
+      if (to.path === '/category') {
+        this.active = 1
       }
       if(to.path === '/shoppingCart/ShoppingPayMent') {
         this.payMent = false
