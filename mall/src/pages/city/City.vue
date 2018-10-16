@@ -178,7 +178,6 @@ export default {
             
             if (-newY >= height1 && -newY < height2) {
               if (this.letter[i]) {
-                  console.log(this.letter);
                 this.fixedTitle = this.letter[i];
                 this.diff = height2 + newY;
               }
@@ -196,6 +195,8 @@ export default {
         }
     }
 };
+
+
 </script>
 
 <style lang="stylus" scoped>
