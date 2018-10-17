@@ -35,8 +35,9 @@ app.use(views(__dirname + '/views', {
 
 app.use(async (ctx,next) => {
   if (ctx.session.login != 1) { // 没有登录
-    const arr = ['/register','/recommend','/classification','/goods/one','/login']
-    if (arr.includes(ctx.url)) {
+    const arr = ['/register','/recommend','/login']
+    if (arr.includes(ctx.url) || ctx.url.includes('/classification') || ctx.url.includes('/goods/one')) {
+      
       await next()
       return
     }
