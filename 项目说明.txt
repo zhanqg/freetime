@@ -1,7 +1,5 @@
-��Ŀ˵����
-1���ֱ����mall��server Ŀ¼�´�cmd  ��װ����
-2��serverĿ¼������index1.js �� index2.js ����Ʒд�����ݿ⣬��Ҫ�Ȱ�װmongodb���ݿ�
-3���������http://localhost:8080�ȿɿ�����Ŀ
-4�����ֹ�������������......
-github��ַ��https://github.com/yzbgyq/shoppingMall
-��ӭIssues�ͽ���
+1：进入 server 目录，在此目录下打开cmd窗口运行cnpm i安装依赖,然后npm start启动本地服务
+2：进入 mall 目录，在此目录下打开cmd窗口运行cnpm i安装依赖,然后npm start启动项目
+3：浏览器打开 http://localhost:8090
+
+欢迎 Issues ，欢迎交流，一起进步

@@ -14,6 +14,15 @@
 > **vue2.5+vuex+vue-router+axios+better-scroll+stylus+localStorage+koa2+mongoose+vant**
 
 
+## 项目说明
+
+本项目采用前后端完全分离模式，后端提供接口，前端渲染数据,主目录下的 **<abbr title="Hyper Text Markup Language">mall</abbr>** 目录是前端目录，**<abbr title="Hyper Text Markup Language">server</abbr>** 是后端目录
+关于数据库问题，项目采用 **<abbr title="Hyper Text Markup Language">mongodb</abbr>** 数据库，**<abbr title="Hyper Text Markup Language">mongoose</abbr>** 建模，数据库版本是**<abbr title="Hyper Text Markup Language">Mongodb4.0</abbr>**
+##运行项目步骤：
+######1：进入 server 目录，在此目录下打开cmd窗口运行 npm i 安装依赖,然后 npm start 启动本地服务
+######2：进入 mall 目录，在此目录下打开cmd窗口运行 npm i 安装依赖,然后 npm start 启动项目
+######3：浏览器打开 http://localhost:8090 
+
 ## 页面
 - [x] 商城首页
 - [x] 商品分类页
@@ -58,15 +67,9 @@
 ![my.png](./images/my.png)
 
 
-## 项目说明
-
-本项目采用前后端完全分离模式，后端提供接口，前端渲染数据,主目录下的 **<abbr title="Hyper Text Markup Language">mall</abbr>** 目录是前端目录，**<abbr title="Hyper Text Markup Language">server</abbr>** 是后端目录，进入这两目录先 **<abbr title="Hyper Text Markup Language">npm i</abbr>** 下载依赖，然后 **<abbr title="Hyper Text Markup Language">npm start</abbr>**，浏览器打开 **<abbr title="Hyper Text Markup Language">http://localhost:8090</abbr>** 既可。
-
-关于数据库问题，项目采用 **<abbr title="Hyper Text Markup Language">mongodb</abbr>** 数据库，**<abbr title="Hyper Text Markup Language">mongoose</abbr>** 建模，运行项目前先要导入往数据库导入数据，数据库版本是**<abbr title="Hyper Text Markup Language">Mongodb4.0</abbr>**，首先安装**<abbr title="Hyper Text Markup Language">Mongodb</abbr>**，安装就不说了，安装好后进入项目 **<abbr title="Hyper Text Markup Language">server</abbr>** 目录，在此目录下打开**<abbr title="Hyper Text Markup Language">cmd</abbr>** 窗口（请确保你的 **<abbr title="Hyper Text Markup Language">node</abbr>** 版本的7.6以上）分别运行 **<abbr title="Hyper Text Markup Language">index1.js</abbr>**  和  **<abbr title="Hyper Text Markup Language">index2.js</abbr>** 往数据库导入数据，提示导入成功后,导入成功后才能运行项目
-
-### 前端请求接口跨域问题，
+### 关于前端请求接口跨域问题，
 ```js
-> 在前端目录mall下的config/index.js文件下面的proxyTable里加上这样一段代码，既可跨域,只适用于开发环境。
+> 在前端目录mall下的config/index.js文件下面的proxyTable里加上这样一段代码，既可跨域,只适用于开发环境，3000是端口号。
 proxyTable: {
   '/':{
     target:'http://localhost:3000',
@@ -82,9 +85,3 @@ newDetails(id) {
 	 ....
 }
 ```
-
-
-
-
-
-
