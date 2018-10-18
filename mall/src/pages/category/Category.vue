@@ -54,7 +54,8 @@ export default {
                 top:false,
             },
             isLoading: false,
-            defaultId : '2c9f6c946016ea9b016016f79c8e0000'
+            defaultId : '2c9f6c946016ea9b016016f79c8e0000',
+            Category: false
         }
     },
 
@@ -66,8 +67,7 @@ export default {
 
     methods: {
         item(val,i) {
-            console.log(1234);
-            
+
             this.active = 0
             this.list = val.bxMallSubDto
             if (this.leftTabIndex == i) return
@@ -109,17 +109,25 @@ export default {
 
         ...mapActions(['setBrowse'])
     },
-
+    beforeRouteUpdate (to, from, next) {
+        if (from.name !== 'Category') {
+            this.Category = true
+            console.log(1);
+            
+        }
+        next()
+    },
     created() {
         const id = this.$route.params.id
         const index = this.$route.params.index
         const val = this.$route.params.val
-        if (id) {
+        if (id && index && val) {
             this.list = val.bxMallSubDto
             this.leftTabIndex = index
             this.getList(id)
             return
-        }        
+        }  
+              
         this.getList(this.defaultId)
     },
 }

@@ -202,6 +202,13 @@ router.post('/isCollection', async (ctx, next) => {
   if (!res || !res.id) {
     isCollection = 0  // 未收藏
   } else {
+    console.log(result);
+    if (!result) {
+      ctx.body = {
+        status: -1,
+        msg: '请登录'
+      }
+    }
     if (result.collections.length) {
       for (let i = 0; i < result.collections.length; i++) {
         if (result.collections[i].id === res.id) {
