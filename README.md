@@ -23,7 +23,9 @@
 ## 运行项目步骤：
 
 ######1：进入 server 目录，在此目录下打开cmd窗口运行 npm i 安装依赖,然后 npm start 启动本地服务
+
 ######2：进入 mall 目录，在此目录下打开cmd窗口运行 npm i 安装依赖,然后 npm start 启动项目
+
 ######3：浏览器打开 http://localhost:8090 
 
 ## 页面
