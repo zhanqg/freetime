@@ -57,7 +57,7 @@
 - [ ] 商品搜索功能
 - [ ] 商品评论
 
-## 截图
+## 项目截图
 ![home.png](./images/home.png)
 ![city.png](./images/city.png)
 ![category.png](./images/category.png)
