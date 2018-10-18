@@ -18,7 +18,10 @@
 
 本项目采用前后端完全分离模式，后端提供接口，前端渲染数据,主目录下的 **<abbr title="Hyper Text Markup Language">mall</abbr>** 目录是前端目录，**<abbr title="Hyper Text Markup Language">server</abbr>** 是后端目录
 关于数据库问题，项目采用 **<abbr title="Hyper Text Markup Language">mongodb</abbr>** 数据库，**<abbr title="Hyper Text Markup Language">mongoose</abbr>** 建模，数据库版本是**<abbr title="Hyper Text Markup Language">Mongodb4.0</abbr>**
-##运行项目步骤：
+
+
+## 运行项目步骤：
+
 ######1：进入 server 目录，在此目录下打开cmd窗口运行 npm i 安装依赖,然后 npm start 启动本地服务
 ######2：进入 mall 目录，在此目录下打开cmd窗口运行 npm i 安装依赖,然后 npm start 启动项目
 ######3：浏览器打开 http://localhost:8090 
@@ -85,3 +88,9 @@ newDetails(id) {
 	 ....
 }
 ```
+
+
+
+
+
+
