@@ -23,6 +23,9 @@ const matutaions = {
     },
     [types.CITY](state,city) {
         state.city = city
+    },
+    [types.ACTIVE](state,active) {
+        state.active = active
     }
 }
 

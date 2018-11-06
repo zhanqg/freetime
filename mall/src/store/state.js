@@ -8,6 +8,7 @@ const state = {
     shopOrderList: [],      // 购物车去结算的时候存入vuex
     temporaryAddress: '',   // 结算时候选择的地址
     city: city.getCity(),
+    active: 0,  // 底部tab的class
 }
 
 export default state

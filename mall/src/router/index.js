@@ -14,10 +14,10 @@ import City from 'pages/city/City'
 import ShoppingPayMent from 'pages/shoppingCart/components/ShoppingPayMent'
 
 import Browse from 'pages/browse/Browse'
-
+import store from '../store'
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     { path: '/', redirect: '/home' },
     { path: '/home', name: 'Home', component: Home, children: [{ path: '/city', component: City }, { path: ':id', component: Details }] },
@@ -32,3 +32,20 @@ export default new Router({
     { path: '*', redirect: '/home' }
   ]
 })
+
+router.beforeEach((to,from,next) => {
+  let active
+
+  if (to.path === '/category') {
+      active = 1
+    } else if (to.path === '/shoppingCart') {
+      active = 2
+    } else if (to.path === '/my') {
+      active = 3
+    } else if(to.path ==='/home'){
+      active = 0
+    }
+  store.commit('ACTIVE',active)
+  next()
+})
+export default router

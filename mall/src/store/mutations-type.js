@@ -6,5 +6,6 @@ export const BROWSE = 'BROWSE'
 export const SHOPORDERLIST = 'SHOPORDERLIST'
 export const TEMPORARYADDRESS = 'TEMPORARYADDRESS'
 export const CITY = 'CITY'
+export const ACTIVE = 'ACTIVE'
 
 

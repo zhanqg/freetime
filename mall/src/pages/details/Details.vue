@@ -266,7 +266,8 @@ export default {
 
   created() {
     if (!this.goodsDetails.goodsId && !this.goodsDetails.id) {
-        this.$router.go(-1)
+        // this.$router.go(-1)
+        this.$router.push({path:'/home'})
         return
     }
     this.goodsItem()

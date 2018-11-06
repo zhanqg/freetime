@@ -67,7 +67,6 @@ export default {
 
     methods: {
         item(val,i) {
-
             this.active = 0
             this.list = val.bxMallSubDto
             if (this.leftTabIndex == i) return
@@ -92,7 +91,6 @@ export default {
                 if (res.data.code == 200) {
                     this.showFlag = false
                     this.dataList =  res.data.dataList
-                    // this.list = val.bxMallSubDto
                 }
             })
         },
@@ -107,16 +105,27 @@ export default {
             setGoodDetails: 'GOODSDETAILS'
         }),
 
-        ...mapActions(['setBrowse'])
+        ...mapActions(['setBrowse','setTab']),
+
+        getCategory() {
+            if (!this.category.length) {
+                this.$http.get('/api/recommend').then( res => {
+                    if (res.data.code == 200) {
+                       this.setTab(res.data.data.category)
+                    }
+                    })
+                
+            }
+        }
     },
     beforeRouteUpdate (to, from, next) {
         if (from.name !== 'Category') {
             this.Category = true
-            console.log(1);
-            
         }
         next()
     },
+
+    
     created() {
         const id = this.$route.params.id
         const index = this.$route.params.index
@@ -127,8 +136,9 @@ export default {
             this.getList(id)
             return
         }  
-              
         this.getList(this.defaultId)
+        this.getCategory()
+        
     },
 }
 </script>
