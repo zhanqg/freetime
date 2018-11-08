@@ -12,6 +12,7 @@ require('../public/js/utils')
 // 首页
 router.get('/recommend', async (ctx, next) => {
   const res = await Goods.findOne({})
+
   ctx.body = res
   if (res) {
     ctx.body = {
@@ -437,6 +438,16 @@ router.get('/myOrder', async (ctx, next) => {
   ctx.body = {
     status: 200,
     list: res.order
+  }
+})
+
+// 搜索
+router.post('/search', async (ctx, next) => {
+  const { value } = ctx.request.body
+  const list = await GoodsList.find({ 'name': { $regex: value } })
+  ctx.body = {
+    status: 200,
+    list
   }
 })
 module.exports = router

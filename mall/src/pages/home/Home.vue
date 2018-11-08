@@ -6,15 +6,25 @@
                 <div @click="cityClick" >
                 <van-col span="5" class="city">{{city}} ▼</van-col>
                 </div>
-                <van-col span="19">
-                    <van-search
+                <van-col span="19" >
+                    <!-- <van-search
                         v-model="value"
                         placeholder="请输入搜索关键词"
                         show-action
                         @search="onSearch"
+                        ref="searchBox"
                         >
-                        <div slot="action" @click="onSearch">搜索</div>
-                    </van-search>
+                        
+                            <div slot="action" v-show="value" @click="onCancel">取消</div>
+                    </van-search> -->
+                    <div class="search-box" ref="searchBox">
+                        <van-icon name="search" class="icon"/>
+                        <input  @focus="focus"  class="box" v-model="value" type="text" placeholder="请输入搜索关键词">
+                        <van-icon name="clear" @click="value=''"  v-show="value" class="clear"/>
+                    </div>
+                    <transition name="bounce">
+                        <div class="quxiao" v-show="query" @click="closeSearch">取消</div>
+                    </transition>
                 </van-col>
             </van-row>
         </div>
@@ -52,6 +62,7 @@
      </div>
 </div>
      <BaseLoding :showFlag='showFlag'/>
+     <HomeSearch v-show="query" :list='serachList' @details='searchDetails'/>
      <router-view/>
 
  </div>
@@ -62,10 +73,12 @@
 import HomeRecommend from './components/HomeRecommend'
 import HomeFoor from './components/HomeFoor'
 import HomeHot from './components/HomeHot'
+import HomeSearch from './components/HomeSearch'
 import Scroll from 'pages/other/Scroll'
 import BaseRefresh from 'pages/other/BaseRefresh'
 import {mapActions,mapMutations,mapGetters} from 'vuex'
 import {loading} from 'js/mixin'
+import {throttle} from 'js/util'
 export default {
     mixins: [loading],
     data() {
@@ -88,13 +101,17 @@ export default {
             isRotate: false,
             trans: false,
             opac: 0,
-            currentCity: ''
+            currentCity: '',
+            serachList: [],     // 搜索结果
+            query: false,       // 显示搜索
+            len: false,        // 是否含有搜索结果
         }
     },
     
     components: {
         HomeRecommend,
         HomeFoor,
+        HomeSearch,
         HomeHot,
         Scroll,
         BaseRefresh,
@@ -177,6 +194,10 @@ export default {
             
         },
         
+        searchDetails(id) {
+           this.$router.push({path:`/home/${id}`})
+        },
+
         ...mapActions(['setTab']),
 
         ...mapMutations({
@@ -212,17 +233,64 @@ export default {
                     val
                 }
             })
+        },
+
+        //搜索
+        async search(value) {
+            // this.len = false
+            this.serachList.push(1)
+             const {data} = await this.$http.post('/api/search',{
+                 value
+             })
+             if (data.status == 200) {
+                 this.serachList = data.list
+             }
+        },
+
+        // 取消搜索
+        onCancel() {
+            this.value = ''
+            
+        },
+
+        focus(){
+            let width =  '85%'
+            this.tran(width)
+            this.query = true
+           this.serachList.push(1)
+        },
+
+        closeSearch(){
+            let width =  '100%'
+            this.tran(width)
+            this.query = false
+            this.value = ''
+        },
+
+        tran(width) {
+            this.$refs.searchBox.style.width = width;
+            this.$refs.searchBox.style['transitionDuration'] = '.3s'
         }
     },
     
     created() {
         this.getHome()
+
+        // 节流函数处理
+        this.$watch('value',throttle((newQuery) => {
+            this.serachList = []
+            if (this.value) {
+                this.search(this.value)
+            } else {
+                this.serachList.push(1)
+            }
+        },500,1000))
     },
 
     watch: {
         city() {
             this.getHome()
-        }
+        },
     }
 }
 </script>
@@ -232,6 +300,7 @@ export default {
     line-height: 44px;
     position: relative;
     z-index: 10;
+    background: #eee;
     .city {
         text-align: center;
         background: @color;
@@ -299,4 +368,67 @@ export default {
     }
     
 }
+     .search-box {
+         display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 100%;
+        height: 44px;
+        background: #eee;
+        position: relative;
+        .icon {
+            font-size: 16px;
+            color: #222;
+            position: absolute;
+            left: 10px;
+        }
+        .box {
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            line-height: 18px;
+            background: #fff;
+            color: #333;
+            font-size: 14px;
+            outline: 0;
+            margin-right: 5px;
+            border-radius: 5px;
+            padding: 7px;
+            padding-left: 32px;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        .clear {
+            position: absolute;
+            right: 12px;
+            color: #999;
+        }
+     }
+    .quxiao {
+        position: absolute;
+        right: 8px;
+        top: 0%;
+        font-size: 16px;
+    }
+ 
+.bounce-enter-active {
+        animation: bounce-in .3s;
+    }
+.bounce-leave-active {
+        animation: bounce-in .1s reverse;
+    }
+@keyframes bounce-in {
+    0% {
+        transform: translate3d(100%,0,0)
+    }
+    
+    100% {
+        transform: translate3d(0,0,0)
+    }
+} 
 </style>
