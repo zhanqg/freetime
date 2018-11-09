@@ -3,7 +3,8 @@ import storage from 'good-storage'
 const TAB_LIST = 'tab'      // TAB 
 const ADDRESS = 'address'     // 地址列表
 const RECENTLY_BROWSE = 'browse'  // 最近浏览
-const CITY = 'city'
+const CITY = 'city'         // 默认城市
+const SEARCH_HISYSTORY = 'searchHistory' // 搜索历史
 export const tab = {
     getTab() {
         return storage.get(TAB_LIST,[])
@@ -76,5 +77,33 @@ export const city = {
 
     setCity(city) {
         return storage.set(CITY,city)
+    }
+}
+
+// 搜索历史
+export const searchHistory = {
+    getHistory() {
+        return storage.get(SEARCH_HISYSTORY,[])
+    },
+
+    setHistory(data) {
+        let newData = this.getHistory()
+        if (newData.length) {
+            for (let i = 0; i < newData.length; i++) {
+                if (newData[i] === data) {
+                    newData.splice(i,1)
+                }
+            }
+        }
+        newData.unshift(data)
+        if (newData.length > 15) {  // 最近浏览最多30条缓存
+            newData.pop()
+        }
+        storage.set(SEARCH_HISYSTORY,newData)
+        return newData
+    },
+
+    clearHistory() {
+        return storage.set(SEARCH_HISYSTORY,[])
     }
 }

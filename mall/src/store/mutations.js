@@ -26,6 +26,9 @@ const matutaions = {
     },
     [types.ACTIVE](state,active) {
         state.active = active
+    },
+    [types.SEARCHHISTORYLIST](state,searchHistoryList) {
+        state.searchHistoryList = searchHistoryList
     }
 }
 

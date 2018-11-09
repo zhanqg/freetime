@@ -1,4 +1,4 @@
-import { tab,address,recentlyBrowse,city } from 'js/cache'
+import { tab,address,recentlyBrowse,city ,searchHistory} from 'js/cache'
 import * as types from './mutations-type'
 export const setTab = function ({ commit }, tabs) {
     commit(types.CATEGORY, tab.setTab(tabs))
@@ -27,4 +27,14 @@ export const deleteOne = function ({commit},id) {
 // 选择地址
 export const selectCity = function ({commit},citys) {
     commit(types.CITY, city.setCity(citys))
+}
+
+// 搜索历史
+export const setSearchHistory = function({commit},data) {
+    commit(types.SEARCHHISTORYLIST, searchHistory.setHistory(data))
+}
+
+// 清空搜索历史
+export const clearSearchHistory = function({commit}) {
+    commit(types.SEARCHHISTORYLIST, searchHistory.clearHistory())
 }

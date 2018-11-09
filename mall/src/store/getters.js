@@ -7,4 +7,6 @@ export const shopOrderList = state => state.shopOrderList
 export const temporaryAddress = state => state.temporaryAddress
 export const city = state => state.city
 export const active = state => state.active
+export const searchHistoryList = state => state.searchHistoryList
+
 

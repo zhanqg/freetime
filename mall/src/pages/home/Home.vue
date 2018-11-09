@@ -62,7 +62,7 @@
      </div>
 </div>
      <BaseLoding :showFlag='showFlag'/>
-     <HomeSearch v-show="query" :list='serachList' @details='searchDetails' :len='len' :value='value'/>
+     <HomeSearch v-show="query" :list='serachList' @details='searchDetails' :len='len' :value='value' @vals='vals'/>
      <router-view/>
 
  </div>
@@ -271,7 +271,12 @@ export default {
         tran(width) {
             this.$refs.searchBox.style.width = width;
             this.$refs.searchBox.style['transitionDuration'] = '.3s'
-        }
+        },
+
+        vals(val) {
+            console.log(val);
+            this.value = val
+        } 
     },
     
     created() {
