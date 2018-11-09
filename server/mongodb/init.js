@@ -3,8 +3,6 @@ const mongoose = require('mongoose');
 const db = mongoose.createConnection('mongodb://127.0.0.1:27017/shop2');
 db.once('open', async callback => {
     console.log('mongoose连接成功')
-
-    
 })
 
 // 导出模块

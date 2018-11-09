@@ -7,19 +7,9 @@
                 <van-col span="5" class="city">{{city}} ▼</van-col>
                 </div>
                 <van-col span="19" >
-                    <!-- <van-search
-                        v-model="value"
-                        placeholder="请输入搜索关键词"
-                        show-action
-                        @search="onSearch"
-                        ref="searchBox"
-                        >
-                        
-                            <div slot="action" v-show="value" @click="onCancel">取消</div>
-                    </van-search> -->
                     <div class="search-box" ref="searchBox">
                         <van-icon name="search" class="icon"/>
-                        <input  @focus="focus"  class="box" v-model="value" type="text" placeholder="请输入搜索关键词">
+                        <input ref="input"  @focus="focus"  class="box" v-model="value" type="text" placeholder="请输入搜索关键词">
                         <van-icon name="clear" @click="value=''"  v-show="value" class="clear"/>
                     </div>
                     <transition name="bouncee">
@@ -195,6 +185,7 @@ export default {
         },
         
         searchDetails(id) {
+            this.$refs.input.blur()
            this.$router.push({path:`/home/${id}`})
         },
 
