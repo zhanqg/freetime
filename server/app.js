@@ -76,7 +76,7 @@ app.use(views(__dirname + '/views', {
 // 请求拦截
 app.use(async (ctx, next) => {
   if (ctx.session.login != 1) { // 没有登录
-    const arr = ['/register', '/recommend', '/login']
+    const arr = ['/register', '/recommend', '/login','/search']
     if (arr.includes(ctx.url) || ctx.url.includes('/classification') || ctx.url.includes('/goods/one')) {
 
       await next()

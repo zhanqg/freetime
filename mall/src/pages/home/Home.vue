@@ -22,7 +22,7 @@
                         <input  @focus="focus"  class="box" v-model="value" type="text" placeholder="请输入搜索关键词">
                         <van-icon name="clear" @click="value=''"  v-show="value" class="clear"/>
                     </div>
-                    <transition name="bounce">
+                    <transition name="bouncee">
                         <div class="quxiao" v-show="query" @click="closeSearch">取消</div>
                     </transition>
                 </van-col>
@@ -238,7 +238,7 @@ export default {
         //搜索
         async search(value) {
             // this.len = false
-            this.serachList.push(1)
+            this.serachList.push(false)
              const {data} = await this.$http.post('/api/search',{
                  value
              })
@@ -257,7 +257,7 @@ export default {
             let width =  '85%'
             this.tran(width)
             this.query = true
-           this.serachList.push(1)
+           this.serachList.push(false)
         },
 
         closeSearch(){
@@ -282,7 +282,7 @@ export default {
             if (this.value) {
                 this.search(this.value)
             } else {
-                this.serachList.push(1)
+                this.serachList.push(false)
             }
         },500,1000))
     },
@@ -416,10 +416,10 @@ export default {
         font-size: 16px;
     }
  
-.bounce-enter-active {
+.bouncee-enter-active {
         animation: bounce-in .3s;
     }
-.bounce-leave-active {
+.bouncee-leave-active {
         animation: bounce-in .1s reverse;
     }
 @keyframes bounce-in {
