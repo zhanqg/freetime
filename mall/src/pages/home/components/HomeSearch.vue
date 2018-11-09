@@ -3,9 +3,10 @@
     <div class="search-content">
         <Scroll :data='list' class="scroll" >
             <ul>
-                <li class="item border-bottom"  v-for="val of list" @click="details(val)" :key="val.id">{{val.name}}</li>
+                <li class="item border-bottom"  v-for="val of list" @click="details(val)" :key="val.id" v-html="keyWord(val.name,value)">
+                </li>
             </ul>
-            <div class="empty" v-show="!list.length">暂无搜索结果~~</div>
+            <div class="empty" v-show="len">暂无搜索结果~~</div>
         </Scroll>
     </div>
 
@@ -22,15 +23,27 @@ export default {
             default: []
         },
         len: {
-            ttype: Boolean,
+            type: Boolean,
             default: false
+        },
+        value: {
+            type: String,
+            default: ''
+        }
+    },
+
+    data() {
+        return {
+            
         }
     },
 
     methods: {
+        keyWords() {
+             return keyWord()
+        },
+
         details(val) {
-            console.log(val);
-            
             this.setBrowse(val)     // 加入最近浏览
             this.setGoodDetails(val)
             this.$emit('details',val.id)
@@ -40,6 +53,13 @@ export default {
         }),
 
         ...mapActions(['setBrowse','setTab']),
+
+        keyWord(str,value) {
+            let replaceReg = new RegExp(value, 'g');
+            let replaceString = `<span style='color:red'>${value}</span>`
+            str = str.replace(replaceReg, replaceString);
+            return str
+        }
     },
 
     components: {

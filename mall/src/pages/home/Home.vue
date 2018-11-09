@@ -28,7 +28,7 @@
                 </van-col>
             </van-row>
         </div>
-    <div v-show="!showFlag" class="content" @touchmove.prevent='touchmove' @touchstart.prevent='touchstart' @touchend.prevent='touchend'>
+    <div v-show="!showFlag"  class="content" @touchmove.prevent='touchmove' @touchstart.prevent='touchstart' @touchend.prevent='touchend'>
         <Scroll :listenScroll='listenScroll' @scroll='scroll' :probeType='probeType'  :data='recommend.hotGoods' class="content-scroll" :bounce='bounce' ref="scroll">
             <div>
                 <div class="swiper">
@@ -62,7 +62,7 @@
      </div>
 </div>
      <BaseLoding :showFlag='showFlag'/>
-     <HomeSearch v-show="query" :list='serachList' @details='searchDetails'/>
+     <HomeSearch v-show="query" :list='serachList' @details='searchDetails' :len='len' :value='value'/>
      <router-view/>
 
  </div>
@@ -237,13 +237,15 @@ export default {
 
         //搜索
         async search(value) {
-            // this.len = false
-            this.serachList.push(false)
+            this.len = false
              const {data} = await this.$http.post('/api/search',{
                  value
              })
              if (data.status == 200) {
                  this.serachList = data.list
+                 if (!this.serachList.length) {
+                     this.len = true
+                 }
              }
         },
 
@@ -257,7 +259,6 @@ export default {
             let width =  '85%'
             this.tran(width)
             this.query = true
-           this.serachList.push(false)
         },
 
         closeSearch(){
@@ -281,9 +282,7 @@ export default {
             this.serachList = []
             if (this.value) {
                 this.search(this.value)
-            } else {
-                this.serachList.push(false)
-            }
+            } 
         },500,1000))
     },
 

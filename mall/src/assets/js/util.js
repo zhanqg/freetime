@@ -115,7 +115,20 @@ const debounce = (fn,dalay) => {
         }, dalay);
     }
 }　　　　　　　　　　　　　　　　　　　　　　　　　
-　
+
+/**
+ * 搜索关键词高亮显示
+ * @param String str 要替换的关键词
+ * @param String value 搜索框里面的内容
+ * @return Function 替换后的内容
+ */
+const keyWord = (str,value) => {
+    const replaceReg = new RegExp(value, 'g');
+    const replaceString = `<span style='color:red'>${value}</span>`
+          str = str.replace(replaceReg, replaceString);
+    return str
+}
+
 export {
     chunk,              //数组分块
     throttle,           //函数节流
@@ -123,4 +136,5 @@ export {
     prefix,             //各种浏览器的css前缀
     getRandomInt,       //获取多少道多少之间的随机整数
     shuffle,            //数组随机打乱(洗牌函数)
+    keyWord,            //搜索关键词高亮显示
 }

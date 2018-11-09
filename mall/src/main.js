@@ -9,7 +9,7 @@ import './vant'   // 有赞组件库
 import FastClick from 'fastclick'
 FastClick.attach(document.body)
 import 'babel-polyfill'
-import 'vant/lib/vant-css/index.css'
+import 'vant/lib/index.css'
 import 'css/reset.css'
 import 'swiper/dist/css/swiper.css'
 import 'css/border.css'
