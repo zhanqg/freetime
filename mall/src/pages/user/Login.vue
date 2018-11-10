@@ -19,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <Back/>
+        <Back @back='back'/>
     </div>
 </transition>      
 </template>
@@ -28,7 +28,9 @@
 import Back from 'pages/other/Back'
 import {mapMutations} from 'vuex'
 import {Toast} from 'vant'
+import {goBack} from 'js/mixin'
 export default {
+    mixins: [goBack],
     data() {
         return {
             username:'',
@@ -42,8 +44,10 @@ export default {
     components: {
         Back,
     },
+
     methods: {
-         login(flag) {
+
+        login(flag) {
             if (!this.username || !this.password) {
                 Toast('请输入用户名或者密码');
                 return

@@ -114,20 +114,19 @@
     </div>
     </div>
     <BaseLoding :showFlag='showFlag'/>
-    <Back/>
+    <Back @back='back'/>
   </div>
   </transition>  
 </template>
 
 <script>
-
 import Back from 'pages/other/Back'
-import {loading} from 'js/mixin'
+import {loading,goBack} from 'js/mixin'
 import {mapGetters,mapActions,mapMutations} from 'vuex'
 import AdditionAndSubtraction from 'pages/other/AdditionAndSubtraction'
 import {Toast} from 'vant'
 export default {
-  mixins: [loading],
+  mixins: [loading,goBack],
   components: {
     Back,
     AdditionAndSubtraction
@@ -141,6 +140,8 @@ export default {
       isCollectionFlag: false,
       showBase:false,  // 显示sku
       newCount: 1,
+      hash: '',   //当前地址url，商品的id
+     
     }
   },
   
@@ -158,12 +159,12 @@ export default {
     },
 
     // 请求商品详情
-    async goodsItem() {
+    async goodsItem(id = this.goodsDetails.goodsId) {
         if (this.goodsDetails.id) {
             this.goods = this.goodsDetails
             return
         }
-        const res = await this.$http.get(`/api/goods/one?id=${this.goodsDetails.goodsId}`)
+        const res = await this.$http.get(`/api/goods/one?id=${id}`)
         if (res.data.code == 200) {
             if (res.data.goodsOne.id) {
               this.setBrowse(res.data.goodsOne)
@@ -261,16 +262,15 @@ export default {
         setShopList: 'SHOPORDERLIST'
     }),
 
-    ...mapActions(['setBrowse'])
+    ...mapActions(['setBrowse']),
+
   },
 
+
+
   created() {
-    if (!this.goodsDetails.goodsId && !this.goodsDetails.id) {
-        // this.$router.go(-1)
-        this.$router.push({path:'/home'})
-        return
-    }
-    this.goodsItem()
+    this.hash = window.location.hash.slice(-32)
+    this.goodsItem(this.hash)
     this.isCollection(this.goodsDetails.goodsId || this.goodsDetails.id)
 
   },

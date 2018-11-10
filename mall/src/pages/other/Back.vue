@@ -6,7 +6,8 @@
 export default {
     methods: {
         back() {
-            this.$router.go(-1)
+            this.$emit('back')
+            // this.$router.go(-1)
         }
     }
 }

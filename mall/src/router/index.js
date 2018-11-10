@@ -20,14 +20,14 @@ Vue.use(Router)
 const router = new Router({
   routes: [
     { path: '/', redirect: '/home' },
-    { path: '/home', name: 'Home', component: Home, children: [{ path: '/city', component: City }, { path: ':id', component: Details }] },
-    { path: '/category', name: 'Category', component: Category, children: [{ path: ':id', component: Details }] },
+    { path: '/home', name: 'Home', component: Home, children: [{ path: '/city', component: City ,name:'City'}, { path: ':id', component: Details ,name:'Details'}] },
+    { path: '/category', name: 'Category', component: Category, children: [{ path: ':id', component: Details,name:'Details' }] },
     { path: '/shoppingCart', name: 'ShoppingCart', component: ShoppingCart },
     { path: '/user/login', name: 'Login', component: Login }, // 登入
     { path: '/user/address', name: 'Address', component: Address }, // 地址
     { path: '/user/addressEdit', name: 'AddressEdit', component: AddressEdit }, // 新增和编辑地址
-    { path: '/user/collection', name: 'Collection', component: Collection, children: [{ path: ':id', component: Details }] }, // 我的收藏
-    { path: '/my', name: 'My', component: My, children: [{ path: '/my/order', component: MyOrder }, { path: '/my/browse', component: Browse, children: [{ path: ':id', component: Details }] }] }, // 我的收藏
+    { path: '/user/collection', name: 'Collection', component: Collection, children: [{ path: ':id', component: Details,name:'Details' }] }, // 我的收藏
+    { path: '/my', name: 'My', component: My, children: [{ path: '/my/order', component: MyOrder,name:'MyOrder' }, { path: '/my/browse', component: Browse, name:'Browse', children: [{ path: ':id', component: Details,name:'Details' }] }] }, // 我的收藏
     { path: '/shoppingPayMent', name: 'ShoppingPayMent', component: ShoppingPayMent },
     { path: '*', redirect: '/home' }
   ]
