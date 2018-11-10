@@ -37,6 +37,7 @@ import Scroll from 'pages/other/Scroll'
 import GoodsList from 'pages/other/GoodsList'
 import BaseTitle from 'pages/other/BaseTitle'
 import {loading} from 'js/mixin'
+import Api from '@/api'
 export default {
     mixins: [loading],
     computed: {
@@ -59,6 +60,7 @@ export default {
         }
     },
 
+    
     components: {
         Scroll,
         BaseTitle,
@@ -85,14 +87,19 @@ export default {
             this.onClick(index)
         },
 
-        getList(id) {
-            this.showFlag = true
-            this.$http.get(`/api/classification?mallSubId=${id}`).then(res => {
-                if (res.data.code == 200) {
+        async getList(id) {
+            try {
+                this.dataList = []
+                this.showFlag = true
+                const { data } = await Api.category(id)
+                if (data.code == 200) {
                     this.showFlag = false
-                    this.dataList =  res.data.dataList
+                    this.dataList = data.dataList
                 }
-            })
+            } catch (error) {
+                this.showFlag = false
+                this.Toast('网络错误')
+            }
         },
 
         datails(val) {
@@ -107,25 +114,40 @@ export default {
 
         ...mapActions(['setBrowse','setTab']),
 
-        getCategory() {
+        async getCategory() {
             if (!this.category.length) {
-                this.$http.get('/api/recommend').then( res => {
-                    if (res.data.code == 200) {
-                       this.setTab(res.data.data.category)
-                    }
-                    })
-                
+                const { data } = await Api.recommend()
+                if (data.code == 200) {
+                    this.setTab(data.data.category)
+                }
             }
+        },
+
+        categorys(fn) {
+            const id = this.$route.params.id
+            const index = this.$route.params.index
+            const val = this.$route.params.val
+            if (id && index && val) {
+                this.list = val.bxMallSubDto
+                this.leftTabIndex = index
+                this.getList(id)
+            }  
         }
     },
+
     beforeRouteUpdate (to, from, next) {
         if (from.name !== 'Category') {
             this.Category = true
         }
         next()
+
+    },
+   
+
+    activated() {
+        this.categorys()
     },
 
-    
     created() {
         const id = this.$route.params.id
         const index = this.$route.params.index
@@ -138,7 +160,6 @@ export default {
         }  
         this.getList(this.defaultId)
         this.getCategory()
-        
     },
 }
 </script>

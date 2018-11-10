@@ -69,6 +69,7 @@ import BaseRefresh from 'pages/other/BaseRefresh'
 import {mapActions,mapMutations,mapGetters} from 'vuex'
 import {loading} from 'js/mixin'
 import {throttle} from 'js/util'
+import Api from '@/api'
 export default {
     mixins: [loading],
     data() {
@@ -199,18 +200,21 @@ export default {
             this.$router.push({path: '/city'})
         },
 
-        getHome() {
-            this.showFlag = true
-            this.$http.get('/api/recommend').then( res => {
-                if (res.data.code == 200) {
+        async getHome() {
+            try {
+                this.showFlag = true
+                const {data} = await Api.recommend()
+                if (data.code == 200) {
                     this.showFlag = false
-                    const data = res.data.data
-                    this.recommend = data
-                    this.advertesPicture = data.advertesPicture.PICTURE_ADDRESS
-                    this.floorName = data.floorName
-                    this.setTab(data.category)
+                    this.recommend = data.data
+                    this.advertesPicture = data.data.advertesPicture.PICTURE_ADDRESS
+                    this.floorName = data.data.floorName
+                    this.setTab(data.data.category)
                 }
-            })
+            } catch (error) {
+                this.showFlag = false
+                this.Toast('网络错误')
+            }
         },
 
         // 跳转到商品分类
@@ -228,16 +232,20 @@ export default {
 
         //搜索
         async search(value) {
-            this.len = false
-             const {data} = await this.$http.post('/api/search',{
-                 value
-             })
-             if (data.status == 200) {
-                 this.serachList = data.list
-                 if (!this.serachList.length) {
-                     this.len = true
-                 }
-             }
+            try {
+                this.len = false
+                const {data} = await Api.search(value)
+                if (data.status == 200) {
+                    this.serachList = data.list
+                    if (!this.serachList.length) {
+                        this.len = true
+                    }
+                }
+            } catch (error) {
+                this.len = false
+                this.Toast('网络错误')
+            }
+            
         },
 
         // 取消搜索
@@ -272,7 +280,6 @@ export default {
     
     created() {
         this.getHome()
-
         // 节流函数处理
         this.$watch('value',throttle((newQuery) => {
             this.serachList = []

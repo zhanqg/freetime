@@ -124,8 +124,9 @@ import Back from 'pages/other/Back'
 import {loading,goBack} from 'js/mixin'
 import {mapGetters,mapActions,mapMutations} from 'vuex'
 import AdditionAndSubtraction from 'pages/other/AdditionAndSubtraction'
-import {Toast} from 'vant'
+import Api from '@/api'
 export default {
+  name: 'Details',
   mixins: [loading,goBack],
   components: {
     Back,
@@ -164,27 +165,33 @@ export default {
             this.goods = this.goodsDetails
             return
         }
-        const res = await this.$http.get(`/api/goods/one?id=${id}`)
-        if (res.data.code == 200) {
-            if (res.data.goodsOne.id) {
-              this.setBrowse(res.data.goodsOne)
-              this.goods = res.data.goodsOne
+        try {
+          const {data} = await Api.goodOne(id)
+          if (data.code == 200) {
+            if (data.goodsOne.id) {
+              this.setBrowse(data.goodsOne)
+              this.goods = data.goodsOne
             }
+          }
+        } catch (error) {
+            this.showFlag = false
+            this.isCollectionFlag = true
+            this.Toast('网络错误')
         }
+      
     },
 
     // 查询是否已收藏
     async isCollection(id) {
       this.showFlag = true
-      const res = await this.$http.post(`/api/isCollection`,{id})
-      if (res.data.status == 200) {
+      const {data} = await Api.isCollection(id)
+      if (data.status == 200) {
         this.showFlag = false
-        if (res.data.isCollection == 1) {   // 已经收藏收藏
+        if (data.isCollection == 1) {   // 已经收藏收藏
             this.isCollectionFlag = false
         } else {
             this.isCollectionFlag = true
         }
-      
       } else {
         this.showFlag = false
         this.isCollectionFlag = true
@@ -200,32 +207,42 @@ export default {
       if (this.isCollectionFlag) {  // 收藏
         let goods = this.goods
         delete(goods['_id'])  
-        const res = await this.$http.post('/api/collection',goods)
-        if (res.data.status == 200) { // 收藏成功
-          Toast(res.data.msg);
-          this.isCollectionFlag = false
+        try {
+          const {data} = await Api.collection(goods)
+          if (data.status == 200) { // 收藏成功
+            this.Toast(data.msg);
+            this.isCollectionFlag = false
+          }
+        } catch (error) {
+          this.Toast('收藏失败,网络错误')
         }
       } else {  // 取消收藏
-        const res = await this.$http.post('/api/cancelCollection',{
-          id: this.goods.id
-        })
-        if (res.data.status == 200) { // 收藏成功
-          this.isCollectionFlag = true
+        try {
+          const {data} = await Api.cancelCollection(this.goods.id)
+              if (data.status == 200) { 
+                this.isCollectionFlag = true
+              }
+        } catch (error) {
+          this.Toast('网络错误')
         }
+
       }
     },
 
+    // 加入购物车
     async addShops() {
-            if (!this.userName) {
-                this.$router.push({path:'/user/login'})
-                return
+          if (!this.userName) {
+              this.$router.push({path:'/user/login'})
+              return
+          }
+          try {
+            const {data} = await Api.addShop(this.goodsDetails.goodsId || this.goodsDetails.id)
+            if (data.status == 200) {
+              this.Toast(data.msg)
             }
-            const res = await this.$http.post('/api/addShop',{
-                id: this.goodsDetails.goodsId || this.goodsDetails.id
-            })            
-            if (res.data.status == 200) {
-                Toast(res.data.msg)
-            }
+          } catch (error) {
+            this.Toast('网络错误')
+          }
     },
 
     // 立即购买弹出sku
@@ -266,12 +283,10 @@ export default {
 
   },
 
-
-
   created() {
     this.hash = window.location.hash.slice(-32)
     this.goodsItem(this.hash)
-    this.isCollection(this.goodsDetails.goodsId || this.goodsDetails.id)
+    this.isCollection(this.goodsDetails.goodsId || this.goodsDetails.id || this.hash)
 
   },
 };

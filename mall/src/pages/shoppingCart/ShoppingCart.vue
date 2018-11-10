@@ -55,8 +55,9 @@ import Scroll from 'pages/other/Scroll'
 import BaseTitle from "pages/other/BaseTitle";
 import {mapMutations,mapGetters} from 'vuex'
 import {loading} from 'js/mixin'
-import {Dialog,Toast } from 'vant'
+import Api from '@/api'
 export default {
+    name: 'ShoppingCart',
     mixins: [loading],
   data() {
     return {
@@ -122,40 +123,44 @@ export default {
     },
 
     async getShopList() {
-        this.showFlag = true
-      const res = await this.$http.get("/api/getCard");
-      if (res.data.status == -1) {
-        this.isLogin = true
-        this.showFlag = false
-      } else {
-        this.showFlag = false
-        this.shopList = res.data.shopList;
-      }
+        try {
+            this.showFlag = true
+            const { data } = await Api.getCard()
+            if (data.status == -1) {
+                this.isLogin = true
+                this.showFlag = false
+            } else {
+                this.showFlag = false
+                this.shopList = data.shopList;
+            }
+        } catch (error) {
+            this.Toast('网络连接失败')
+            this.showFlag = false
+        }
+
     },
 
     goshop() {
       this.$router.push({ path: "/home" });
     },
+
     // 加减商品
     async editCart(flag, val) {
-      if (flag == "minu") {
-        if (val.count <= 1) {
-          return;
+        if (flag == "minu") {
+            if (val.count <= 1) {
+            return;
+            }
+            val.count--;
+        } else if (flag == "add") {
+            if (val.count >= 50) {
+            this.Toast("最多购买50件噢~~");
+            return;
+            }
+            val.count++
         }
-        val.count--;
-      } else if (flag == "add") {
-        if (val.count >= 50) {
-          Toast("最多购买50件噢~~");
-          return;
-        }
-        val.count++
-      }
+        const mallPrice = (val.present_price * val.count).toFixed(2)
+        Api.editCart(val.count,val.id,mallPrice)
 
-      const res = await this.$http.post("/api/editCart", {
-          count: val.count,
-          id: val.id,
-          mallPrice: (val.present_price * val.count).toFixed(2)
-        });
     },
     // 删除商品
     deletes() {
@@ -163,12 +168,12 @@ export default {
         this.shopList.forEach(item => {
             if (item.check) {
                 id.push(item.id)
-                Dialog.confirm({
+                this.Dialog.confirm({
                     title: '提示',
                     message: `确认删除商品吗?`
                 }).then(() => {
                      this.deleteShop(id)
-                     this.deleteFlag = false
+                     
                 })
             }
         })
@@ -176,20 +181,25 @@ export default {
 
     // 删除购物车商品
     async deleteShop(id) {
-        const res = await this.$http.post('/api/deleteShop',id)
-        if (res.data.status == 200) {
-            Toast(res.data.msg)
-            this.getShopList()
+        try {
+            const {data} = await Api.deleteShop(id)
+            if (data.status == 200) {
+                this.deleteFlag = false
+                this.Toast(data.msg)
+                this.getShopList()
+            } 
+        } catch (error) {
+            this.Toast('删除失败,网络错误')
         }
     },
 
     // 推荐随机商品
-    async getRandom() {
-      let res = await axios.get("/api/getCard/recommend");
-      if (res.data.code == 1) {
-        this.tablist(res.data.shopRecommend);
-      }
-    },
+    // async getRandom() {
+    //   let res = await axios.get("/api/getCard/recommend");
+    //   if (res.data.code == 1) {
+    //     this.tablist(res.data.shopRecommend);
+    //   }
+    // },
 
     // 提交订单
     placeOrder() {
@@ -214,7 +224,6 @@ export default {
   },
   created() {
     this.getShopList();
-    // this.getRandom()
   },
 };
 </script>

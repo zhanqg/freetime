@@ -3,6 +3,9 @@ import App from './App'
 import router from './router'
 import store from './store'
 import axios from 'axios'
+import {Toast,Dialog } from 'vant'
+Vue.prototype.Toast = Toast //全局提示
+Vue.prototype.Dialog = Dialog // 全局弹框
 Vue.prototype.$http = axios
 import './vant'   // 有赞组件库
 // 解决300毫秒延时
