@@ -1,4 +1,5 @@
 <template>
+        <!-- 返回上一页组件 -->
         <div class="icon" @click="back"><van-icon name="arrow-left" class="arrow"/></div>
 </template>
 

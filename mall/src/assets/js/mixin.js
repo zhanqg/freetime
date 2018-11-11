@@ -53,6 +53,8 @@ export const goBack = {
         next(vm => {
           // 通过 `vm` 访问组件实例
           vm.routerName = flag
+          console.log(vm.routerName);
+          
         })
       },
 }

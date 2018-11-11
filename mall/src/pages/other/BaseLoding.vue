@@ -1,4 +1,5 @@
 <template>
+    <!-- 数据加载提示loadding -->
     <div class="loader31 loader" v-show="showFlag">
         <div class="loader-31">
             <div></div>

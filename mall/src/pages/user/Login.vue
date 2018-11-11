@@ -61,33 +61,41 @@ export default {
 
         async register(flag) {
             if (flag) { //  注册
+            try {
                 this.regLoding = true
-                const res = await this.$http.post('/api/register',{
-                    username: this.username,
-                    password: this.username
-                })
-                if (res.data.code == 200) {
+                const {data} = await this.Api.register(this.username,this.password)
+                if (data.code == 200) {
                     this.setName(this.username)
                     setTimeout(() => {
                         this.$router.go(-1)
                     }, 1500);
+                    
                 }
                 this.regLoding = false
-                Toast(res.data.msg);
+                this.Toast(data.msg);
+            } catch (error) {
+                this.Toast('网络错误')
+                this.regLoding = false
+            }
+                
             } else {    // 登录
-                this.loginLoding = true
-                const res = await this.$http.post('/api/login',{
-                    username: this.username,
-                    password: this.username
-                })
-                if (res.data.code == 200) {
-                    this.setName(this.username)
-                    setTimeout(() => {
-                        this.$router.go(-1)
-                    }, 1500);
+                try {
+                    this.loginLoding = true
+                    const {data} = await this.Api.login(this.username,this.password)
+                    if (data.code == 200) {
+                        this.setName(this.username)
+                        setTimeout(() => {
+                            this.$router.go(-1)
+                        }, 1500);
+                    }
+                    this.loginLoding = false
+                    this.Toast(data.msg);
+                } catch (error) {
+                    this.Toast('网络错误')
+                    this.loginLoding = false
                 }
-                this.loginLoding = false
-                Toast(res.data.msg);
+                
+                
             }
         },
 

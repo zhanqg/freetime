@@ -25,10 +25,10 @@ app.use(bodyparser({
   enableTypes: ['json', 'form', 'text']
 }))
 app.use(json())
-app.use(require('koa-static')(__dirname + '/public'))
+app.use(require('koa-static')(__dirname + '/dist'))
 
 app.use(views(__dirname + '/views', {
-  extension: 'pug'
+  extension: 'html'
 }))
 
   // 把商品导入数据库

@@ -41,7 +41,6 @@ import GoodsList from 'pages/other/GoodsList'
 import BaseTitle from 'pages/other/BaseTitle'
 import {mapGetters,mapMutations} from 'vuex'
 import Scroll from 'pages/other/Scroll'
-import Api from '@/api'
 export default {
     components: {
         BaseTitle,
@@ -93,11 +92,11 @@ export default {
             this.shopOrderList.forEach( item => {
                 orderId.push(item.id)
             })
-            // 以下参数名称在api接口看详情
+            // 以下参数名称在this.Api接口看详情
             console.log(this.temporaryAddress.tel);
             
             try {
-                const { data } = await Api.placeOrder({
+                const { data } = await this.Api.placeOrder({
                     address: this.temporaryAddress.address,
                     tel: this.temporaryAddress.tel,
                     orderId,

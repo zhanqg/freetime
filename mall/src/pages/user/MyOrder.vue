@@ -68,11 +68,16 @@ export default {
                 this.showFlag = false
                 return
             }
-            this.showFlag = true
-            const res = await this.$http.get('/api/myOrder')
-            if (res.data.status == 200) {
+            try {
+                this.showFlag = true
+                const {data} = await this.Api.getMyOrder()
+                if (data.status == 200) {
+                    this.showFlag = false
+                    this.list = data.list
+                }
+            } catch (error) {
+                this.Toast('网络错误')
                 this.showFlag = false
-                this.list = res.data.list
             }
         }
     },

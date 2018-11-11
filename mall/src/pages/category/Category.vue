@@ -37,7 +37,6 @@ import Scroll from 'pages/other/Scroll'
 import GoodsList from 'pages/other/GoodsList'
 import BaseTitle from 'pages/other/BaseTitle'
 import {loading} from 'js/mixin'
-import Api from '@/api'
 export default {
     mixins: [loading],
     computed: {
@@ -91,7 +90,7 @@ export default {
             try {
                 this.dataList = []
                 this.showFlag = true
-                const { data } = await Api.category(id)
+                const { data } = await this.Api.category(id)
                 if (data.code == 200) {
                     this.showFlag = false
                     this.dataList = data.dataList
@@ -116,18 +115,20 @@ export default {
 
         async getCategory() {
             if (!this.category.length) {
-                const { data } = await Api.recommend()
+                const { data } = await this.Api.recommend()
                 if (data.code == 200) {
                     this.setTab(data.data.category)
                 }
             }
         },
 
-        categorys(fn) {
+        categorys() {
             const id = this.$route.params.id
             const index = this.$route.params.index
             const val = this.$route.params.val
-            if (id && index && val) {
+            console.log(id,index,val);
+            
+            if (id && index || index == 0 && val) {
                 this.list = val.bxMallSubDto
                 this.leftTabIndex = index
                 this.getList(id)

@@ -24,6 +24,7 @@ import GoodsList from 'pages/other/GoodsList'
 import {loading} from 'js/mixin'
 import {mapActions,mapMutations,mapGetters} from 'vuex'
 export default {
+    name: 'Collection',
     mixins: [loading],
     components: {
         Scroll,
@@ -53,20 +54,24 @@ export default {
             this.$router.go(-1)
         },
 
-        getCollection() {
+        async getCollection() {
             if (!this.userName) {
                 this.showFlag = false
                 return
             }
-            this.showFlag = true
-            this.$http.get('/api/collection/list').then( res => {
-                if (res.data.status == 200) {
+            try {
+                this.showFlag = true
+                const {data} = await this.Api.getCollection()
+                if (data.status == 200) {
                     this.showFlag = false
-                    this.list = res.data.collection
+                    this.list = data.collection
                 } else {
                     this.isText = true
                 }
-            })
+            } catch (error) {
+                this.Toast('网络错误')
+                this.showFlag = false
+            }
         },
 
         datails(item) {
@@ -78,15 +83,17 @@ export default {
         },
 
         // 这里是取消收藏
-        close(item,index) {
+        async close(item,index) {
             // this.deleteOne(item.id)
             this.list.splice(index,1)
-            this.$http.post('/api/cancelCollection',{id: item.id}).then(res => {
-                console.log(res);
-                if (res.data.status == 200) {
-                    this.Toast(res.data.msg);
+            try {
+                const {data} = await this.Api.cancelCollection(item.id)
+                if (data.status == 200) {
+                    this.Toast(data.msg);
                 }
-            })
+            } catch (error) {
+                this.Toast('网络错误')
+            }
         },
 
         ...mapActions(['setBrowse']),

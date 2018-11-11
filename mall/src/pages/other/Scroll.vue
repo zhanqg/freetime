@@ -1,4 +1,5 @@
 <template>
+  <!-- 滚动组件 -->
     <div ref="warpper">
         <slot></slot>
     </div>

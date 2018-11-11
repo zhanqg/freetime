@@ -124,7 +124,6 @@ import Back from 'pages/other/Back'
 import {loading,goBack} from 'js/mixin'
 import {mapGetters,mapActions,mapMutations} from 'vuex'
 import AdditionAndSubtraction from 'pages/other/AdditionAndSubtraction'
-import Api from '@/api'
 export default {
   name: 'Details',
   mixins: [loading,goBack],
@@ -166,7 +165,7 @@ export default {
             return
         }
         try {
-          const {data} = await Api.goodOne(id)
+          const {data} = await this.Api.goodOne(id)
           if (data.code == 200) {
             if (data.goodsOne.id) {
               this.setBrowse(data.goodsOne)
@@ -184,7 +183,7 @@ export default {
     // 查询是否已收藏
     async isCollection(id) {
       this.showFlag = true
-      const {data} = await Api.isCollection(id)
+      const {data} = await this.Api.isCollection(id)
       if (data.status == 200) {
         this.showFlag = false
         if (data.isCollection == 1) {   // 已经收藏收藏
@@ -208,7 +207,7 @@ export default {
         let goods = this.goods
         delete(goods['_id'])  
         try {
-          const {data} = await Api.collection(goods)
+          const {data} = await this.Api.collection(goods)
           if (data.status == 200) { // 收藏成功
             this.Toast(data.msg);
             this.isCollectionFlag = false
@@ -218,7 +217,7 @@ export default {
         }
       } else {  // 取消收藏
         try {
-          const {data} = await Api.cancelCollection(this.goods.id)
+          const {data} = await this.Api.cancelCollection(this.goods.id)
               if (data.status == 200) { 
                 this.isCollectionFlag = true
               }
@@ -231,18 +230,18 @@ export default {
 
     // 加入购物车
     async addShops() {
-          if (!this.userName) {
-              this.$router.push({path:'/user/login'})
-              return
+        if (!this.userName) {
+            this.$router.push({path:'/user/login'})
+            return
+        }
+        try {
+          const {data} = await this.Api.addShop(this.goodsDetails.goodsId || this.goodsDetails.id)
+          if (data.status == 200) {
+            this.Toast(data.msg)
           }
-          try {
-            const {data} = await Api.addShop(this.goodsDetails.goodsId || this.goodsDetails.id)
-            if (data.status == 200) {
-              this.Toast(data.msg)
-            }
-          } catch (error) {
-            this.Toast('网络错误')
-          }
+        } catch (error) {
+          this.Toast('网络错误')
+        }
     },
 
     // 立即购买弹出sku

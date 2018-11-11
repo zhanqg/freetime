@@ -9,6 +9,10 @@ const ShopList = require('../mongodb/schema/shopList')
 const userTest = require('../mongodb/schema/user2')
 const md5 = require("md5")
 require('../public/js/utils')
+router.get('/', async (ctx, next) => {
+  await ctx.render('index')
+})
+
 // 首页
 router.get('/recommend', async (ctx, next) => {
   const res = await Goods.findOne({})

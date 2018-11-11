@@ -1,4 +1,5 @@
 <template>
+    <!-- 顶部title组件 -->
     <div class="title border-bottom">
         <div class="left" v-if="back" @click="goBack"><van-icon name="arrow-left" /></div>
         <div class="shoptitle">{{title}}</div>

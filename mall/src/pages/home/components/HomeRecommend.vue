@@ -24,7 +24,6 @@ import VueAwesomeSwiper from 'vue-awesome-swiper' //轮播图
 Vue.use(VueAwesomeSwiper)
 import {details} from 'js/mixin'
 import {mapGetters} from 'vuex'
-import Api from '@/api'
 export default {
     mixins: [details],
     props:['recommend'],
@@ -55,7 +54,7 @@ export default {
                 return
             }
             try {
-                const {data} = await Api.addShop(val.goodsId)
+                const {data} = await this.Api.addShop(val.goodsId)
                 if (data.status == 200) {
                     this.Toast(data.msg)
                 }

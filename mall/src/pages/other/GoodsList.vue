@@ -1,4 +1,5 @@
 <template>
+    <!-- 商品列表组件 -->
         <ul>
         <li v-for="(item,index) in list" :key="item._id || item.id" class="good-item border-bottom" @click="details(item)">
             <img :src="item.image || item.image_path" :onerror="defaultImg" :class="{img2:isBrowse || isCollection || isOrder}">

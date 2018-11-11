@@ -26,8 +26,8 @@ import BaseTitle from 'pages/other/BaseTitle'
 import Scroll from 'pages/other/Scroll'
 import {mapActions,mapMutations} from 'vuex'
 import {loading} from 'js/mixin'
-// import Api from 
 export default {
+    name: 'Address',
     mixins: [loading],
     components: {
         BaseTitle,
@@ -85,6 +85,8 @@ export default {
                 this.setAddress2( this.list[0])  // 默认第一条作为收货地址
             }
         } catch (error) {
+            console.log(error);
+            
             this.Toast('网络错误')
             this.showFlag = false
         }

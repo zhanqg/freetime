@@ -125,3 +125,6 @@ input[type=checkbox]:checked::after {
 .home .van-search {
 	padding-left: 0;
 }
+.van-tabbar .active {
+	color: #e0322b
+}

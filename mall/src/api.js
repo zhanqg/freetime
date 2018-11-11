@@ -6,6 +6,7 @@ export default class Api {
      * 首页(Home)所有接口
      * recommend 首页的默认数据
      * search 搜索
+     * keeplogin   保持登录
      */
     static recommend() {
         return axios.get('/api/recommend')
@@ -17,6 +18,9 @@ export default class Api {
         })
     }
 
+    static keeplogin() {
+        return axios.post('/api/keeplogin')
+    }
     // ===============================================================================================================
     /**
      * 分类页面(Category)所有接口
@@ -77,7 +81,7 @@ export default class Api {
     }
 
     static cancelCollection(id) {
-        return axios.post('/api/cancelCollection', id)
+        return axios.post('/api/cancelCollection', {id})
     }
 
     static isCollection(id) {
@@ -105,6 +109,10 @@ export default class Api {
      *                                province：省，city：市，county：区，addressDetail：详情地址，
      *                                areaCode：地区代码，id：修改地址时候要传id
      * deleteAddress 删除地址 参数： id：地址id
+     * getCollection    查询我的收藏
+     * register         注册
+     * login    登录
+     * getMyOrder  订单查询
      */
     static getAddress() {
         return axios.get(`/api/getAddress`)
@@ -118,5 +126,27 @@ export default class Api {
         return axios.post('/api/deleteAddress',{
             id
         })
+    }
+
+    static getCollection() {
+        return axios.get(`/api/collection/list`)
+    }
+
+    static register(username,password) {
+        return axios.post('/api/register',{
+            username,
+            password
+        })
+    }
+
+    static login(username,password) {
+        return axios.post('/api/login',{
+            username,
+            password
+        })
+    }
+
+    static getMyOrder() {
+        return axios.get(`/api/myOrder`)
     }
 }

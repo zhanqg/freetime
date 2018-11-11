@@ -55,7 +55,6 @@ import Scroll from 'pages/other/Scroll'
 import BaseTitle from "pages/other/BaseTitle";
 import {mapMutations,mapGetters} from 'vuex'
 import {loading} from 'js/mixin'
-import Api from '@/api'
 export default {
     name: 'ShoppingCart',
     mixins: [loading],
@@ -125,7 +124,7 @@ export default {
     async getShopList() {
         try {
             this.showFlag = true
-            const { data } = await Api.getCard()
+            const { data } = await this.Api.getCard()
             if (data.status == -1) {
                 this.isLogin = true
                 this.showFlag = false
@@ -159,7 +158,7 @@ export default {
             val.count++
         }
         const mallPrice = (val.present_price * val.count).toFixed(2)
-        Api.editCart(val.count,val.id,mallPrice)
+        this.Api.editCart(val.count,val.id,mallPrice)
 
     },
     // 删除商品
@@ -182,7 +181,7 @@ export default {
     // 删除购物车商品
     async deleteShop(id) {
         try {
-            const {data} = await Api.deleteShop(id)
+            const {data} = await this.Api.deleteShop(id)
             if (data.status == 200) {
                 this.deleteFlag = false
                 this.Toast(data.msg)
@@ -195,7 +194,7 @@ export default {
 
     // 推荐随机商品
     // async getRandom() {
-    //   let res = await axios.get("/api/getCard/recommend");
+    //   let res = await axios.get("/this.Api/getCard/recommend");
     //   if (res.data.code == 1) {
     //     this.tablist(res.data.shopRecommend);
     //   }

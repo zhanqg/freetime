@@ -1,4 +1,5 @@
 <template>
+    <!-- 首页条目组件 -->
     <div class="title" v-show="floorName">
             <span v-show="num">{{num}}F</span>
             {{floorName}}

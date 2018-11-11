@@ -1,3 +1,4 @@
+// 用到的部分 vant 组件
 import Vue from 'vue'
 import { 
     Tabbar, TabbarItem,Tab, Tabs ,Sku,Tag,Col,Icon, 

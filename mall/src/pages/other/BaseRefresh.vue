@@ -1,4 +1,5 @@
 <template>
+    <!-- 下拉刷新组件 -->
     <div class="refresh" :style="transform" :class="[{transition:trans}]">
         <i :class="{rotate:isRotate}" :style="opac">刷</i>
     </div>

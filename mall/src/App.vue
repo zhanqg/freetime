@@ -1,28 +1,29 @@
 <template>
   <div id="app">
-    <!-- <keep-alive exclude="ShoppingCart"> -->
+    <keep-alive exclude="ShoppingCart,Address,Collection">
       <router-view/>
-    <!-- </keep-alive> -->
+    </keep-alive>
     <div class="tab" v-show="payMent">
-      <van-tabbar v-model.lazy="active" @change='change'>
-        <van-tabbar-item  icon="wap-home" >商城</van-tabbar-item>
-        <van-tabbar-item icon="wap-nav">分类</van-tabbar-item>
-        <van-tabbar-item icon="shopping-cart">购物车</van-tabbar-item>
-        <van-tabbar-item icon="contact" >我的</van-tabbar-item>
+      <van-tabbar  @change='change'>
+        <van-tabbar-item v-for="(val,index) of item" :key="val.id" :icon="val.icon" :class="{active:active==index}">{{val.title}}</van-tabbar-item>
       </van-tabbar>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 import {mapMutations,mapGetters} from 'vuex'
 export default {
   name: 'App',
   data() {
     return {
-      // active: 0,
-      payMent: true
+      payMent: true,
+      item: [
+        {id:1,title:'商城',icon:'wap-home'},
+        {id:2,title:'分类',icon:'wap-nav'},
+        {id:3,title:'购物车',icon:'shopping-cart'},
+        {id:4,title:'我的',icon:'contact'}
+      ]
     }
   },
   computed: {
@@ -49,7 +50,7 @@ export default {
 
   },
 
-  created() {
+  async created() {
     const name = this.$router.history.current.name
     const fullPath = this.$router.history.current.fullPath
     // if (name === 'Category') {
@@ -67,11 +68,15 @@ export default {
     // }else if(fullPath=== '/shoppingCart/ShoppingPayMent') {
     //     this.payMent = false
     // } 
-    axios.post('/api/keeplogin').then( res => {
-      if (res.data.status == 1) {
-        this.setName(res.data.username)
-      } 
-    })
+    try {
+      const {data} = await this.Api.keeplogin()
+      if (data.status == 1) {
+        this.setName(data.username)
+      }
+    } catch (error) {
+      this.Toast('网络错误')
+    }
+    
   },
   watch: {
     // $route(to,from){

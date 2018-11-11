@@ -69,7 +69,6 @@ import BaseRefresh from 'pages/other/BaseRefresh'
 import {mapActions,mapMutations,mapGetters} from 'vuex'
 import {loading} from 'js/mixin'
 import {throttle} from 'js/util'
-import Api from '@/api'
 export default {
     mixins: [loading],
     data() {
@@ -138,7 +137,7 @@ export default {
             if (this.transformY > 80 ) this.touch.isRotate = true
             this.opac = daltaY / 320
         },
-        touchend(e) {
+        async touchend(e) {
             this.$refs.scroll.enable()
             if (this.transformY > 0) this.trans = true
             this.isRotate = true
@@ -151,22 +150,29 @@ export default {
             } else {
                 this.touch.isRotate = false
                 if (this.transformY > 100) {
-                    this.$http.get('/api/recommend').then( res => {
-                        if (res.data.code == 200) {
-                            const data = res.data.data
-                            this.recommend = data
-                            this.advertesPicture = data.advertesPicture.PICTURE_ADDRESS
-                            this.floorName = data.floorName
+                    // 请求接口刷新数据
+                    try {
+                        const {data} = await this.Api.recommend()
+                        if (data.code == 200) {
+                            const datas = data.data
+                            this.recommend = datas
+                            this.advertesPicture = datas.advertesPicture.PICTURE_ADDRESS
+                            this.floorName = datas.floorName
                             setTimeout(() => {
                                 this.transformY = 0
                                 this.rotate = 0
+                                
                             }, 1000);
                             setTimeout(() => {
                                 this.isRotate = false
                                 this.opac = 0
+                                this.Toast('刷新成功')
                             }, 1500);
                         }
-                    })
+                    } catch (error) {
+                        this.Toast('刷新失败,网络错误')
+                    }
+                    
                 }  else {
                     console.log('小于80');
                     this.transformY = 0
@@ -203,7 +209,7 @@ export default {
         async getHome() {
             try {
                 this.showFlag = true
-                const {data} = await Api.recommend()
+                const {data} = await this.Api.recommend()
                 if (data.code == 200) {
                     this.showFlag = false
                     this.recommend = data.data
@@ -234,7 +240,7 @@ export default {
         async search(value) {
             try {
                 this.len = false
-                const {data} = await Api.search(value)
+                const {data} = await this.Api.search(value)
                 if (data.status == 200) {
                     this.serachList = data.list
                     if (!this.serachList.length) {
