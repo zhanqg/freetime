@@ -22,8 +22,6 @@ import Scroll from 'pages/other/Scroll'
 import BaseTitle from 'pages/other/BaseTitle'
 import GoodsList from 'pages/other/GoodsList'
 import {loading} from 'js/mixin'
-
-import {Toast} from 'vant'
 import {mapActions,mapMutations,mapGetters} from 'vuex'
 export default {
     mixins: [loading],
@@ -86,7 +84,7 @@ export default {
             this.$http.post('/api/cancelCollection',{id: item.id}).then(res => {
                 console.log(res);
                 if (res.data.status == 200) {
-                    Toast(res.data.msg);
+                    this.Toast(res.data.msg);
                 }
             })
         },

@@ -3,7 +3,9 @@ import App from './App'
 import router from './router'
 import store from './store'
 import axios from 'axios'
-import {Toast,Dialog } from 'vant'
+import { Toast, Dialog } from 'vant'
+import Api from './api'
+Vue.prototype.Api = Api     // 请求接口类
 Vue.prototype.Toast = Toast //全局提示
 Vue.prototype.Dialog = Dialog // 全局弹框
 Vue.prototype.$http = axios

@@ -24,7 +24,7 @@ import VueAwesomeSwiper from 'vue-awesome-swiper' //轮播图
 Vue.use(VueAwesomeSwiper)
 import {details} from 'js/mixin'
 import {mapGetters} from 'vuex'
-import {Toast} from 'vant'
+import Api from '@/api'
 export default {
     mixins: [details],
     props:['recommend'],
@@ -48,17 +48,21 @@ export default {
     },
  
     methods: {
+        // 加入购物车
         async addShops(val) {
             if (!this.userName) {
                 this.$router.push({path:'/user/login'})
                 return
             }
-            const res = await this.$http.post('/api/addShop',{
-                id: val.goodsId
-            })            
-            if (res.data.status == 200) {
-                Toast(res.data.msg)
+            try {
+                const {data} = await Api.addShop(val.goodsId)
+                if (data.status == 200) {
+                    this.Toast(data.msg)
+                }
+            } catch (error) {
+                this.Toast('网络错误')
             }
+            
         }
     }
   }

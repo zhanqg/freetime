@@ -41,7 +41,7 @@ import GoodsList from 'pages/other/GoodsList'
 import BaseTitle from 'pages/other/BaseTitle'
 import {mapGetters,mapMutations} from 'vuex'
 import Scroll from 'pages/other/Scroll'
-import {Toast} from 'vant'
+import Api from '@/api'
 export default {
     components: {
         BaseTitle,
@@ -83,7 +83,7 @@ export default {
 
         async onSubmit() {
             if (!this.temporaryAddress || !this.temporaryAddress.id) {
-                Toast('请添加收获地址')
+                this.Toast('请添加收获地址')
                 return
             }
             this.isLoading = true
@@ -93,21 +93,28 @@ export default {
             this.shopOrderList.forEach( item => {
                 orderId.push(item.id)
             })
-            const res = await this.$http.post('/api/order',{
-                address: this.temporaryAddress.address,
-                tel: this.temporaryAddress.tel,
-                orderId,
-                totalPrice: (this.price / 100).toFixed(2),
-                idDirect: this.shopOrderList[0].idDirect,
-                count: this.shopOrderList[0].count
-            })
-            if (res.data.status == 200) {
-                this.isLoading = false
-                Toast(`结算成功,一共${(this.price / 100).toFixed(2)}元`)
-                setTimeout(() => {
-                    this.setShopList([])
-                    this.$router.push({path: '/'})
-                }, 1000);
+            // 以下参数名称在api接口看详情
+            console.log(this.temporaryAddress.tel);
+            
+            try {
+                const { data } = await Api.placeOrder({
+                    address: this.temporaryAddress.address,
+                    tel: this.temporaryAddress.tel,
+                    orderId,
+                    totalPrice: (this.price / 100).toFixed(2),
+                    idDirect: this.shopOrderList[0].idDirect,
+                    count: this.shopOrderList[0].count
+                })
+                if (data.status == 200) {
+                    this.isLoading = false
+                    this.Toast(`结算成功,一共${(this.price / 100).toFixed(2)}元`)
+                    setTimeout(() => {
+                        this.setShopList([])
+                        this.$router.push({path: '/'})
+                    }, 1000);
+                }
+            } catch (err) {
+                this.Toast('网络错误')
             }
         },
 

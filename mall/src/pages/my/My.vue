@@ -27,6 +27,7 @@
 <script>
 import BaseTitle from 'pages/other/BaseTitle'
 import {mapGetters,mapMutations} from 'vuex'
+import Api from '@/api'
 export default {
   components: {
     BaseTitle
@@ -58,14 +59,16 @@ export default {
     },
 
     // 退出登录
-    loginOut() {
-      this.$http.post('/api/loginOut').then(res => {
-        console.log(res.data);
-        if (res.data.status == 0) {
+    async loginOut() {
+      try {
+        const {data} = await Api.loginOut()
+        if (data.status == 0) {
           window.location.reload();
           localStorage.clear();
         }
-      })
+      } catch (error) {
+          this.Toast('网络错误')
+      }
     },
 
     // 最近浏览

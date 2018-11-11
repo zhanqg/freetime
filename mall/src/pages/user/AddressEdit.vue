@@ -49,43 +49,49 @@ export default {
 
     methods: {
         async onSave(val) {
-            const res = await this.$http.post('/api/address',{
-                name: val.name,
-                tel: val.tel,
-                address: val.province + val.city + val.county + val.addressDetail,
-                isDefault: val.isDefault,
-                province: val.province,
-                city: val.city,
-                county: val.county,
-                addressDetail: val.addressDetail,
-                areaCode: val.areaCode,
-                id: this.addressInfo ? this.addressInfo.id : undefined  // 修改地址时候要传id
-            })
-            if (res.data.status == 200) {
-                Toast(res.data.msg);
-                 setTimeout(() => {
-                    this.$router.go(-1)
-                    this.clearAddress('')
-                }, 1000);
-            } else {
-                this.$router.push('/user/login')
+            // 以下参数在api接口查看详情
+            try {
+                const {data} = await this.Api.postAddress({
+                        name: val.name,
+                        tel: val.tel,
+                        address: val.province + val.city + val.county + val.addressDetail,
+                        isDefault: val.isDefault,
+                        province: val.province,
+                        city: val.city,
+                        county: val.county,
+                        addressDetail: val.addressDetail,
+                        areaCode: val.areaCode,
+                        id: this.addressInfo ? this.addressInfo.id : undefined  // 修改地址时候要传id
+                })
+                    if (data.status == 200) {
+                        this.Toast(data.msg);
+                        setTimeout(() => {
+                            this.$router.go(-1)
+                            this.clearAddress('')
+                        }, 1000);
+                    } else {
+                        this.$router.push('/user/login')
+                    }
+                
+            } catch (error) {
+                this.Toast('网络错误')
             }
-           
-            
             
         },
         async onDelete(val) {
-            const res = await this.$http.post('/api/deleteAddress',{
-                id: val.id
-            })
-            if (res.data.code == 200) {
-                Toast(res.data.msg);
-                setTimeout(() => {
-                    this.$router.go(-1)
-                    this.clearAddress('')
-                }, 1000);
-            }else {
-                this.$router.push('/user/login')
+            try {
+                const {data} = await this.Api.deleteAddress(val.id)
+                if (data.code == 200) {
+                    this.Toast(data.msg);
+                    setTimeout(() => {
+                        this.$router.go(-1)
+                        this.clearAddress('')
+                    }, 1000);
+                }else {
+                    this.$router.push('/user/login')
+                }
+            } catch (error) {
+                this.Toast('网络错误')
             }
         },
         
