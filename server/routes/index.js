@@ -16,7 +16,6 @@ router.get('/', async (ctx, next) => {
 // 首页
 router.get('/recommend', async (ctx, next) => {
   const res = await Goods.findOne({})
-
   ctx.body = res
   if (res) {
     ctx.body = {

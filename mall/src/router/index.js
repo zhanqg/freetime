@@ -18,7 +18,7 @@ import store from '../store'
 Vue.use(Router)
 
 const router = new Router({
-  mode : 'history',
+  // mode : 'history',
   routes: [
     { path: '/', redirect: '/home' },
     { path: '/home', name: 'Home', component: Home, children: [{ path: '/city', component: City ,name:'City'}, { path: ':id', component: Details ,name:'Details'}] },
