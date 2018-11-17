@@ -2,16 +2,16 @@
 
 # shoppingMall-VUE
 
-> 一个基于 **<abbr title="Hyper Text Markup Language">vue2.5 + koa2 + mongodb + vant </abbr>** 的电商webapp网站
+> 一个基于 **<abbr title="Hyper Text Markup Language">vue2.5 + egg.js + mongodb + vant </abbr>** 的电商webapp网站
 
 
 ## 声明
->本项目所用到的ui组件是[有赞](https://github.com/youzan/vant)，前后端完全分离，后端只提供接口，后端代码写的比较简单，适合新手学习，这差不多是一个完整的电商网站流程，只是比较简单，非常适合新手学习研究，后续代码会慢慢更新，欢迎交流，欢迎Issues。
+>目前代码项目还在不断完善中，本项目所用到的ui组件是[有赞](https://github.com/youzan/vant)，前后端完全分离，后端只提供接口，后端代码写的比较简单，适合新手学习，这差不多是一个完整的电商网站流程，只是比较简单，非常适合新手学习研究，后续代码会慢慢更新，欢迎交流，欢迎Issues。
 注：部分商品可能没有图片，使用了网络图片代替。
 
 ## 技术栈
 
-> **vue2.5+vuex+vue-router+axios+better-scroll+stylus+localStorage+koa2+mongoose+vant**
+> **vue2.5+vuex+vue-router+axios+better-scroll+stylus+localStorage+egg+mongoose+vant**
 
 
 ## 项目说明
