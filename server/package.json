@@ -1,30 +1,47 @@
 {
   "name": "server",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "",
   "private": true,
-  "scripts": {
-    "start": "nodemon bin/www",
-    "dev": "./node_modules/.bin/nodemon bin/www",
-    "prd": "pm2 start bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "dependencies": {
-    "debug": "^2.6.3",
-    "koa": "^2.2.0",
-    "koa-bodyparser": "^3.2.0",
-    "koa-convert": "^1.2.0",
-    "koa-json": "^2.0.2",
-    "koa-logger": "^2.0.1",
-    "koa-onerror": "^1.2.1",
-    "koa-router": "^7.1.1",
-    "koa-session": "^5.9.0",
-    "koa-static": "^3.0.0",
-    "koa-views": "^5.2.1",
+    "egg": "^2.2.1",
+    "egg-mongoose": "^3.1.1",
+    "egg-scripts": "^2.5.0",
     "md5": "^2.2.1",
-    "mongoose": "^5.2.17",
-    "pug": "^2.0.0-rc.1"
+    "silly-datetime": "^0.1.2"
   },
   "devDependencies": {
-    "nodemon": "^1.8.1"
-  }
+    "autod": "^3.0.1",
+    "autod-egg": "^1.0.0",
+    "egg-bin": "^4.3.5",
+    "egg-ci": "^1.8.0",
+    "egg-mock": "^3.14.0",
+    "eslint": "^4.11.0",
+    "eslint-config-egg": "^6.0.0",
+    "webstorm-disable-index": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=8.9.0"
+  },
+  "scripts": {
+    "start": "egg-scripts start --daemon --title=egg-server-server",
+    "stop": "egg-scripts stop --title=egg-server-server",
+    "dev": "egg-bin dev",
+    "debug": "egg-bin debug",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov",
+    "lint": "eslint .",
+    "ci": "npm run lint && npm run cov",
+    "autod": "autod"
+  },
+  "ci": {
+    "version": "8"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "",
+  "license": "MIT"
 }

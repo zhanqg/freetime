@@ -38,7 +38,7 @@ export default class Api {
      * deleteShop  购物车商品删除
      */
     static getCard() {
-        return axios.get(`/api/getCard`)
+        return axios.post(`/api/getCard`)
     }
 
     static editCart(count, id, mallPrice) {   // 数量  商品id 价格
