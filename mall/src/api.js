@@ -4,15 +4,15 @@ import axios from 'axios'
 export default class Api {
     /**
      * 首页(Home)所有接口
-     * recommend 首页的默认数据
-     * search 搜索
-     * keeplogin   保持登录
+     * recommend            首页的默认数据
+     * search               搜索 参数： value：搜索关键词
+     * keeplogin            保持登录
      */
     static recommend() {
         return axios.get('/api/recommend')
     }
 
-    static search(value) {  // value：搜索关键词
+    static search(value) {  
         return axios.post('/api/search', {
             value
         })
@@ -24,24 +24,24 @@ export default class Api {
     // ===============================================================================================================
     /**
      * 分类页面(Category)所有接口
-     * category 分类查询
+     * category 分类查询  参数id：默认分类的id
      */
-    static category(id) {  // id：默认分类的id
+    static category(id) {  
         return axios.get(`/api/classification?mallSubId=${id}`)
     }
 
     // ===============================================================================================================
     /**
      * 购物车(ShoppingCart)所有接口
-     * getCard 查询获取购物车数据
-     * editCart 购物车加减商品
-     * deleteShop  购物车商品删除
+     * getCard      查询获取购物车数据
+     * editCart     购物车加减商品      参数 ： 数量  商品id 价格
+     * deleteShop   购物车商品删除      参数 id：需要删除的商品id
      */
     static getCard() {
         return axios.post(`/api/getCard`)
     }
 
-    static editCart(count, id, mallPrice) {   // 数量  商品id 价格
+    static editCart(count, id, mallPrice) { 
         return axios.post('/api/editCart', {
             count,
             id,
@@ -49,7 +49,7 @@ export default class Api {
         })
     }
 
-    static deleteShop(id) { // id：需要删除的商品id
+    static deleteShop(id) { 
         return axios.post('/api/deleteShop', id)
     }
 
@@ -66,11 +66,11 @@ export default class Api {
     // ===============================================================================================================
     /**
      * 商品详情页面(Details)所有接口
-     * goodOne 请求单个商品详情,参数： id:商品的id
-     * collection 收藏单个商品  参数：goods:商品的详情信息
-     * cancelCollection 取消收藏单个商品  id:商品的id
-     * isCollection     查询商品是否已收藏  id:商品的id
-     * addShop      //加入购物车 参数： id:商品的id
+     * goodOne          请求单个商品详情,        参数： id:商品的id
+     * collection       收藏单个商品            参数：  goods:商品的详情信息
+     * cancelCollection 取消收藏单个商品        参数：  id:商品的id
+     * isCollection     查询商品是否已收藏      参数：  id:商品的id
+     * addShop          加入购物车             参数：  id:商品的id
      */
     static goodOne(id) {
         return axios.get(`/api/goods/one?id=${id}`)
@@ -104,15 +104,15 @@ export default class Api {
     // ===============================================================================================================
     /**
      * 用户相关(user文件夹下)所有接口
-     * getAddress 查询用户收货地址 
-     * postAddress  增加收货地址 参数：name:用户名,tel:电话，address:详情地址，isDefault：是否默认
-     *                                province：省，city：市，county：区，addressDetail：详情地址，
-     *                                areaCode：地区代码，id：修改地址时候要传id
-     * deleteAddress 删除地址 参数： id：地址id
+     * getAddress       查询用户收货地址 
+     * postAddress      增加收货地址        参数：name:用户名,tel:电话，address:详情地址，isDefault：是否默认
+            *                                province：省，city：市，county：区，addressDetail：详情地址，
+            *                                areaCode：地区代码，id：修改地址时候要传id
+     * deleteAddress    删除地址            参数： id：地址id
      * getCollection    查询我的收藏
      * register         注册
-     * login    登录
-     * getMyOrder  订单查询
+     * login            登录
+     * getMyOrder       订单查询
      */
     static getAddress() {
         return axios.get(`/api/getAddress`)
