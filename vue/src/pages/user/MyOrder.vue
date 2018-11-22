@@ -96,7 +96,7 @@ export default {
     right 0
     bottom 0
     z-index 500
-    background #F2F2F2
+    background #Fff
     .scroll
         position fixed
         top 40px
