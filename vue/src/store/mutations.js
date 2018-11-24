@@ -3,6 +3,9 @@ const matutaions = {
     [types.CATEGORY](state,category) {
         state.category = category
     },
+    [types.COMMODITYID](state,commodityId) {
+        state.commodityId = commodityId
+    },
     [types.GOODSDETAILS](state,goodsDetails) {
         state.goodsDetails = goodsDetails
     },

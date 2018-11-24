@@ -71,8 +71,8 @@
       </van-tabs>
     </div>
     <van-goods-action>
-      <van-goods-action-mini-btn icon="chat">
-        客服
+      <van-goods-action-mini-btn icon="home" @click="goHome">
+        首  页
       </van-goods-action-mini-btn>
       <van-goods-action-mini-btn icon="cart" @click="onClickCart">
         购物车
@@ -146,7 +146,7 @@ export default {
   },
   
   computed: {
-      ...mapGetters(['goodsDetails','userName'])
+      ...mapGetters(['goodsDetails','userName','commodityId'])
   },
 
   methods: {
@@ -156,6 +156,10 @@ export default {
 
     onClickCart() {
       this.$router.push('/shoppingCart');
+    },
+
+    goHome() {
+      this.$router.push({ path: '/home' })
     },
 
     // 请求商品详情

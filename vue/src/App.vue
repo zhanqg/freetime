@@ -170,14 +170,17 @@ export default {
       }
     ];
 
-    const newArr = arr2.map(item => {
-      return {val_id: item.id}
+    arr2.forEach(item => {
+     
     })
-    const newArr2 = arr2.filter(item => {
-      return item.id == 444
-    })
-    console.log(newArr);
-    console.log(newArr2);
+    // const newArr = arr2.map(item => {
+    //   return {val_id: item.id}
+    // })
+    // const newArr2 = arr2.filter(item => {
+    //   return item.id == 444
+    // })
+    // console.log(newArr);
+    // console.log(newArr2);
     
     // const concatAll = (arr, fn) => {
     //   let res = [];

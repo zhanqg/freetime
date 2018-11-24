@@ -1,4 +1,5 @@
 export const CATEGORY = 'CATEGORY'
+export const COMMODITYID = 'COMMODITYID'
 export const GOODSDETAILS = 'GOODSDETAILS'
 export const USERNAME = 'USERNAME'
 export const ADDRESSINFO = 'ADDRESSINFO'

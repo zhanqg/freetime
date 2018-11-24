@@ -1,8 +1,13 @@
-import { tab,address,recentlyBrowse,city ,searchHistory} from 'js/cache'
+import {tab,address,recentlyBrowse,city ,searchHistory} from 'js/cache'
 import * as types from './mutations-type'
 export const setTab = function ({ commit }, tabs) {
     commit(types.CATEGORY, tab.setTab(tabs))
 }
+
+// 保存单个商品id
+// export const setGoodsId = function({ commit }, id) {
+//     commit(types.COMMODITYID, commodityId.setId(id))
+// }
 
 // 保存要修改的地址
 export const setAddress = function({ commit }, list) {

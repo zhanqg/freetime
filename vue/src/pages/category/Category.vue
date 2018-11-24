@@ -12,7 +12,7 @@
             <div class="right" ref='right'>
                 <div class="empty">
                         <van-tabs v-model="active" @click="onClick" >
-                                <Scroll  v-show="!showFlag" :data='dataList' class="scroll" ref="scroll" :bounce='bounce' >
+                                <Scroll  v-show="!showFlag" :data='dataList' class="scroll" @scroll="scroll" :listenScroll='listenScroll' ref="scroll" :bounce='bounce' >
                                     <div>
                                         <van-tab v-for="val in list || category[0].bxMallSubDto" :title="val.mallSubName" :key="val.mallSubId">
                                             <GoodsList :list='dataList' @datails='datails'/>
@@ -53,6 +53,7 @@ export default {
             bounce: {
                 top:false,
             },
+            listenScroll: true,
             isLoading: false,
             defaultId : '2c9f6c946016ea9b016016f79c8e0000',
             Category: false
@@ -67,6 +68,10 @@ export default {
     },
 
     methods: {
+        scroll(x,y) {
+            console.log(x,y);
+            
+        },
         item(val,i) {
             this.active = 0
             this.list = val.bxMallSubDto
@@ -147,6 +152,8 @@ export default {
 
     activated() {
         this.categorys()
+                    
+
     },
 
     created() {

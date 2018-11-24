@@ -70,6 +70,7 @@ export default {
         bounce: this.bounce,
       });
       if (this.listenScroll) {
+        
         //滚动事件触发
         const that = this; //pos 指的是滚动到的位置
         this.scroll.on("scroll", pos => {
