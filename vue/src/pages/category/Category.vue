@@ -209,7 +209,9 @@ export default {
                 box-sizing border-box
                 color #bbb
             .scroll
-                height 100%
                 overflow hidden
+                position fixed
+                bottom 50px
+                top 85px
 
 </style>
