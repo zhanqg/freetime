@@ -75,8 +75,10 @@ export default {
         },
 
         datails(item) {
+            console.log(item);
+            
             this.setGoodDetails(item)
-            this.$router.push({path:`/user/collection/${item.id}`})
+            this.$router.push({path:`/user/collection/${item.cid}`})
             setTimeout(() => {
                 this.setBrowse(item)     // 加入最近浏览
             }, 300);

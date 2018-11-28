@@ -12,6 +12,15 @@
       <p @click="loginOut">退出登录</p>
       <van-icon name="setting" class="setting" @click="setting"/>
     </div>
+    <div class="user-links van-row"><div class="van-col van-col--6"><i class="van-icon van-icon-pending-payment"><!----></i>
+      待付款
+    </div><div class="van-col van-col--6"><i class="van-icon van-icon-pending-orders"><!----></i>
+      待接单
+    </div><div class="van-col van-col--6"><i class="van-icon van-icon-pending-deliver"><!----></i>
+      待发货
+    </div><div class="van-col van-col--6"><i class="van-icon van-icon-logistics"><!----></i>
+      待发货
+    </div></div>
     <van-cell-group class="user-group">
       <van-cell icon="records" title="全部订单" is-link @click="myOrder"/>
     </van-cell-group>

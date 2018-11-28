@@ -120,8 +120,7 @@ class OperatingGoodsService extends BsseService {
         let platform = '622'           // 订单头
         let r1 = Math.floor(Math.random() * 10)
         let r2 = Math.floor(Math.random() * 10)
-        // 'YYYY-MM-DD HH:mm:ss'
-        let sysDate = ctx.helper.format(new Date(), 'YYYY-MM-DD HH:mm:ss')          // 系统时间
+        let sysDate = ctx.helper.format(new Date(), 'YYYYMMDDHHmmss')          // 系统时间
         let add_time = ctx.helper.format(new Date(), 'YYYY-MM-DD HH:mm:ss')   // 订单创建时间
         let order_id = platform + r1 + sysDate + r2;   // 订单id
         let shopList = []
@@ -159,78 +158,13 @@ class OperatingGoodsService extends BsseService {
         // 存入数据库
         let orderList = new ctx.model.OrderList(orders)
         await orderList.save()
-        this.success('提交成功')
-    }
-
-    // 接受订单
-    async order1(data) {
-        const { ctx } = this
-        // 订单信息
-        let platform = '622'           // 订单头
-        let r1 = Math.floor(Math.random() * 10)
-        let r2 = Math.floor(Math.random() * 10)
-        // 'YYYY-MM-DD HH:mm:ss'
-        let sysDate = ctx.helper.format(+new Date(), 'YYYYMMDDhhmmss')          // 系统时间
-        let createDate = ctx.helper.format(+new Date(), 'YYYY-MM-DD hh:mm:ss')   // 订单创建时间
-        let orderId = platform + r1 + sysDate + r2;   // 订单id
-        const username = ctx.session.username
-        let newData = []
-        const order = await ctx.model.User.findOne({ username })
-        if (!order.order) {
-            order.order = {}
-        }
-        // 根据id查询出购物车订单
-        for (let i = 0; i < data.orderId.length; i++) {
-            if (data.idDirect) {
-                const res = await ctx.model.Goods.findOne({ id: data.orderId[0] })
-                newData[i] = {
-                    order_id: orderId + i,
-                    count: data.count,
-                    present_price: res.present_price,
-                    id: res.id,
-                    image_path: res.image_path,
-                    name: res.namem,
-                    mallPrice: data.totalPrice,
-                }
-            } else {
-                let item = await ctx.model.User.aggregate([
-                    { "$unwind": "$shopList" },
-                    { "$match": { "shopList.id": data.orderId[i], username } },
-                    { "$project": { "shopList": 1 } }
-                ])
-                newData[i] = item[0].shopList
-                newData[i].order_id = orderId + i
-            }
-
-        }
-        if (!order.order[orderId]) {
-            order.order[orderId] = {
-                address: data.address,
-                tel: data.tel,
-                orderList: newData,
-                totalPrice: data.totalPrice,
-                createDate,
-                orderId,
-            }
-        }
-        await ctx.model.User.update({ username }, {
-            $set: {
-                'order': order.order,
-            }
-        })
-
-        for (let i = 0; i < data.orderId.length; i++) {
-            await ctx.model.User.findOneAndUpdate({ username, 'shopList.id': data.orderId[i] }, {
-                $pull: {
-                    'shopList': {
-                        'id': data.orderId[i]
-                    }
-                }
-            })
+        // 删除购物车列表的商品
+        if (!data.idDirect) {
+            await ctx.model.ShopList.deleteMany({ uid, cid: data.orderId })
         }
         ctx.body = {
             code: 200,
-            msg: '结算成功!'
+            msg: `结算成功,一共 ${mallPrice} 元`
         }
     }
 }

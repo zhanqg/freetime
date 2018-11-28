@@ -137,3 +137,21 @@ input[type=checkbox]:checked::after {
 .van-tabs__track .van-tab__pane {
 	width: auto!important;
 }
+.order-warp .van-tabs__content {
+	left: 0;
+}
+
+.order-warp [class*=van-hairline]:after {
+    content: " ";
+    position: absolute;
+    pointer-events: none;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+    border-top: none ;
+}

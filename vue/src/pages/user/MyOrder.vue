@@ -3,30 +3,34 @@
 <transition name='bounce'>
     <div class="order-warp">
         <BaseTitle :back='back' title="我的订单" @goBack='goBack'/>
-        <Scroll v-show="!showFlag" :data='list' ref="scroll" class="scroll">
-            <div class="wap">
-                <div class="list-warp" v-for="(value,key) in list" :key="key"> 
-                    <div class='top border-bottom'>
-                        <div>订单编号: {{key}}</div>
-                        <div class="order-ok">交易完成</div>
-                    </div>
-                    <div class="list" v-for="(val,index) in value.orderList" :key="val.order_id">
-                        <img class="good-img" :src="val.image_path" :onerror="defaultImg">
-                        <div class="good-title">{{val.name}}</div>
-                        <div class="good-count">
-                            <p>￥{{val.mallPrice}}</p>
-                            <p class="count">x{{val.count}}</p>
+        <van-tabs v-model="active" @change='change'>
+            <van-tab :title="val" v-for="(val,index) in tabs" :key="index">
+                <Scroll v-show="!showFlag" :data='list' ref="scroll" class="scroll">
+                    <div class="wap">
+                        <div class="list-warp" v-if="value.status==active" v-for="(value,index) in list" :key="val.order_id"> 
+                            <div class='top border-bottom'>
+                                <div>订单编号: {{value.order_id}}</div>
+                                <div class="order-ok">{{status(value.status)}}</div>
+                            </div>
+                            <div class="list" v-for="(val,index) in value.order_list" :key="val._id">
+                                <img class="good-img" :src="val.image_path" :onerror="defaultImg">
+                                <div class="good-title">{{val.name}}</div>
+                                <div class="good-count">
+                                    <p>￥{{val.mallPrice}}</p>
+                                    <p class="count">x{{val.count}}</p>
+                                </div>
+                            </div>
+                            <div class="timre bottom border-top">创建时间: {{value.add_time}}</div>
+                            <div class="bottom">收货地址: {{value.address}}</div>
+                            <div class="bottom">共 {{value.order_list.length}} 件商品   合计: {{value.mallPrice}}</div>
                         </div>
                     </div>
-                    <div class="timre bottom border-top">创建时间: {{value.createDate}}</div>
-                    <div class="bottom">收货地址: {{value.address}}</div>
-                    <div class="bottom">共{{value.orderList.length}}件商品   合计: {{value.totalPrice}}</div>
-                </div>
-            </div>
-            <div v-if="!list && !showFlag" class="null">
-                 {{userName&&!showFlag? '暂无订单~~' : '请先登录噢~~'}}
-            </div>
-         </Scroll>
+                    <div v-if="!list.length && !showFlag" class="null">
+                        {{userName&&!showFlag? '暂无订单~~' : '请先登录噢~~'}}
+                    </div>
+                </Scroll>
+            </van-tab>
+        </van-tabs>
          <BaseLoding :showFlag='showFlag'/>
     </div>
 </transition>  
@@ -43,13 +47,15 @@ export default {
     data() {
         return {
             back: true,
+            active: 0,
             list: '',
             defaultImg: 'this.src="' + require('img/vue.jpg') + '"',
+            tabs:['待支付','带发货','待收货','已完成'],
         }
     },
 
     computed: {
-        ...mapGetters(['userName'])
+        ...mapGetters(['userName']),
     },
 
     components: {
@@ -59,10 +65,23 @@ export default {
     },
 
     methods: {
+        change(i) {
+            this.active = i
+        },
         goBack() {
             this.$router.go(-1)
         },
-
+        status(status) {
+            if (status == 0) {
+                return '待支付'
+            } else if(status == 1) {
+                return '待发货'
+            } else if(status == 2) {
+                return '待收货'
+            } else {
+                return '已完成'
+            }
+        },
         async getMyOrder() {
             if (!this.userName) {
                 this.showFlag = false
@@ -99,11 +118,12 @@ export default {
     background #Fff
     .scroll
         position fixed
-        top 40px
+        top 84px
         bottom 0px
         left 0
         right 0
         overflow hidden
+        background #F2F2F2
         .wap
             padding 5px 0
             .list-warp

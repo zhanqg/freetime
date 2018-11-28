@@ -127,11 +127,11 @@ export default {
                 })
                 if (data.code == 200) {
                     this.isLoading = false
-                    this.Toast(`结算成功,一共${(this.price / 100).toFixed(2)}元`)
+                    this.Toast(data.msg)
                     setTimeout(() => {
                         this.setShopList([])
                         this.$router.push({path: '/'})
-                    }, 1000);
+                    }, 2000);
                 }
             } catch (err) {
                 this.isLoading = false
