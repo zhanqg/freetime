@@ -1,8 +1,7 @@
 'use strict';
 
-const Controller = require('egg').Controller;
-
-class OperatingGoodsController extends Controller {
+const BaseController = require('./base')
+class OperatingGoodsController extends BaseController {
     // 收藏商品
     async collection() {
         const data = this.ctx.request.body

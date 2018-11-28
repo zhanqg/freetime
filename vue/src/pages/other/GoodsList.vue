@@ -11,10 +11,11 @@
                     <span class="orl-pic">{{item.orl_price}}</span>
                     <span class="count" v-if="isOrder">x{{item.count}}</span>
                 </p>
-                <div class="icon" v-if="isBrowse || isCollection">
+                
+            </div>
+            <div class="icon" v-if="isBrowse || isCollection">
                     <van-icon name="close" class="close" @click.stop="close(item,index)"/>
                 </div>
-            </div>
         </li>
         </ul>
 </template>
@@ -77,6 +78,7 @@ ul
         display flex
         padding 10px 15px
         box-sizing border-box
+        position relative
         &.list-enter-active, &.list-leave-active 
             transition all .1s linear
         &.list-enter, &.list-leave-to
@@ -114,9 +116,12 @@ ul
                     color #f00
                     font-weight 700
                     margin-right 5px 
-            .icon
-                text-align right      
-                .close
-                    padding 10px   
+        .icon
+            position absolute
+            display inline
+            right 10px
+            bottom 0
+            .close
+                padding 10px   
 
 </style>

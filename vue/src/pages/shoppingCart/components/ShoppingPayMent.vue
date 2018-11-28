@@ -4,14 +4,14 @@
     <div class="order">
         <BaseTitle :back='back' title="订单结算" @goBack='goBack'/>
                 <div class="address-warp">
-                    <div class="address addnull" v-if=" !temporaryAddress || !temporaryAddress.id" @click="goAddress">
+                    <div class="address addnull" v-if="!defaultAdd || !defaultAdd._id && (!temporaryAddress || !temporaryAddress._id)" @click="goAddress">
                         点击添加收获地址
                     </div>
                     <div class="address" v-else @click="editAddress">
                         <div class="icon"><van-icon name="location" class="location"/></div>
                         <div class="address-cont">
-                            <p class="name">收货人: {{temporaryAddress.name}} <span>{{temporaryAddress.tel}}</span></p>
-                            <p class="address-e">收货地址: {{temporaryAddress.address}}</p>
+                            <p class="name">收货人: {{temporaryAddress.name || defaultAdd.name}} <span>{{temporaryAddress.tel || defaultAdd.tel}}</span></p>
+                            <p class="address-e">收货地址: {{temporaryAddress.address || defaultAdd.address}}</p>
                             <p class="no">(收货不便时,可选择免费待收货服务)</p>
                         </div>
                         <div class="icon2"><van-icon name="arrow" class="location"/></div>
@@ -48,6 +48,12 @@ export default {
         Scroll,
     },
 
+    beforeRouteEnter (to, from, next) {
+        next(vm => {
+            vm.getDefaultAddress()
+        })
+        
+    },
     computed: {
         ...mapGetters(['shopOrderList','temporaryAddress']),
 
@@ -68,20 +74,35 @@ export default {
             caitiao: require('img/caitiao.jpg'),
             isOrder: true,
             isLoading: false,
-            list: []
+            list: [],
+            defaultAdd:''
         }
     },
 
     methods: {
+        // 查询默认收货地址
+        async getDefaultAddress() {
+            try {
+                const {data} = await this.Api.getDefaultAddress()
+                if (data.code == 200) {
+                    this.defaultAdd = data.defaultAdd
+                }
+            } catch (error) {
+                this.Toast('网络错误')
+            }
+            
+        },
+
         goBack() {
             this.$router.go(-1)
             setTimeout(() => {
                 this.setShopList([])
+                this.setVuexAddress('')
             }, 300);
         },
 
         async onSubmit() {
-            if (!this.temporaryAddress || !this.temporaryAddress.id) {
+            if (!this.defaultAdd || !this.defaultAdd._id && (!this.temporaryAddress || !this.temporaryAddress._id)) {
                 this.Toast('请添加收获地址')
                 return
             }
@@ -89,22 +110,22 @@ export default {
             // 传地址id，订单id，和总价格
             let Addressid = 123456745;
             let orderId = []
+            console.log(this.shopOrderList);
+            
             this.shopOrderList.forEach( item => {
-                orderId.push(item.id)
+                orderId.push(item.cid)
             })
-            // 以下参数名称在this.Api接口看详情
-            console.log(this.temporaryAddress.tel);
             
             try {
                 const { data } = await this.Api.placeOrder({
-                    address: this.temporaryAddress.address,
-                    tel: this.temporaryAddress.tel,
+                    address:  this.temporaryAddress.address || this.defaultAdd.address,
+                    tel: this.temporaryAddress.tel || this.defaultAdd.tel,
                     orderId,
                     totalPrice: (this.price / 100).toFixed(2),
                     idDirect: this.shopOrderList[0].idDirect,
                     count: this.shopOrderList[0].count
                 })
-                if (data.status == 200) {
+                if (data.code == 200) {
                     this.isLoading = false
                     this.Toast(`结算成功,一共${(this.price / 100).toFixed(2)}元`)
                     setTimeout(() => {
@@ -113,12 +134,14 @@ export default {
                     }, 1000);
                 }
             } catch (err) {
+                this.isLoading = false
                 this.Toast('网络错误')
             }
         },
 
         ...mapMutations({
-            setShopList: 'SHOPORDERLIST'
+            setShopList: 'SHOPORDERLIST',
+            setVuexAddress:'TEMPORARYADDRESS'
         }),
 
         // 添加收货地址

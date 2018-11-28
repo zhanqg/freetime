@@ -52,8 +52,8 @@ export default {
   async created() {
     try {
       const { data } = await this.Api.keeplogin();
-      if (data.status == 1) {
-        this.setName(data.username);
+      if (data.code == 200) {
+        this.setName(data.nickname);
       }
     } catch (error) {
       this.Toast("网络错误");

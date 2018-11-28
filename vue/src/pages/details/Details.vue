@@ -35,7 +35,7 @@
     <div>
        <van-tabs v-model="active"  class="datails-tabs" sticky>
         <van-tab v-for="val in item" :title="val.title" :key="val.id" >
-          <div v-show="active == 0" v-html="goodsDetails.detail || goods.detail"></div>
+          <div v-show="active == 0"  v-html="goodsDetails.detail || goods.detail"  class="active-0"></div>
           <div v-show="active == 1" class="active-1" >
               <div class='comment' >
                 <div class="comment-content">
@@ -188,7 +188,7 @@ export default {
     async isCollection(id) {
       this.showFlag = true
       const {data} = await this.Api.isCollection(id)
-      if (data.status == 200) {
+      if (data.code == 200) {
         this.showFlag = false
         if (data.isCollection == 1) {   // 已经收藏收藏
             this.isCollectionFlag = false
@@ -212,7 +212,7 @@ export default {
         delete(goods['_id'])  
         try {
           const {data} = await this.Api.collection(goods)
-          if (data.status == 200) { // 收藏成功
+          if (data.code == 200) { // 收藏成功
             this.Toast(data.msg);
             this.isCollectionFlag = false
           }
@@ -222,7 +222,7 @@ export default {
       } else {  // 取消收藏
         try {
           const {data} = await this.Api.cancelCollection(this.goods.id)
-              if (data.status == 200) { 
+              if (data.code == 200) { 
                 this.isCollectionFlag = true
               }
         } catch (error) {
@@ -240,7 +240,7 @@ export default {
         }
         try {
           const {data} = await this.Api.addShop(this.goodsDetails.goodsId || this.goodsDetails.id)
-          if (data.status == 200) {
+          if (data.code == 200) {
             this.Toast(data.msg)
           }
         } catch (error) {
@@ -263,10 +263,12 @@ export default {
         this.$router.push({path:'/user/login'})
         return
       }
+      console.log(this.goods);
+      
       let goods = [{
         check:true,
         count: this.newCount,
-        id: this.goods.id,
+        cid: this.goods.id,
         image_path: this.goods.image_path,
         mallPrice: this.goods.present_price * this.newCount,
         present_price: this.goods.present_price,

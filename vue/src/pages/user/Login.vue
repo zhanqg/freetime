@@ -7,10 +7,10 @@
                 <p class="login-title">登录 / 注册</p>
                 <div class="form-group">
                     <label for="username" class="sr-only">USERNAME</label>
-                    <input type="text" v-model="username" class="form-control" maxlength="16" placeholder="USERNAME" autocomplete="off">
+                    <input type="text" v-model="nickname" class="form-control" maxlength="16" placeholder="USERNAME" autocomplete="off">
                 </div>
                 <div class="form-group">
-                    <label for="username" class="sr-only">PASSWORD</label>
+                    <label for="password" class="sr-only">PASSWORD</label>
                     <input type="password" v-model="password" class="form-control" maxlength="16" placeholder="PASSWORD" autocomplete="off">
                 </div>
                 <div class="form-group form-group2">
@@ -33,7 +33,7 @@ export default {
     mixins: [goBack],
     data() {
         return {
-            username:'',
+            nickname:'',
             password:'',
             tip:'',
             timer:0,
@@ -48,7 +48,7 @@ export default {
     methods: {
 
         login(flag) {
-            if (!this.username || !this.password) {
+            if (!this.nickname || !this.password) {
                 Toast('请输入用户名或者密码');
                 return
             }
@@ -63,9 +63,9 @@ export default {
             if (flag) { //  注册
             try {
                 this.regLoding = true
-                const {data} = await this.Api.register(this.username,this.password)
+                const {data} = await this.Api.register(this.nickname,this.password)
                 if (data.code == 200) {
-                    this.setName(this.username)
+                    this.setName(this.nickname)
                     setTimeout(() => {
                         this.$router.go(-1)
                     }, 1500);
@@ -81,9 +81,9 @@ export default {
             } else {    // 登录
                 try {
                     this.loginLoding = true
-                    const {data} = await this.Api.login(this.username,this.password)
+                    const {data} = await this.Api.login(this.nickname,this.password)
                     if (data.code == 200) {
-                        this.setName(this.username)
+                        this.setName(this.nickname)
                         setTimeout(() => {
                             this.$router.go(-1)
                         }, 1500);

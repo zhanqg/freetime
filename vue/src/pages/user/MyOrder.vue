@@ -71,7 +71,7 @@ export default {
             try {
                 this.showFlag = true
                 const {data} = await this.Api.getMyOrder()
-                if (data.status == 200) {
+                if (data.code == 200) {
                     this.showFlag = false
                     this.list = data.list
                 }

@@ -1,8 +1,7 @@
 'use strict';
 
-const Service = require('egg').Service;
-
-class CommodityService extends Service {
+const BsseService = require('./base')
+class CommodityService extends BsseService {
     // 首页商品查询
     async recommend() {
         const { ctx } = this
@@ -55,7 +54,7 @@ class CommodityService extends Service {
     async search(value) {
         const list = await this.ctx.model.Goods.find({ 'name': { $regex: value } })
         this.ctx.body = {
-            status: 200,
+            code: 200,
             list
         }
     }

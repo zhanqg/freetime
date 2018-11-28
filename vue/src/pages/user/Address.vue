@@ -39,7 +39,8 @@ export default {
             back: true, // 是否显示返回按钮
             chosenAddressId: '1',
             list: [],
-            isPay: false
+            isPay: false,
+               
         }
     },
 
@@ -57,12 +58,27 @@ export default {
             this.$router.push('/user/addressEdit')
         },
 
+        async setDefaultAddress(id) {
+            try {
+                const {data} = await this.Api.setDefaultAddress(id)
+                if (data.code == 200) {
+                    this.Toast('设置默认地址成功')
+                }
+            } catch (error) {
+                this.Toast('网络错误')
+            }
+            
+        },
+
         onSelect(item) {
-            this.setAddress2(item)
             if (this.isPay) {   // 判断是不是从订单页面过来的
+                this.setAddress2(item)
                 setTimeout(() => {
                     this.$router.go(-1)
                 }, 500);
+            } else {
+                // 选中设置默认地址
+                this.setDefaultAddress(item._id)                
             }
         },
         
@@ -74,19 +90,29 @@ export default {
         
     },
 
+ 
     async created() {
         // 查询地址
         try {
             this.showFlag = true
             const {data} = await this.Api.getAddress()
-            if (data.status == 200) {
+            if (data.code == 200) {
                 this.showFlag = false
                 this.list = data.address.reverse()
-                this.setAddress2( this.list[0])  // 默认第一条作为收货地址
+                let defaultAddress
+                for (let i = 0; i < this.list.length; i++) {
+                    if (this.list[i].isDefault == true) {
+                        defaultAddress = this.list[i]
+                        defaultAddress.id = '1'
+                        this.list.splice(i,1)
+                        this.list.unshift(defaultAddress)
+                    } else {
+                        this.list[i].id = String( i+2)
+                    }
+                }                                
             }
         } catch (error) {
             console.log(error);
-            
             this.Toast('网络错误')
             this.showFlag = false
         }
@@ -94,9 +120,8 @@ export default {
 
     beforeRouteEnter (to, from,next) {
         next(vm => {
-            if (from.fullPath == "/shoppingCart/ShoppingPayMent") {
+            if (from.name == "ShoppingPayMent") {
                 vm.isPay = true
-            console.log(vm.isPay);
             }
             // 通过 `vm` 访问组件实例
         })

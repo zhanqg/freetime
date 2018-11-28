@@ -55,7 +55,7 @@ export default {
             }
             try {
                 const {data} = await this.Api.addShop(val.goodsId)
-                if (data.status == 200) {
+                if (data.code == 200) {
                     this.Toast(data.msg)
                 }
             } catch (error) {

@@ -129,7 +129,7 @@ export default {
       try {
         this.showFlag = true;
         const { data } = await this.Api.getCard();
-        if (data.status == -1) {
+        if (data.code == -1) {
           this.isLogin = true;
           this.showFlag = false;
         } else {
@@ -148,6 +148,8 @@ export default {
 
     // 加减商品
     async editCart(flag, val) {
+      console.log(val);
+      
       if (flag == "minu") {
         if (val.count <= 1) {
           return;
@@ -161,14 +163,14 @@ export default {
         val.count++;
       }
       const mallPrice = (val.present_price * val.count).toFixed(2);
-      this.Api.editCart(val.count, val.id, mallPrice);
+      this.Api.editCart(val.count, val.cid, mallPrice);
     },
     // 删除商品
     deletes() {
       let id = [];
       this.shopList.forEach(item => {
         if (item.check) {
-          id.push(item.id);
+          id.push(item.cid);
           this.Dialog.confirm({
             title: "提示",
             message: `确认删除商品吗?`
@@ -183,7 +185,7 @@ export default {
     async deleteShop(id) {
       try {
         const { data } = await this.Api.deleteShop(id);
-        if (data.status == 200) {
+        if (data.code == 200) {
           this.deleteFlag = false;
           this.Toast(data.msg);
           this.getShopList();

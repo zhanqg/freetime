@@ -128,3 +128,12 @@ input[type=checkbox]:checked::after {
 .van-tabbar .active {
 	color: #e0322b
 }
+.gender .van-field__control, .birth .van-field__control {
+	color: #000;
+}
+.van-tabs__track {
+	display: block!important;
+}
+.van-tabs__track .van-tab__pane {
+	width: auto!important;
+}

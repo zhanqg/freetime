@@ -1,5 +1,5 @@
 <template>
-    <!-- 最近浏览 -->
+    <!-- 我的收藏 -->
 <transition name='bounce'>
     <div class="browse-warp">
         <BaseTitle :back='back' title="我的收藏" @goBack='goBack'/>
@@ -62,7 +62,7 @@ export default {
             try {
                 this.showFlag = true
                 const {data} = await this.Api.getCollection()
-                if (data.status == 200) {
+                if (data.code == 200) {
                     this.showFlag = false
                     this.list = data.collection
                 } else {
@@ -84,11 +84,12 @@ export default {
 
         // 这里是取消收藏
         async close(item,index) {
-            // this.deleteOne(item.id)
+            console.log(item);
+            
             this.list.splice(index,1)
             try {
-                const {data} = await this.Api.cancelCollection(item.id)
-                if (data.status == 200) {
+                const {data} = await this.Api.cancelCollection(item.cid)
+                if (data.code == 200) {
                     this.Toast(data.msg);
                 }
             } catch (error) {

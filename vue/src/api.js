@@ -12,7 +12,7 @@ export default class Api {
         return axios.get('/api/recommend')
     }
 
-    static search(value) {  
+    static search(value) {
         return axios.post('/api/search', {
             value
         })
@@ -26,7 +26,7 @@ export default class Api {
      * 分类页面(Category)所有接口
      * category 分类查询  参数id：默认分类的id
      */
-    static category(id) {  
+    static category(id) {
         return axios.get(`/api/classification?mallSubId=${id}`)
     }
 
@@ -41,7 +41,7 @@ export default class Api {
         return axios.post(`/api/getCard`)
     }
 
-    static editCart(count, id, mallPrice) { 
+    static editCart(count, id, mallPrice) {
         return axios.post('/api/editCart', {
             count,
             id,
@@ -49,7 +49,7 @@ export default class Api {
         })
     }
 
-    static deleteShop(id) { 
+    static deleteShop(id) {
         return axios.post('/api/deleteShop', id)
     }
 
@@ -59,7 +59,7 @@ export default class Api {
      * 购物车支付页面(ShoppingPayMent)所有接口
      * placeOrder 提交订单 参数：address:收货地址,tel:电话，orderId：所有商品的id，totalPrice：总价格,idDirect:用来判断是购物车结算还是直接购买,count:商品数量
      */
-    static placeOrder({...args}) {
+    static placeOrder({ ...args }) {
         return axios.post('/api/order', args)
     }
 
@@ -81,7 +81,7 @@ export default class Api {
     }
 
     static cancelCollection(id) {
-        return axios.post('/api/cancelCollection', {id})
+        return axios.post('/api/cancelCollection', { id })
     }
 
     static isCollection(id) {
@@ -96,26 +96,45 @@ export default class Api {
     /**
      * 会员中心(My)所有接口
      * loginOut 退出登录
+     * user     获取用户信息
+     * saveUser 修改保存用户信息
      */
     static loginOut() {
         return axios.post(`/api/loginOut`)
     }
 
+    static user() {
+        return axios.post(`/api/queryUser`)
+    }
+
+    static saveUser({ ...args }) {
+        return axios.post(`/api/saveUser`, args)
+    }
     // ===============================================================================================================
     /**
      * 用户相关(user文件夹下)所有接口
-     * getAddress       查询用户收货地址 
-     * postAddress      增加收货地址        参数：name:用户名,tel:电话，address:详情地址，isDefault：是否默认
+     * getAddress           查询用户收货地址 
+     * getDefaultAddress    查询默认收货地址
+     * setDefaultAddress    设置默认收货地址    参数：id：地址id
+     * postAddress          增加收货地址        参数：name:用户名,tel:电话，address:详情地址，isDefault：是否默认
             *                                province：省，city：市，county：区，addressDetail：详情地址，
             *                                areaCode：地区代码，id：修改地址时候要传id
-     * deleteAddress    删除地址            参数： id：地址id
-     * getCollection    查询我的收藏
-     * register         注册
-     * login            登录
-     * getMyOrder       订单查询
+     * deleteAddress        删除地址            参数： id：地址id
+     * getCollection        查询我的收藏
+     * register             注册
+     * login                登录
+     * getMyOrder           订单查询
      */
     static getAddress() {
         return axios.get(`/api/getAddress`)
+    }
+
+    static getDefaultAddress() {
+        return axios.get(`/api/getDefaultAddress`)
+    }
+
+    static setDefaultAddress(id) {
+        return axios.post(`/api/setDefaultAddress`, { id })
     }
 
     static postAddress({ ...args }) {
@@ -123,7 +142,7 @@ export default class Api {
     }
 
     static deleteAddress(id) {
-        return axios.post('/api/deleteAddress',{
+        return axios.post('/api/deleteAddress', {
             id
         })
     }
@@ -132,16 +151,16 @@ export default class Api {
         return axios.get(`/api/collection/list`)
     }
 
-    static register(username,password) {
-        return axios.post('/api/register',{
-            username,
+    static register(nickname, password) {
+        return axios.post('/api/register', {
+            nickname,
             password
         })
     }
 
-    static login(username,password) {
-        return axios.post('/api/login',{
-            username,
+    static login(nickname, password) {
+        return axios.post('/api/login', {
+            nickname,
             password
         })
     }

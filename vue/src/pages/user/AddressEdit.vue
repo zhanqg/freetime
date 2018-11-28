@@ -61,9 +61,9 @@ export default {
                         county: val.county,
                         addressDetail: val.addressDetail,
                         areaCode: val.areaCode,
-                        id: this.addressInfo ? this.addressInfo.id : undefined  // 修改地址时候要传id
+                        id: this.addressInfo ? this.addressInfo._id : undefined  // 修改地址时候要传id
                 })
-                    if (data.status == 200) {
+                    if (data.code == 200) {
                         this.Toast(data.msg);
                         setTimeout(() => {
                             this.$router.go(-1)
@@ -80,7 +80,7 @@ export default {
         },
         async onDelete(val) {
             try {
-                const {data} = await this.Api.deleteAddress(val.id)
+                const {data} = await this.Api.deleteAddress(val._id)
                 if (data.code == 200) {
                     this.Toast(data.msg);
                     setTimeout(() => {
@@ -97,7 +97,9 @@ export default {
         
         goBack() {
             this.$router.go(-1)
-            this.clearAddress('')
+            setTimeout(() => {
+                this.clearAddress('')
+            }, 300);
         },
 
         ...mapActions(['clearAddress']),

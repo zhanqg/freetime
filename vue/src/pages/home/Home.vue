@@ -241,7 +241,7 @@ export default {
             try {
                 this.len = false
                 const {data} = await this.Api.search(value)
-                if (data.status == 200) {
+                if (data.code == 200) {
                     this.serachList = data.list
                     if (!this.serachList.length) {
                         this.len = true

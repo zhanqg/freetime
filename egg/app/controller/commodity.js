@@ -1,8 +1,7 @@
 'use strict';
-
-const Controller = require('egg').Controller;
+const BaseController = require('./base')
 // 商品查询相关
-class CommodityController extends Controller {
+class CommodityController extends BaseController {
     // 首页商品展示
     async recommend() {
         await this.service.commodity.recommend()
