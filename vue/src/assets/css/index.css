@@ -170,3 +170,7 @@ input[type=checkbox]:checked::after {
 	left: 0;
 	top: 235px
 }
+.rate-warp .van-cell,.rate-warp .van-field__control {
+	background: #F7F7F7;
+	padding: 5px;
+}

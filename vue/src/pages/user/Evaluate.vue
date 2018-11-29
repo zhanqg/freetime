@@ -12,7 +12,7 @@
                                  <img :src="val.image_path" alt="" srcset="">
                                  <div>
                                      <p>{{val.name}}</p>
-                                     <span><van-icon name="chat" />评论晒单</span>
+                                     <span @click="rate(val.cid)"><van-icon name="chat" />评论晒单</span>
                                  </div>
                              </div>
                              <div class="item border-bottom" v-if="active==1" v-for="(val,index) in evaluateList" :key="index">
@@ -36,6 +36,7 @@
             <!-- </Scroll> -->
             <!-- <router-view/> -->
             <!-- <BaseLoding :showFlag='showFlag'/> -->
+            <router-view></router-view>
         </div>
     </transition> 
 </template>
@@ -65,6 +66,11 @@ export default {
     methods: {
         goBack() {
             this.$router.go(-1)
+        },
+
+        rate(id) {
+            console.log(id);
+            this.$router.push({path:'/my/evaluate/rate',query:{id}})
         }
     },
 
@@ -134,7 +140,7 @@ export default {
                         border-radius 15px
                         font-size 12px
                         i 
-                            vertical-align middle
+                            vertical-align -1px
                             margin-right 5px
 </style>
 

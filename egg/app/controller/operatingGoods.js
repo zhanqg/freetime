@@ -97,6 +97,18 @@ class OperatingGoodsController extends BaseController {
         }
         await this.service.operatingGoods.order(data)
     }
+
+    // 商品评论
+    async comment() {
+        const data = this.ctx.request.body
+        if (!data.id || !data.content) {
+            return this.ctx.body = {
+                code: -1,
+                msg: '缺少重要参数id或者内容'
+            }
+        }
+        await this.service.operatingGoods.comment(data)
+    }
 }
 
 module.exports = OperatingGoodsController;

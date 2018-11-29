@@ -4,7 +4,8 @@ import {
     Tabbar, TabbarItem,Tab, Tabs ,Sku,Tag,Col,Icon, 
     Cell,CellGroup,Swipe,SwipeItem,GoodsAction,GoodsActionBigBtn,
     GoodsActionMiniBtn,Search,Row,Lazyload,Dialog,Checkbox,SubmitBar,
-    AddressList,AddressEdit,Area,Button,Popup,Field ,DatetimePicker,Picker  
+    AddressList,AddressEdit,Area,Button,Popup,Field ,DatetimePicker,Picker,
+    Rate,Uploader    
   } from 'vant'
   Vue.use(Tabbar).use(TabbarItem).use(Tab).use(Tabs).use(Sku)
      .use(Tag).use(Col).use(Icon).use(Cell).use(CellGroup)
@@ -12,4 +13,4 @@ import {
      .use(GoodsActionBigBtn).use(GoodsActionMiniBtn).use(Search)
      .use(Row).use(Lazyload).use(Dialog).use(Checkbox).use(SubmitBar)
      .use(AddressList).use(AddressEdit).use(Area).use(Button).use(Popup)
-     .use(Field ).use(DatetimePicker).use(Picker )
+     .use(Field ).use(DatetimePicker).use(Picker ).use(Rate).use(Uploader)

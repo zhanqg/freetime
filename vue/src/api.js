@@ -99,6 +99,7 @@ export default class Api {
      * user     获取用户信息
      * saveUser 修改保存用户信息
      * getOrderNum 查询用户订单数量
+     * comment  商品评论
      */
     static loginOut() {
         return axios.post(`/api/loginOut`)
@@ -114,6 +115,10 @@ export default class Api {
 
     static getOrderNum() {
         return axios.get(`/api/myOrder/orderNum`)
+    }
+
+    static comment({...args}) {
+        return axios.post(`/api/goodsOne/comment`, args)
     }
     // ===============================================================================================================
     /**

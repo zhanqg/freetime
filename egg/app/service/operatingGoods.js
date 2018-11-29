@@ -169,6 +169,25 @@ class OperatingGoodsService extends BsseService {
             msg: `结算成功,一共 ${mallPrice.toFixed(2)} 元`
         }
     }
+
+    // 商品评论
+    async comment(data) {
+        console.log(data);
+        const {ctx} = this
+        const userInfo = ctx.session.userInfo
+        const datas = {
+            comment_uid: userInfo._id,
+            comment_nickname: userInfo.nickname,
+            cid:data.id,
+            comment_time: +new Date(),
+            rate:data.rate,
+            anonymous: data.anonymous,
+            content:data.content,
+        }
+        const comment = new ctx.model.Comment(datas)
+        await comment.save()
+        this.success('提交成功')
+    }
 }
 
 module.exports = OperatingGoodsService;

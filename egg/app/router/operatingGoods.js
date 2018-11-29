@@ -9,6 +9,7 @@ module.exports = app => {
     router.post('/address', controller.operatingGoods.address);                     // 保存收货地址
     router.post('/deleteAddress', controller.operatingGoods.deleteAddress);         // 删除单条收货地址
     router.post('/order', controller.operatingGoods.order);                         // 接受订单
+    router.post('/goodsOne/comment', controller.operatingGoods.comment);            // 商品评论
 
 
 }

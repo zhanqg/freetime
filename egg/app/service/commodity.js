@@ -37,11 +37,32 @@ class CommodityService extends BsseService {
     // 单个商品详情查询
     async goodsOne(id) {
         const { ctx } = this
-        const res = await ctx.model.Goods.findOne({ id })
-        if (res) {
+        const res2 = await ctx.model.Goods.aggregate([
+            {
+                $lookup:{
+                    from: "comment",
+                    localField: "id", 
+                    foreignField: "cid", 
+                    as: "comment"
+                }
+            },
+            {
+                $match:{
+                    "id":id
+                },
+            }
+        ])
+        if (res2.length) {
+            res2[0].comment.forEach(item => {
+                if (item.anonymous) {
+                    item.comment_nickname = '匿名人士'
+                    delete item.comment_uid
+                    delete item.comment_avatar
+                }
+            })
             return ctx.body = {
                 code: 200,
-                goodsOne: res
+                goodsOne: res2[0]
             }
         }
         ctx.body = {
