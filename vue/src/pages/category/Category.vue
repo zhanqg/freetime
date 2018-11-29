@@ -15,7 +15,7 @@
                                 <Scroll  v-show="!showFlag" :data='dataList' class="scroll" @scroll="scroll" :listenScroll='listenScroll' ref="scroll" :bounce='bounce' >
                                     <div>
                                         <van-tab v-for="val in list || category[0].bxMallSubDto" :title="val.mallSubName" :key="val.mallSubId">
-                                            <GoodsList :list='dataList' @datails='datails'/>
+                                            <GoodsList :list='dataList' @details='details'/>
                                         </van-tab>
                                     </div>
                                 </Scroll>
@@ -106,10 +106,10 @@ export default {
             }
         },
 
-        datails(val) {
+        details(val) {
             this.setBrowse(val)     // 加入最近浏览
             this.setGoodDetails(val)
-            this.$router.push({path:`/category/${val.id}`})
+            this.$router.push({ path: `/category/details`, query: { id: val.id } })
         },
 
         ...mapMutations({

@@ -6,15 +6,7 @@ const ADDRESS = 'address'     // 地址列表
 const RECENTLY_BROWSE = 'browse'  // 最近浏览
 const CITY = 'city'         // 默认城市
 const SEARCH_HISYSTORY = 'searchHistory' // 搜索历史
-// export const commodityId = {
-//     getId() {
-//         return storage.get(COMMODITY_ID,'')
-//     },
-    
-//     setId(id) {
-//         return storage.set(COMMODITY_ID,id)
-//     }
-// }
+
 export const tab = {
     getTab() {
         return storage.get(TAB_LIST,[])

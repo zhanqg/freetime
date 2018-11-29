@@ -3,98 +3,85 @@
     <BaseTitle title="会员中心"/>
     <!-- <img class="user-poster" src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png"> -->
     <div class="avatar" v-if="!userName">
-      <img src="http://img4.imgtn.bdimg.com/it/u=198369807,133263955&fm=27&gp=0.jpg" alt="" srcset="">
+      <img src="http://img4.imgtn.bdimg.com/it/u=198369807,133263955&fm=27&gp=0.jpg" alt srcset>
       <p @click="login">登录/注册</p>
     </div>
-     <div class="avatar" v-else>
-      <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3909870665,3259015587&fm=27&gp=0.jpg">
+    <div class="avatar" v-else>
+      <img
+        src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3909870665,3259015587&fm=27&gp=0.jpg"
+      >
       <p class="usename">欢迎您：{{userName}}</p>
       <p @click="loginOut">退出登录</p>
       <van-icon name="setting" class="setting" @click="setting"/>
     </div>
-    <div class="user-links van-row"><div class="van-col van-col--6"><i class="van-icon van-icon-pending-payment"><!----></i>
-      待付款
-    </div><div class="van-col van-col--6"><i class="van-icon van-icon-pending-orders"><!----></i>
-      待接单
-    </div><div class="van-col van-col--6"><i class="van-icon van-icon-pending-deliver"><!----></i>
-      待发货
-    </div><div class="van-col van-col--6"><i class="van-icon van-icon-logistics"><!----></i>
-      待发货
-    </div></div>
+    <div class="user-links van-row">
+      <div
+        class="van-col van-col--6 numlist"
+        v-for="(val,index) in tabs"
+        :key="val.status"
+        @click="status(val.status)"
+      >
+        <i class="van-icon" :class="val.icon"></i>
+        <span>{{val.title}}</span>
+        <span class="num" v-if="orderNum && orderNum[index]!=0">{{orderNum[index]}}</span>
+      </div>
+    </div>
     <van-cell-group class="user-group">
       <van-cell icon="records" title="全部订单" is-link @click="myOrder"/>
     </van-cell-group>
 
     <van-cell-group>
       <van-cell icon="exchange" title="收藏商品" is-link @click="collection"/>
-      <van-cell icon="gold-coin" @click="address" title="地址管理" is-link />
+      <van-cell icon="gold-coin" @click="address" title="地址管理" is-link/>
       <van-cell icon="gift" title="最近浏览" is-link @click="browse"/>
     </van-cell-group>
     <van-popup v-model="show" position="right" class="popup" :overlay="false">
-      <BaseTitle title="个人资料"  :back='back' @goBack='show=false'/>
+      <BaseTitle title="个人资料" :back="back" @goBack="show=false"/>
       <van-cell-group>
         <p @click="noName">
-          <van-field
-            v-model="username"
-            disabled
-            clearable
-            label="用户名"
-            placeholder="请输入用户名"
-          />
+          <van-field v-model="username" disabled clearable label="用户名" placeholder="请输入用户名"/>
         </p>
 
-        <van-field
-          v-model="nickname"
-          clearable
-          label="昵称"
-          placeholder="请输入昵称"
-        />
-        <p @click="showGender=true"  class="gender">
-          <van-field
-            v-model="gender"
-            clearable
-            disabled
-            label="性别"
-            placeholder="男"
-          />
+        <van-field v-model="nickname" clearable label="昵称" placeholder="请输入昵称"/>
+        <p @click="showGender=true" class="gender">
+          <van-field v-model="gender" clearable disabled label="性别" placeholder="男"/>
         </p>
-        
-        <van-field
-          v-model="email"
-          clearable
-          label="邮箱"
-          placeholder="请输入邮箱"
-        />
-        <p @click="showBirth = true;"  class="birth">
-        <van-field
-          v-model="birth"
-          clearable
-          disabled
-          label="出生年月"
-          placeholder="出生年月"
-        />
+
+        <van-field v-model="email" clearable label="邮箱" placeholder="请输入邮箱"/>
+        <p @click="showBirth = true;" class="birth">
+          <van-field v-model="birth" clearable disabled label="出生年月" placeholder="出生年月"/>
         </p>
-    </van-cell-group>
-    <van-popup v-model="showBirth" position="bottom" :overlay="true">
+      </van-cell-group>
+      <van-popup v-model="showBirth" position="bottom" :overlay="true">
         <van-datetime-picker
           v-model="currentDate"
           type="date"
           :min-date="minDate"
           :max-date="maxDate"
-          @confirm='confirm'
-          @cancel='showBirth = false'
+          @confirm="confirm"
+          @cancel="showBirth = false"
         />
-    </van-popup>
-    <van-popup v-model="showGender" position="bottom" :overlay="true">
-      <van-picker class="gender-picker" :columns="columns" @change="onChange" 
+      </van-popup>
+      <van-popup v-model="showGender" position="bottom" :overlay="true">
+        <van-picker
+          class="gender-picker"
+          :columns="columns"
+          @change="onChange"
           show-toolbar
           title="性别"
           @cancel="showGender=false"
-          @confirm="showGender=false"/>
-        </van-popup>
+          @confirm="showGender=false"
+        />
+      </van-popup>
       <div class="normal">
-        <van-button size="normal"  class="normal-btn" type="primary" @click="post" :loading='loading'>保存</van-button>
-        <van-button @click="show=false" size="normal"  class="normal-btn normal-btn-default" >取消</van-button>
+        <van-button
+          size="normal"
+          class="normal-btn"
+          type="primary"
+          @click="post"
+          :loading="loading"
+        >保存</van-button>
+        <van-button @click="show=false" size="normal" class="normal-btn normal-btn-default">取消</van-button>
       </div>
     </van-popup>
     <router-view/>
@@ -105,6 +92,7 @@
 import BaseTitle from "pages/other/BaseTitle";
 import { mapGetters, mapMutations } from "vuex";
 export default {
+  name: "My",
   components: {
     BaseTitle
   },
@@ -112,7 +100,7 @@ export default {
   data() {
     return {
       show: false,
-      nickname: '',
+      nickname: "",
       username: "",
       gender: "男",
       email: "",
@@ -127,7 +115,14 @@ export default {
       year: "",
       month: "",
       day: "",
-      loading: false
+      loading: false,
+      orderNum: "", //订单数量，
+      tabs: [
+        { status: 0, icon: "van-icon-pending-payment", title: "待支付" },
+        { status: 1, icon: "van-icon-pending-orders", title: "带发货" },
+        { status: 2, icon: "van-icon-pending-deliver", title: "待收货" },
+        { status: 3, icon: "van-icon-logistics", title: "已完成" }
+      ]
     };
   },
 
@@ -141,7 +136,7 @@ export default {
     }),
 
     noName() {
-      this.Toast('用户名暂时不能修改哟~~')
+      this.Toast("用户名暂时不能修改哟~~");
     },
 
     login() {
@@ -195,7 +190,7 @@ export default {
         this.day = data.day;
         this.email = data.email;
         this.id = data._id;
-        this.nickname = data.nickname
+        this.nickname = data.nickname;
       } catch (error) {
         this.Toast("获取用户信息失败");
       }
@@ -217,7 +212,7 @@ export default {
 
     // 保存
     async post() {
-      this.loading = true
+      this.loading = true;
       let datas = {
         gender: this.gender,
         email: this.email,
@@ -230,17 +225,33 @@ export default {
       try {
         const { data } = await this.Api.saveUser(datas);
         if (data.code == 200) {
-          this.loading = false
-          this.setName(this.nickname)
+          this.loading = false;
+          this.setName(this.nickname);
           this.Toast(data.msg);
         } else {
           this.Toast(data.msg);
-          this.loading = false
+          this.loading = false;
         }
       } catch (error) {
-        this.loading = false
+        this.loading = false;
         this.Toast("修改失败,网络错误");
       }
+    },
+
+    status(i) {
+      console.log(i);
+      this.$router.push({ path: "/my/order", query: { status: i } });
+    }
+  },
+
+  async created() {
+    try {
+      const { data } = await this.Api.getOrderNum();
+      if (data.code == 200) {
+        this.orderNum = data.numList;
+      }
+    } catch (error) {
+      this.Toast("网络错误");
     }
   }
 };
@@ -340,5 +351,21 @@ export default {
 }
 .normal-btn-default {
   margin-top: 10px;
+}
+.numlist {
+  position: relative;
+}
+.numlist .num {
+  position: absolute;
+  right: 23px;
+  top: -8px;
+  color: #fff;
+  background: #e0322b;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 14px;
+  border-radius: 50%;
 }
 </style>

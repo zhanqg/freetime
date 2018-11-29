@@ -8,7 +8,6 @@ export const temporaryAddress = state => state.temporaryAddress
 export const city = state => state.city
 export const active = state => state.active
 export const searchHistoryList = state => state.searchHistoryList
-export const commodityId = state => state.commodityId
 
 
 

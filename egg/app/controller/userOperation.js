@@ -48,6 +48,11 @@ class UserOperationController extends BaseController {
         }
         await this.service.userOperation.setDefaultAddress(this.ctx.request.body.id)
     }
+
+    // 查询用户订单数量
+    async orderNum() {
+        await this.service.userOperation.orderNum()
+    }
 }
 
 module.exports = UserOperationController;

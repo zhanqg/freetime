@@ -31,7 +31,7 @@ export default {
                 goodsId
             }
             this.setGoodDetails(a)
-            this.$router.push({path:`/home/${goodsId}`})
+            this.$router.push({ path: `/details`, query: { id: goodsId} })
         },
 
         ...mapMutations({

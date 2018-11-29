@@ -59,7 +59,7 @@ export default {
 
     methods: {
         details(item) {
-            this.$emit('datails',item)
+            this.$emit('details',item)
         },
 
         // 清除单条浏览记录

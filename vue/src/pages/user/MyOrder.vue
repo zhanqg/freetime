@@ -43,6 +43,7 @@ import Scroll from 'pages/other/Scroll'
 import {mapGetters} from 'vuex'
 import {loading} from 'js/mixin'
 export default {
+    name: 'MyOarder',
     mixins: [loading],
     data() {
         return {
@@ -83,16 +84,14 @@ export default {
             }
         },
         async getMyOrder() {
-            if (!this.userName) {
-                this.showFlag = false
-                return
-            }
             try {
                 this.showFlag = true
                 const {data} = await this.Api.getMyOrder()
                 if (data.code == 200) {
                     this.showFlag = false
                     this.list = data.list
+                } else {
+                    this.showFlag = false
                 }
             } catch (error) {
                 this.Toast('网络错误')
@@ -102,6 +101,10 @@ export default {
     },
 
     created() {
+        let status = this.$route.query.status
+        if (status) {
+            this.active = status
+        } 
         this.getMyOrder()
     },
 }

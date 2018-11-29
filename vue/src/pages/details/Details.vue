@@ -140,13 +140,12 @@ export default {
       isCollectionFlag: false,
       showBase:false,  // 显示sku
       newCount: 1,
-      hash: '',   //当前地址url，商品的id
      
     }
   },
   
   computed: {
-      ...mapGetters(['goodsDetails','userName','commodityId'])
+      ...mapGetters(['goodsDetails','userName'])
   },
 
   methods: {
@@ -289,9 +288,9 @@ export default {
   },
 
   created() {
-    this.hash = window.location.hash.slice(-32)
-    this.goodsItem(this.hash)
-    this.isCollection(this.goodsDetails.goodsId || this.goodsDetails.id || this.hash)
+    let id = this.$route.query.id
+    this.goodsItem(id)
+    this.isCollection(this.goodsDetails.goodsId || this.goodsDetails.id || this.id)
 
   },
 };

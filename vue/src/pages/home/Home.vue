@@ -187,13 +187,12 @@ export default {
                 goodsId: val.goodsId
             }
             this.setGoodDetails(id)
-            this.$router.push({path:`/home/${val.goodsId}`})
-            
+            this.$router.push({path:`/home/details`,query: {id:val.goodsId}})
         },
         
         searchDetails(id) {
             this.$refs.input.blur()
-           this.$router.push({path:`/home/${id}`})
+            this.$router.push({path:`/home/details`,query: {id}})
         },
 
         ...mapActions(['setTab']),

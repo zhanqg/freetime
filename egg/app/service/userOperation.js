@@ -36,10 +36,35 @@ class UserOperationService extends BsseService {
     async myOrder() {
         const { ctx } = this
         const uid = ctx.session.userInfo._id
-        const res = await ctx.model.OrderList.find({uid})
+        const res = await ctx.model.OrderList.find({ uid })
         ctx.body = {
             code: 200,
             list: res.reverse()
+        }
+    }
+
+    // 查询用户订单数量
+    async orderNum() {
+        const { ctx } = this
+        const uid = ctx.session.userInfo._id
+        let num = [], num1 = [], num2 = [], num3 = [], numList = []
+
+        const res = await ctx.model.OrderList.find({ uid })
+        res.forEach(item => {
+            if (item.status == 0) {
+                num.push(item)
+            } else if (item.status == 1) {
+                num1.push(item)
+            } else if (item.status == 2) {
+                num2.push(item)
+            } else {
+                num3.push(item)
+            }
+        })
+        numList.push(num.length, num1.length, num2.length, num3.length)
+        ctx.body = {
+            code: 200,
+            numList
         }
     }
 
@@ -86,7 +111,7 @@ class UserOperationService extends BsseService {
             }
         })
 
-        await ctx.model.Address.findOneAndUpdate({ uid: _id, _id: id },{
+        await ctx.model.Address.findOneAndUpdate({ uid: _id, _id: id }, {
             $set: {
                 'isDefault': true,
             }

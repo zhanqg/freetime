@@ -1,17 +1,16 @@
-import { mapMutations,mapGetters } from 'vuex'
+import { mapMutations, mapGetters,mapActions } from 'vuex'
 import BaseLoding from 'pages/other/BaseLoding'
 
 export const details = {
     methods: {
         ...mapMutations({
             setGoodDetails: 'GOODSDETAILS',
-            setGoodaId: 'COMMODITYID'
         }),
-
+        ...mapActions(['setBrowse']),
         details(val) {
             this.setGoodDetails(val)
-            this.setGoodaId(val.goodsId)
-            this.$router.push({ path: `/home/${val.goodsId}` })
+            this.setBrowse(val)     // 加入最近浏览
+            this.$router.push({ path: `/home/details`, query: { id: val.goodsId || val.id} })
         }
     }
 }
@@ -30,43 +29,12 @@ export const loading = {
 
 // 返回上一页或者首页
 export const goBack = {
-    data() {
-        return {
-          
-        }
-    },
-
-    computed: {
-        ...mapGetters(['commodityId'])
-    },
-
     methods: {
         back() {
-            // if (this.routerName) {
-            //   this.$router.push({path: '/home'})
-            // } else {
-            //   this.$router.go(-1)
-            // }
-            // if (!this.commodityId) {
-            //     this.$router.push({ path: '/home' })
-            // } else {
-                this.$router.go(-1)
-            // }
+            window.history.length > 1
+                ? this.$router.go(-1)
+                : this.$router.push('/home')
 
         }
-    },
-
-    beforeRouteEnter(to, from, next) {
-        // 说明不是从上一页跳转过来的
-        let flag = false
-        if (!from.name) {
-            flag = true
-        }
-        next(vm => {
-            // 通过 `vm` 访问组件实例
-            vm.routerName = flag
-            console.log(vm.routerName);
-
-        })
     },
 }

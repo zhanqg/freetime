@@ -147,7 +147,7 @@ class OperatingGoodsService extends BsseService {
         }, 0)
         let orders = {
             uid,
-            status: 0,
+            status: 1,
             order_id,
             tel: data.tel,
             address: data.address,

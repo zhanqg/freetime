@@ -5,7 +5,7 @@
         <BaseTitle :back='back' title="我的收藏" @goBack='goBack'/>
         <Scroll v-show="!showFlag" :data='list' class="scroll">
             <div>
-                <GoodsList :list='list' :isCollection='isCollection' @datails='datails' @close='close'/>
+                <GoodsList :list='list' :isCollection='isCollection' @details='details' @close='close'/>
             </div>
             <div v-if="!list.length" class="null">
                  {{userName&&!showFlag? '暂无收藏~~' : '请先登录噢~~'}}
@@ -48,7 +48,13 @@ export default {
     created() {
         this.getCollection()
     },
-
+    beforeRouteUpdate (to, from, next) {
+        if (from.name == 'Details') {
+            this.getCollection()
+        }
+        next()
+        
+    },
     methods: {
         goBack() {
             this.$router.go(-1)
@@ -74,11 +80,10 @@ export default {
             }
         },
 
-        datails(item) {
-            console.log(item);
+        details(item) {
             
             this.setGoodDetails(item)
-            this.$router.push({path:`/user/collection/${item.cid}`})
+            this.$router.push({path:`/user/collection/details`,query: {id:item.cid}})
             setTimeout(() => {
                 this.setBrowse(item)     // 加入最近浏览
             }, 300);
@@ -86,8 +91,6 @@ export default {
 
         // 这里是取消收藏
         async close(item,index) {
-            console.log(item);
-            
             this.list.splice(index,1)
             try {
                 const {data} = await this.Api.cancelCollection(item.cid)

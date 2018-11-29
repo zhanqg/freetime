@@ -5,7 +5,7 @@
         <BaseTitle :back='back' title="最近浏览" @goBack='goBack'/>
         <Scroll :data='browse' class="scroll">
             <div>
-                <GoodsList :list='browse' :isBrowse='isBrowse' @close='close' @datails='datails'/>
+                <GoodsList :list='browse' :isBrowse='isBrowse' @close='close' @details='details'/>
             </div>
             <div v-if="!browse.length" class="null">
                 暂无最近浏览~~
@@ -50,9 +50,10 @@ export default {
         },
         ...mapActions(['deleteOne','setBrowse']),
 
-        datails(item) {
+        details(item) {
             this.setGoodDetails(item)
-            this.$router.push({path:`/my/browse/${item.id}`})
+            this.$router.push({path:`/my/browse/details`,query: {id:item.id}})
+
             setTimeout(() => {
                 this.setBrowse(item)     // 加入最近浏览
             }, 300);

@@ -365,12 +365,6 @@
       "price": 16.80,
       "goodsName": "纳美小苏打源生护龈牙膏3010/支"
     }, {
-      "image": "http://images.baixingliangfan.cn/compressedPic/20180411085355_2725.jpg",
-      "mallPrice": 9.50,
-      "goodsId": "245fc7d457e5454481db9620f0f9881f",
-      "price": 9.50,
-      "goodsName": "ABCK25超吸棉柔护垫22片/包"
-    }, {
       "image": "http://images.baixingliangfan.cn/compressedPic/20180413093730_3138.jpg",
       "mallPrice": 6.00,
       "goodsId": "24afea564e5248b5a2bc59da95f09911",
@@ -460,6 +454,13 @@
       "goodsId": "fa750a815cfd46c3ba468db800f0e370",
       "price": 28.00,
       "goodsName": "青芒1.6kg/盒"
+    },
+     {
+      "image": "http://images.baixingliangfan.cn/compressedPic/20180411085355_2725.jpg",
+      "mallPrice": 9.50,
+      "goodsId": "245fc7d457e5454481db9620f0f9881f",
+      "price": 9.50,
+      "goodsName": "ABCK25超吸棉柔护垫22片/包"
     }],
     "sendFee": {
       "chargeStartFee": "59.00",

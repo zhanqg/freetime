@@ -1,7 +1,6 @@
-import {commodityId,tab,address,recentlyBrowse,city,searchHistory} from 'js/cache'
+import {tab,address,recentlyBrowse,city,searchHistory} from 'js/cache'
 const state = {
     category: tab.getTab(),   //分类条目
-    commodityId: '',     // 单个商品的id
     goodsDetails: {},   // 商品详情
     userName: '',       // 用户名
     addressInfo: address.getAddress(),    //  保存要修改的地址

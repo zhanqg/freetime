@@ -98,6 +98,7 @@ export default class Api {
      * loginOut 退出登录
      * user     获取用户信息
      * saveUser 修改保存用户信息
+     * getOrderNum 查询用户订单数量
      */
     static loginOut() {
         return axios.post(`/api/loginOut`)
@@ -109,6 +110,10 @@ export default class Api {
 
     static saveUser({ ...args }) {
         return axios.post(`/api/saveUser`, args)
+    }
+
+    static getOrderNum() {
+        return axios.get(`/api/myOrder/orderNum`)
     }
     // ===============================================================================================================
     /**
