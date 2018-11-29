@@ -5,9 +5,9 @@ module.exports = app => {
 
     const OrderListSchema = new Schema({
         uid: String,                // 用户id
-        status: {                   // 0,未支付 1，已经支付待发货 2，发货待收货 3，已签收完成订单
+        status: {                   // 0,待付款 1，待发货 2，待收货 3，评价 4，已完成
             type: Number,
-            default: 0      
+            default: 0
         },
         order_id: String,           // 订单id
         tel: Number,                // 用户电话
@@ -20,6 +20,7 @@ module.exports = app => {
         order_list: [
             {
                 count: Number,
+                uid: String,
                 present_price: Number,
                 cid: String,
                 image_path: String,

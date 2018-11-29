@@ -12,6 +12,7 @@ import Collection from 'pages/user/Collection'
 import MyOrder from 'pages/user/MyOrder'
 import City from 'pages/city/City'
 import ShoppingPayMent from 'pages/shoppingCart/components/ShoppingPayMent'
+import Evaluate from 'pages/user/Evaluate'
 
 import Browse from 'pages/browse/Browse'
 import store from '../store'
@@ -28,7 +29,7 @@ const router = new Router({
     { path: '/user/address', name: 'Address', component: Address }, // 地址
     { path: '/user/addressEdit', name: 'AddressEdit', component: AddressEdit }, // 新增和编辑地址
     { path: '/user/collection', name: 'Collection', component: Collection, children: [{ path: 'details', component: Details,name:'Details' }] }, // 我的收藏
-    { path: '/my', name: 'My', component: My, children: [{ path: '/my/order', component: MyOrder,name:'MyOrder' }, { path: '/my/browse', component: Browse, name:'Browse', children: [{ path: 'details', component: Details,name:'Details' }] }] }, // 我的收藏
+    { path: '/my', name: 'My', component: My, children: [{ path: '/my/order', component: MyOrder,name:'MyOrder' },{ path: 'evaluate', component: Evaluate,name:'Evaluate' }, { path: '/my/browse', component: Browse, name:'Browse', children: [{ path: 'details', component: Details,name:'Details' }] }] }, // 我的收藏
     { path: '/shoppingPayMent', name: 'ShoppingPayMent', component: ShoppingPayMent },
     { path: '*', redirect: '/home' }
   ]

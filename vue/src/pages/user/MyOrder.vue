@@ -51,7 +51,7 @@ export default {
             active: 0,
             list: '',
             defaultImg: 'this.src="' + require('img/vue.jpg') + '"',
-            tabs:['待支付','带发货','待收货','已完成'],
+            tabs:['待支付','待发货','待收货','已完成'],
         }
     },
 
@@ -79,7 +79,7 @@ export default {
                 return '待发货'
             } else if(status == 2) {
                 return '待收货'
-            } else {
+            }else {
                 return '已完成'
             }
         },

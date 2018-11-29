@@ -158,3 +158,15 @@ input[type=checkbox]:checked::after {
     transform: scale(.5);
     border-top: none ;
 }
+
+.evaluate-warp .van-tabs__wrap {
+	width: 90%;
+	margin: auto;
+	top: -15px;
+	border-radius: 5px;
+	box-shadow: 3px 2px 10px rgba(45,45,45,.15);
+}
+.evaluate-warp .van-tabs__content {
+	left: 0;
+	top: 235px
+}

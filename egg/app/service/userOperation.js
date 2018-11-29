@@ -33,22 +33,42 @@ class UserOperationService extends BsseService {
     }
 
     // 查询用户订单
-    async myOrder() {
+    async myOrder(evaluate) {
         const { ctx } = this
+
         const uid = ctx.session.userInfo._id
         const res = await ctx.model.OrderList.find({ uid })
-        ctx.body = {
-            code: 200,
-            list: res.reverse()
+        if (evaluate) { // 用来判断是不是查询评论的
+            let eva = []
+            res.forEach(item => {
+                if (item.status == 4) {
+                    item.order_list.forEach(v => {
+                        eva.push(v)
+                    })
+               
+                }
+            })
+            
+            ctx.body = {
+                code: 200,
+                evaluate: eva.reverse()
+            }
+        } else {
+            ctx.body = {
+                code: 200,
+                list: res.reverse()
+            }
         }
+
+
     }
 
     // 查询用户订单数量
     async orderNum() {
         const { ctx } = this
         const uid = ctx.session.userInfo._id
-        let num = [], num1 = [], num2 = [], num3 = [], numList = []
-
+        // 0,待付款 1，待发货 2，待收货 3，已完成
+        let num = [], num1 = [], num2 = [], num3 = [], numList = [], evaluate = [] // 待评价
         const res = await ctx.model.OrderList.find({ uid })
         res.forEach(item => {
             if (item.status == 0) {
@@ -57,14 +77,19 @@ class UserOperationService extends BsseService {
                 num1.push(item)
             } else if (item.status == 2) {
                 num2.push(item)
-            } else {
+            } else if (item.status == 3) {
                 num3.push(item)
+            } else {
+                item.order_list.forEach(a => {
+                        evaluate.push(a)    // 待评价商品数量
+                })
             }
         })
-        numList.push(num.length, num1.length, num2.length, num3.length)
+        numList.push(num.length, num1.length, num2.length, evaluate.length, num3.length)
         ctx.body = {
             code: 200,
-            numList
+            numList,
+            // evaluate
         }
     }
 
@@ -72,10 +97,10 @@ class UserOperationService extends BsseService {
     async collectionList() {
         const { ctx } = this
         const { _id } = ctx.session.userInfo
-        const result = await ctx.model.Collection.find({ uid: _id }).sort({ 'add_time': -1 })
+        const collection = await ctx.model.Collection.find({ uid: _id }).sort({ 'add_time': -1 })
         ctx.body = {
             code: 200,
-            collection: result
+            collection
         }
     }
 

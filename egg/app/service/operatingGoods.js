@@ -134,11 +134,13 @@ class OperatingGoodsService extends BsseService {
                     cid: res.id,
                     image_path: res.image_path,
                     name: res.name,
-                    mallPrice: data.count * res.present_price
+                    mallPrice: data.count * res.present_price,
+                    uid
                 }
             } else {    // 购物车来的
                 let item = await ctx.model.ShopList.find({ uid, cid: data.orderId[i] })
                 shopList[i] = item[0]
+                shopList[i].uid = uid
             }
         }
         // 计算商品的总价（后端计算）
@@ -147,7 +149,7 @@ class OperatingGoodsService extends BsseService {
         }, 0)
         let orders = {
             uid,
-            status: 1,
+            status: 4,
             order_id,
             tel: data.tel,
             address: data.address,
@@ -164,7 +166,7 @@ class OperatingGoodsService extends BsseService {
         }
         ctx.body = {
             code: 200,
-            msg: `结算成功,一共 ${mallPrice} 元`
+            msg: `结算成功,一共 ${mallPrice.toFixed(2)} 元`
         }
     }
 }

@@ -20,7 +20,8 @@ class UserOperationController extends BaseController {
 
     // 查询用户订单
     async myOrder() {
-        await this.service.userOperation.myOrder()
+        const { evaluate } = this.ctx.query
+        await this.service.userOperation.myOrder(evaluate)
     }
 
     // 查询收藏的商品

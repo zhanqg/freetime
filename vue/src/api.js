@@ -128,7 +128,7 @@ export default class Api {
      * getCollection        查询我的收藏
      * register             注册
      * login                登录
-     * getMyOrder           订单查询
+     * getMyOrder           订单查询        参数：evaluate：用来判断是不是查询订单，默认false
      */
     static getAddress() {
         return axios.get(`/api/getAddress`)
@@ -170,7 +170,11 @@ export default class Api {
         })
     }
 
-    static getMyOrder() {
-        return axios.get(`/api/myOrder`)
+    static getMyOrder(evaluate = '') {
+        return axios.get(`/api/myOrder`,{
+            params: {
+                evaluate
+            }
+        })
     }
 }

@@ -117,11 +117,13 @@ export default {
       day: "",
       loading: false,
       orderNum: "", //订单数量，
+      // 0,待付款 1，待发货 2，待收货 3，评价 4，已完成
       tabs: [
-        { status: 0, icon: "van-icon-pending-payment", title: "待支付" },
-        { status: 1, icon: "van-icon-pending-orders", title: "带发货" },
-        { status: 2, icon: "van-icon-pending-deliver", title: "待收货" },
-        { status: 3, icon: "van-icon-logistics", title: "已完成" }
+        { status: 0, icon: "van-icon-pending-payment", title: "待付款" },
+        { status: 1, icon: "van-icon-pending-deliver", title: "待发货" },
+        { status: 2, icon: "van-icon-logistics", title: "待收货" },
+        { status: 3, icon: "van-icon-pending-orders", title: "评价" },
+        { status: 4, icon: "van-icon-exchange", title: "已完成" },
       ]
     };
   },
@@ -239,8 +241,14 @@ export default {
     },
 
     status(i) {
-      console.log(i);
-      this.$router.push({ path: "/my/order", query: { status: i } });
+      if (i == 3) {
+        this.$router.push({ path: "/my/evaluate"});
+      } else {
+        if (i == 4) {
+          i = 3
+        }
+        this.$router.push({ path: "/my/order", query: { status: i } });
+      }
     }
   },
 
@@ -354,10 +362,11 @@ export default {
 }
 .numlist {
   position: relative;
+  width: 20%;
 }
 .numlist .num {
   position: absolute;
-  right: 23px;
+  right: 15px;
   top: -8px;
   color: #fff;
   background: #e0322b;
