@@ -7,10 +7,7 @@ module.exports = app => {
         comment_uid: String,        // 评论人的id
         comment_nickname: String,   // 评论人的昵称
         cid: String,                // 商品的id
-        comment_time: {             // 评论的时间
-            type: Number,
-            default: +new Date(),
-        },
+        comment_time: String,
         rate:Number,                // 商品评分
         anonymous: Boolean,         // 是否匿名评价
         content: {                  // 评论的内容

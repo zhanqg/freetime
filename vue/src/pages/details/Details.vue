@@ -37,35 +37,20 @@
         <van-tab v-for="val in item" :title="val.title" :key="val.id" >
           <div v-show="active == 0"  v-html="goodsDetails.detail || goods.detail"  class="active-0"></div>
           <div v-show="active == 1" class="active-1" >
-              <div class='comment' >
+              <div class='comment' v-for="val of comment" :key="val._id">
                 <div class="comment-content">
-                    <div class='avatar'><img src="http://images.baixingliangfan.cn/compressedPic/20171219105440_2015.jpg" alt="" srcset=""></div>
+                    <div class='avatar'><img :src="val.comment_avatar" alt="" srcset=""></div>
                     <div class='desc border-bottom'>
                         <p class='fist'>
-                            <span class='name'>Peony</span>
-                            <span class='num'>1万
-                                <i class="fa fa-thumbs-up"></i>
-                            </span>
+                            <span class='name'>{{val.comment_nickname}}：</span>
+                            <span class='num'>{{val.comment_time}}</span>
                         </p>
-                        <p class="timer">1970-01-30</p>
-                        <p class='cont'>很好</p>
-                    </div>
-                </div>
-
-                <div class="comment-content">
-                    <div class='avatar'><img src="http://images.baixingliangfan.cn/compressedPic/20171219105440_2015.jpg" alt="" srcset=""></div>
-                    <div class='desc border-bottom'>
-                        <p class='fist'>
-                            <span class='name'>Peony</span>
-                            <span class='num'>1万
-                                <i class="fa fa-thumbs-up"></i>
-                            </span>
-                        </p>
-                        <p class="timer">1970-01-30</p>
-                        <p class='cont'>很好asdfsdf三点后还哦俗话说iOSadhi啥都管会看到啥风格看见啥卡上就开始给看见啥电话很快就斯柯达很好看叫啥货到付款静安寺号地块卡萨丁就会很快就傻乎乎</p>
+                        <p class="timer"><van-rate v-model="val.rate" disabled :size="12" disabled-color='#e0322b'/></p>
+                        <p class='cont'>{{val.content}}</p>
                     </div>
                 </div>
             </div>
+            <div v-show="!comment.length" class="nocomment">该商品暂无评论噢~~</div>
           </div>
         </van-tab>
       </van-tabs>
@@ -140,7 +125,7 @@ export default {
       isCollectionFlag: false,
       showBase:false,  // 显示sku
       newCount: 1,
-     
+      comment: ''
     }
   },
   
@@ -173,6 +158,7 @@ export default {
             if (data.goodsOne.id) {
               this.setBrowse(data.goodsOne)
               this.goods = data.goodsOne
+              this.comment = data.goodsOne.comment
             }
           }
         } catch (error) {
@@ -350,7 +336,7 @@ export default {
       flex: 0 0 60%;
       width: 60%;
       .num {
-        font-size: 14px;
+        font-size: 12px;
       }
       .totle {
         margin-top: 15px;
@@ -430,13 +416,12 @@ export default {
 }
 
 .active-1 {
-  min-height: 600px
+  min-height: 300px
 }
 .comment {
-  margin-top: 10px;
+  margin-top: 15px;
   .comment-content {
     display: flex;
-    padding: 0 0 0 16px;
     margin: 12px;
     &-first-child {
       margin-top: 50px;
@@ -444,7 +429,7 @@ export default {
     .avatar {
       flex: 0 0 35px;
       width: 35px;
-      margin-right: 10px;
+      margin-right: 20px;
       img {
         width: 38px;
         height: 38px;
@@ -473,11 +458,11 @@ export default {
       }
       .timer {
           color: grey   ;    
-          margin-top: 3px;
+          margin-top: 8px;
       }    
       .cont {
-          margin-top: 14px;
-          color: #000;
+          margin-top: 8px;
+          color: #333;
           overflow: hidden;
           word-wrap: break-word;
           word-break: break-all;
@@ -503,6 +488,11 @@ export default {
     right: 8%;
     color: red;
   }
+}
+.nocomment {
+  text-align: center;
+  color: #333;
+  margin-top: 50px;
 }
 .bounce2-enter-active {
     animation: bounce-in .3s;

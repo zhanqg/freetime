@@ -43,15 +43,16 @@ class UserOperationService extends BsseService {
             res.forEach(item => {
                 if (item.status == 4) {
                     item.order_list.forEach(v => {
-                        eva.push(v)
+                        if (!v.isComment) {
+                            eva.push(v)
+                        }
                     })
                
                 }
             })
-            
             ctx.body = {
                 code: 200,
-                evaluate: eva.reverse()
+                evaluate: eva
             }
         } else {
             ctx.body = {
@@ -80,8 +81,10 @@ class UserOperationService extends BsseService {
             } else if (item.status == 3) {
                 num3.push(item)
             } else {
-                item.order_list.forEach(a => {
-                        evaluate.push(a)    // 待评价商品数量
+                item.order_list.forEach(v => {
+                    if (!v.isComment) {
+                        evaluate.push(v)// 待评价商品数量
+                    }
                 })
             }
         })

@@ -45,7 +45,9 @@ export default {
             back: true,
             checked: true,
             goodsOne: '',
-            id: ''
+            id: '',  //商品id
+            _id: '',   // 数据库单条id
+            order_id: ''//  订单id
         }
     },
 
@@ -62,22 +64,38 @@ export default {
         },
 
         async submit() {
-            const data = {
+            if (!this.message) {
+                return this.Toast('请输入需要提交的内容')
+            }
+            const datas = {
                 id:this.id,
                 rate:this.rate,
                 content:this.message,
-                anonymous:this.checked
+                anonymous:this.checked,
+                _id:this._id,
+                order_id:this.order_id
             }
-            this.Api.comment(data)
+            const {data} = await this.Api.comment(datas)
+            if (data.code == 200) {
+                this.Toast(data.msg)
+                setTimeout(() => {
+                    this.$router.go(-1)
+                }, 1500);
+                
+            }
         }
     },
 
     async created() {
         this.id = this.$route.query.id
+        this._id = this.$route.params._id
+        this.order_id = this.$route.params.order_id
         try {
             const {data} = await this.Api.goodOne(this.id )
             if (data.code == 200) {
                 this.goodsOne = data.goodsOne
+            } else {
+                this.Toast('请先登录')
             }
         } catch (error) {
             this.Toast('网络错误')

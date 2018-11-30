@@ -12,9 +12,13 @@
                                  <img :src="val.image_path" alt="" srcset="">
                                  <div>
                                      <p>{{val.name}}</p>
-                                     <span @click="rate(val.cid)"><van-icon name="chat" />评论晒单</span>
+                                     <span @click="rate(val.cid,val._id,val.order_id)"><van-icon name="chat" />评论晒单</span>
                                  </div>
+                                 
                              </div>
+                             <h6 v-if="!evaluateList.length && active==0" class="noevaluate">
+                                     暂无待评价商品~~
+                              </h6>
                              <div class="item border-bottom" v-if="active==1" v-for="(val,index) in evaluateList" :key="index">
                                  <img :src="val.img" alt="" srcset="">
                                  <div>
@@ -68,22 +72,37 @@ export default {
             this.$router.go(-1)
         },
 
-        rate(id) {
-            console.log(id);
-            this.$router.push({path:'/my/evaluate/rate',query:{id}})
+        rate(id,_id,order_id) {
+            this.$router.push({path:'/my/evaluate/rate',name:'Rate',query:{id},params:{_id,order_id}})
+        },
+
+        async getMyOrder() {
+            try {
+                const {data} = await this.Api.getMyOrder('evaluate')
+                if (data.code == 200) {
+                    this.evaluateList = data.evaluate
+                    
+                }
+            } catch (error) {
+                this.Toast('网络错误')
+            }
         }
+
     },
 
     async created() {
-        try {
-            const {data} = await this.Api.getMyOrder('evaluate')
-            if (data.code == 200) {
-                this.evaluateList = data.evaluate
-                
-            }
-        } catch (error) {
-             this.Toast('网络错误')
+        this.getMyOrder()
+    },
+
+    beforeRouteUpdate (to, from, next) {
+        // 在当前路由改变，但是该组件被复用时调用
+        // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
+        // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
+        // 可以访问组件实例 `this`
+        if (from.name === 'Rate') {
+           this.getMyOrder()
         }
+        next()
     },
 }
 </script>
@@ -110,6 +129,10 @@ export default {
         .warp
             padding 0px 10px
             box-sizing border-box
+            .noevaluate
+                text-align center
+                color #333
+                margin-top 50px
             .item
                 display flex
                 margin-top 15px

@@ -128,6 +128,7 @@ class OperatingGoodsService extends BsseService {
         for (let i = 0; i < data.orderId.length; i++) {
             if (data.idDirect) {    // 说明不是从购物车过来（直接购买）
                 const res = await ctx.model.Goods.findOne({ id: data.orderId[0] })
+
                 shopList[i] = {
                     count: data.count,
                     present_price: res.present_price,
@@ -135,12 +136,26 @@ class OperatingGoodsService extends BsseService {
                     image_path: res.image_path,
                     name: res.name,
                     mallPrice: data.count * res.present_price,
-                    uid
+                    uid,
+                    order_id
                 }
             } else {    // 购物车来的
                 let item = await ctx.model.ShopList.find({ uid, cid: data.orderId[i] })
-                shopList[i] = item[0]
-                shopList[i].uid = uid
+                let datas = item[0]
+                console.log(datas);
+
+                shopList[i] = {
+                    count: datas.count,
+                    present_price: datas.present_price,
+                    cid: datas.cid,
+                    image_path: datas.image_path,
+                    name: datas.name,
+                    mallPrice: datas.count * datas.present_price,
+                    uid,
+                    order_id
+                }
+                // shopList[i].uid = uid
+                // shopList[i].order_id = '112345'
             }
         }
         // 计算商品的总价（后端计算）
@@ -173,19 +188,27 @@ class OperatingGoodsService extends BsseService {
     // 商品评论
     async comment(data) {
         console.log(data);
-        const {ctx} = this
+        const { ctx } = this
         const userInfo = ctx.session.userInfo
         const datas = {
             comment_uid: userInfo._id,
             comment_nickname: userInfo.nickname,
-            cid:data.id,
-            comment_time: +new Date(),
-            rate:data.rate,
+            cid: data.id,
+            comment_time: ctx.helper.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),   // 订单创建时间,
+            rate: data.rate,
             anonymous: data.anonymous,
-            content:data.content,
+            content: data.content,
         }
         const comment = new ctx.model.Comment(datas)
         await comment.save()
+        // 删除需要评论的那条数据或者把是否已经评论的状态改变(这里是改变状态)
+        // 1，查到对应的订单,直接修改
+        await ctx.model.OrderList.findOneAndUpdate({uid:userInfo._id, order_id: data.order_id,'order_list._id': data._id },{
+            $set: {
+                'order_list.$.isComment':true
+              }
+        })
+        
         this.success('提交成功')
     }
 }

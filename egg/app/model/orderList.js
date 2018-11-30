@@ -26,6 +26,11 @@ module.exports = app => {
                 image_path: String,
                 name: String,
                 mallPrice: Number,
+                order_id: String,
+                isComment: {
+                    type: Boolean,
+                    default: false
+                },   //是否已经评论过了
             }
         ]
     });
