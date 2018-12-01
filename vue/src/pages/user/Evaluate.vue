@@ -149,12 +149,15 @@ export default {
         },
 
         async scrollToEnd2() {
-           if (this.hasMore()) {
-               this.page++
-                this.alreadyEvaluated(true)
-            } else {
-                this.Toast('没有很多数据了~~')
+            if (this.dataArr.length >= 10) {
+                if (this.hasMore()) {
+                this.page++
+                    this.alreadyEvaluated(true)
+                } else {
+                    this.Toast('没有很多数据了~~')
+                }
             }
+            
         }
     },
 

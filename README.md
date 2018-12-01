@@ -71,8 +71,13 @@
 ![addresse.png](./images/addresse.png)
 ![addresslist.png](./images/addresslist.png)
 ![ment.png](./images/ment.png)
+![pinlun.png](./images/pinlun.png)
+![pinlun2.png](./images/pinlun2.png)
 ![detail.png](./images/detail.png)
+![detailC.png](./images/detailC.png)
+![chakan.png](./images/chakan.png)
 ![order.png](./images/order.png)
+
 ![broese.png](./images/broese.png)
 ![collectiom.png](./images/collectiom.png)
 ![my.png](./images/my.png)

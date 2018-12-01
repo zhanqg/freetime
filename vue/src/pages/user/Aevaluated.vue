@@ -11,11 +11,14 @@
                 </div>
                 <div class="time">{{evaluateOne.evaluateOne.comment_time}}</div>
             </div>
-            <div class="content border-bottom">内容：{{evaluateOne.evaluateOne.content}}</div>
-            <div>
+            <div class="content border-bottom">评价内容：{{evaluateOne.evaluateOne.content}}</div>
+            <div class="goods">
                 <img :src="evaluateOne.goods.image_path" alt="" srcset="">
-                <p>{{evaluateOne.goods.name}}</p>
-                <p><van-icon name="cart" /></p>
+                <p class="name">{{evaluateOne.goods.name}}</p>
+                <p class="cart" @click="addCard(evaluateOne.evaluateOne.cid)"><van-icon name="cart" /></p>
+            </div>
+            <div class="btn">
+                <van-button type="primary" size="large" @click='goBack'>返回</van-button>
             </div>
          </div>    
     </transition> 
@@ -23,12 +26,17 @@
 
 <script>
 import BaseTitle from 'pages/other/BaseTitle'
+import {mapGetters} from 'vuex'
 export default {
     data() {
         return {
             back: true,
             evaluateOne:''
         }
+    },
+
+    computed: {
+        ...mapGetters(['userName'])
     },
 
     components: {
@@ -38,6 +46,21 @@ export default {
     methods: {
         goBack() {
             this.$router.go(-1)
+        },
+
+        async addCard(id) {
+            if (!this.userName) {
+                this.$router.push({path:'/user/login'})
+                return
+            }
+            try {
+            const {data} = await this.Api.addShop(id)
+            if (data.code == 200) {
+                this.Toast(data.msg)
+            }
+            } catch (error) {
+            this.Toast('网络错误')
+            }
         }
     },
 
@@ -91,5 +114,36 @@ export default {
     .content
         margin 15px 10px 10px 10px
         padding-bottom 15px
+    .goods
+        display flex 
+        padding 0 10px
+        img 
+            width 55px
+            height 50px
+            flex 0 0 55px   
+            margin-right 10px
+        .name
+            flex 1
+            line-height 1.6
+        .cart
+            flex 0 0 40px
+            height 40px
+            display flex
+            align-items center
+            justify-content center
+            border-radius 50%
+            text-align center
+            background #FFE6E2
+            margin-left 10px
+            i 
+                font-size 18px
+                color red
+    .btn
+        width 90%
+        margin 0 auto          
+        position absolute
+        left 50%
+        bottom 10%
+        transform translateX(-50%)  
 </style>
 
