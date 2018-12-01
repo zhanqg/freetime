@@ -33,32 +33,13 @@ class UserOperationService extends BsseService {
     }
 
     // 查询用户订单
-    async myOrder(evaluate) {
+    async myOrder() {
         const { ctx } = this
-
         const uid = ctx.session.userInfo._id
         const res = await ctx.model.OrderList.find({ uid })
-        if (evaluate) { // 用来判断是不是查询评论的
-            let eva = []
-            res.forEach(item => {
-                if (item.status == 4) {
-                    item.order_list.forEach(v => {
-                        if (!v.isComment) {
-                            eva.push(v)
-                        }
-                    })
-               
-                }
-            })
-            ctx.body = {
-                code: 200,
-                evaluate: eva
-            }
-        } else {
-            ctx.body = {
-                code: 200,
-                list: res.reverse()
-            }
+        ctx.body = {
+            code: 200,
+            list: res.reverse()
         }
 
 
@@ -92,7 +73,6 @@ class UserOperationService extends BsseService {
         ctx.body = {
             code: 200,
             numList,
-            // evaluate
         }
     }
 
@@ -145,6 +125,90 @@ class UserOperationService extends BsseService {
             }
         })
         this.success('设置默认地址成功')
+    }
+
+    // 查询已经评价的商品
+    async alreadyEvaluated() {
+        const { ctx } = this
+        const uid = ctx.session.userInfo._id
+        let pageSize = 10
+        let page = ctx.query.page || 1
+        let skip = (page - 1) * pageSize
+        const alreadyEvaluated = await ctx.model.Comment.aggregate([
+            {
+                $lookup: {
+                    from: "goods",
+                    localField: "cid",
+                    foreignField: "id",
+                    as: "goods"
+                }
+            },
+            {
+                $match: {
+                    comment_uid: uid,
+                    anonymous: true
+                },
+            },
+        ]).sort({ comment_time: -1 }).skip(skip).limit(pageSize)
+        const count = await ctx.model.Comment.find({ comment_uid: uid, anonymous: true }).count()
+        ctx.body = {
+            code: 200,
+            data: {
+                count,
+                page,
+                list: alreadyEvaluated
+            }
+        }
+    }
+    // 查询待评价的商品
+    async tobeEvaluated() {
+        const { ctx } = this
+        const uid = ctx.session.userInfo._id
+        let pageSize = 10
+        let page = ctx.query.page || 1
+        let skip = (page - 1) * pageSize
+        let status = ctx.query.status || 4
+        const res = await ctx.model.OrderList.find({ uid, status })
+        let eva = []
+        res.forEach(item => {
+            item.order_list.forEach(v => {
+                if (!v.isComment) {
+                    eva.push(v)
+                }
+            })
+        })
+
+        const res2 = await ctx.model.OrderList.find({ uid, status, 'order_list.isComment': false }).skip(skip).limit(pageSize)
+        let eva2 = []
+        res2.forEach(item => {
+            item.order_list.forEach(v => {
+                if (!v.isComment) {
+                    eva2.push(v)
+                }
+            })
+        })
+        ctx.body = {
+            code: 200,
+            data: {
+                list: eva2,
+                page,
+                count: eva.length
+            }
+        }
+    }
+
+    // 查询单条 评价
+    async evaluateOne(_id) {
+        const { ctx } = this
+        const data2 = await ctx.model.Comment.findOne({ _id })
+        const data3 = await ctx.model.Goods.findOne({ id: data2.cid })
+        ctx.body = {
+            code: 200,
+            data: {
+                evaluateOne: data2,
+                goods: data3
+            }
+        }
     }
 }
 

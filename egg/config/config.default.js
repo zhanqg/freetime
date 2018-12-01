@@ -32,7 +32,7 @@ module.exports = appInfo => {
 
   config.session = {
     key: 'SESSION_ID',
-    maxAge: 8640000,
+    maxAge: 864000000,
     overwrite: true,  //是否可以overwrite    (默认default true)
     httpOnly: true, //cookie是否只有服务器端可以访问 httpOnly or not (default true)
     signed: true,   //签名默认true

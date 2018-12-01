@@ -109,6 +109,8 @@ class OperatingGoodsController extends BaseController {
         }
         await this.service.operatingGoods.comment(data)
     }
+
+    
 }
 
 module.exports = OperatingGoodsController;

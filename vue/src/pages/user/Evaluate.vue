@@ -6,30 +6,44 @@
             <img :src="evaluateImg" class="evaluateImg" alt="">
             <van-tabs v-model="active" >
                 <van-tab :title="val.title+ 10" v-for="val of tabs" :key="val.id">
-                     <Scroll class="scroll">
+                     <Scroll class="scroll" v-if="active==0"  :pullup='pullup' :data='alreadyEvaluatedList' :listenScroll='listenScroll' :probeType='probeType' @scrollToEnd='scrollToEnd'>
                          <div class="warp">
-                             <div class="item border-bottom" v-if="active==0" v-for="(val,index) in evaluateList" :key="index">
-                                 <img :src="val.image_path" alt="" srcset="">
+                             <div class="item border-bottom" v-for="(val,index) in evaluateList" :key="index">
+                                 <img :onerror="defaultImg" :src="val.image_path" alt="" srcset="">
                                  <div>
                                      <p>{{val.name}}</p>
                                      <span @click="rate(val.cid,val._id,val.order_id)"><van-icon name="chat" />评论晒单</span>
                                  </div>
                                  
                              </div>
-                             <h6 v-if="!evaluateList.length && active==0" class="noevaluate">
+                             <h6 v-if="!evaluateList.length" class="noevaluate">
                                      暂无待评价商品~~
                               </h6>
-                             <div class="item border-bottom" v-if="active==1" v-for="(val,index) in evaluateList" :key="index">
-                                 <img :src="val.img" alt="" srcset="">
+                         </div>
+                         <div v-show="loading" class="van-loading van-loading--circular van-loading--white" style="color: white;"><span class="van-loading__spinner van-loading__spinner--circular"><svg viewBox="25 25 50 50" class="van-loading__circular"><circle cx="50" cy="50" r="20" fill="none"></circle></svg></span></div>
+                     </Scroll>    
+
+
+                     <Scroll class="scroll" v-if="active==1"  :pullup='pullup' :data='dataArr' :listenScroll='listenScroll' :probeType='probeType' @scrollToEnd='scrollToEnd2'>
+                         <div class="warp">
+                            
+                              <h6 v-if="!dataArr.length " class="noevaluate">
+                                    暂无已评价商品~~
+                              </h6>
+                             <div class="item border-bottom" v-for="(val,index) in dataArr" :key="index">
+                                 <img :onerror="defaultImg" :src="val.goods[0].image_path" alt="" srcset="">
                                  <div>
-                                     <p>美洲鲜活波士顿龙虾 750g-800g/只（次日达）</p>
-                                     <span><van-icon name="chat" />评论晒单</span>
+                                     <p>{{val.goods[0].name}}</p>
+                                     <span class="span2" @click="aevaluated(val.cid,val._id)"><van-icon name="search" />查看评价</span>
                                  </div>
                              </div>
                          </div>
+                         <div v-show="loading2" class="van-loading van-loading--circular van-loading--white" style="color: white;"><span class="van-loading__spinner van-loading__spinner--circular"><svg viewBox="25 25 50 50" class="van-loading__circular"><circle cx="50" cy="50" r="20" fill="none"></circle></svg></span></div>
+
                      </Scroll>    
                 </van-tab>
             </van-tabs>
+            
             <!-- <Scroll v-show="!showFlag" :data='list' class="scroll"> -->
                 <!-- <div>
                     <GoodsList :list='list' :isCollection='isCollection' @details='details' @close='close'/>
@@ -48,7 +62,9 @@
 <script>
 import Scroll from 'pages/other/Scroll'
 import BaseTitle from 'pages/other/BaseTitle'
+import {page} from 'js/mixin'
 export default {
+    mixins:[page],
     components: {
         Scroll,
         BaseTitle
@@ -64,6 +80,17 @@ export default {
                 {id:1,title: '已评价',status:1,},
             ],
             evaluateList: '',
+            count: 0,
+            page: 1,
+            page2:1,
+            alreadyEvaluatedList: '',
+            pullup: true,
+            listenScroll:true,
+            probeType: 3,
+            // locked: false,
+            loading: false,
+            loading2: false,
+            defaultImg: 'this.src="' + require('img/vue.jpg') + '"',
         }
     },
 
@@ -72,35 +99,76 @@ export default {
             this.$router.go(-1)
         },
 
+        // 评价
         rate(id,_id,order_id) {
             this.$router.push({path:'/my/evaluate/rate',name:'Rate',query:{id},params:{_id,order_id}})
         },
 
-        async getMyOrder() {
+        // 查看已评价
+        aevaluated(id,_id) {
+            this.$router.push({path:'/my/evaluate/aevaluated',name:'Aevaluated',query:{id},params:{_id}})
+        },
+
+        async tobeEvaluated() {
             try {
-                const {data} = await this.Api.getMyOrder('evaluate')
+                const {data} = await this.Api.tobeEvaluated(this.page1)
                 if (data.code == 200) {
-                    this.evaluateList = data.evaluate
-                    
+                    this.evaluateList = data.data.list
                 }
             } catch (error) {
                 this.Toast('网络错误')
             }
-        }
+        },
 
+        async alreadyEvaluated(flag) {
+            try {
+                if (this.isLocked()) return // 必须等待上一次请求完成
+                this.locked()//开始请求之前锁住
+                this.loading2 = true
+                const { data } = await this.Api.alreadyEvaluated(this.page)
+                if (data.code == 200) {
+                    this.loading2 = false
+                    this.setTotal(data.data.count)  // 总条数
+                    this.unLocked() // 解锁
+                    if (flag) {
+                        this.setNewData(data.data.list)
+                    } else {
+                        this.dataArr = data.data.list
+                    }
+                }
+            } catch (error) {
+                this.unLocked() // 解锁
+                this.Toast('网络错误')
+            }
+            
+        },
+
+        async scrollToEnd() {
+            console.log(11111111);
+            
+        },
+
+        async scrollToEnd2() {
+           if (this.hasMore()) {
+               this.page++
+                this.alreadyEvaluated(true)
+            } else {
+                this.Toast('没有很多数据了~~')
+            }
+        }
     },
 
+
     async created() {
-        this.getMyOrder()
+        this.tobeEvaluated()
+        this.alreadyEvaluated()
     },
 
     beforeRouteUpdate (to, from, next) {
-        // 在当前路由改变，但是该组件被复用时调用
-        // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
-        // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
-        // 可以访问组件实例 `this`
         if (from.name === 'Rate') {
-           this.getMyOrder()
+            this.page = 1
+           this.tobeEvaluated()
+           this.alreadyEvaluated()
         }
         next()
     },
@@ -155,6 +223,9 @@ export default {
                     p
                         line-height 1.3
                         letter-spacing 1px
+                    .span2
+                        color #333
+                        border 1px solid #666
                     span 
                         align-self flex-end    
                         border 1px solid red

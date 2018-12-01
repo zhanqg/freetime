@@ -117,7 +117,7 @@ export default class Api {
         return axios.get(`/api/myOrder/orderNum`)
     }
 
-    static comment({...args}) {
+    static comment({ ...args }) {
         return axios.post(`/api/goodsOne/comment`, args)
     }
     // ===============================================================================================================
@@ -134,6 +134,9 @@ export default class Api {
      * register             注册
      * login                登录
      * getMyOrder           订单查询        参数：evaluate：用来判断是不是查询订单，默认false
+     * alreadyEvaluated     查询已评价      参数： page：页面
+     * tobeEvaluated        查询待评价      参数： page：页面
+     * evaluateOne          查询单条评论    参数： id：商品id，_id：数据库的那条id
      */
     static getAddress() {
         return axios.get(`/api/getAddress`)
@@ -175,11 +178,25 @@ export default class Api {
         })
     }
 
-    static getMyOrder(evaluate = '') {
-        return axios.get(`/api/myOrder`,{
-            params: {
-                evaluate
-            }
+    static getMyOrder() {
+        return axios.get(`/api/myOrder`)
+    }
+
+    static alreadyEvaluated(page = 1) {
+        return axios.get('/api/alreadyEvaluated', {
+            params: { page }
+        })
+    }
+
+    static tobeEvaluated(page = 1) {
+        return axios.get('/api/tobeEvaluated', {
+            params: { page }
+        })
+    }
+
+    static evaluateOne(_id) {
+        return axios.post('/api/evaluateOne', {
+            _id
         })
     }
 }

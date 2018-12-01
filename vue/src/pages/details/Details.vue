@@ -148,10 +148,7 @@ export default {
 
     // 请求商品详情
     async goodsItem(id = this.goodsDetails.goodsId) {
-        if (this.goodsDetails.id) {
-            this.goods = this.goodsDetails
-            return
-        }
+        
         try {
           const {data} = await this.Api.goodOne(id)
           if (data.code == 200) {
@@ -159,6 +156,7 @@ export default {
               this.setBrowse(data.goodsOne)
               this.goods = data.goodsOne
               this.comment = data.goodsOne.comment
+              
             }
           }
         } catch (error) {
@@ -248,8 +246,6 @@ export default {
         this.$router.push({path:'/user/login'})
         return
       }
-      console.log(this.goods);
-      
       let goods = [{
         check:true,
         count: this.newCount,
@@ -274,9 +270,10 @@ export default {
   },
 
   created() {
+    
     let id = this.$route.query.id
     this.goodsItem(id)
-    this.isCollection(this.goodsDetails.goodsId || this.goodsDetails.id || this.id)
+    this.isCollection(this.goodsDetails.goodsId || this.goodsDetails.id || id)
 
   },
 };

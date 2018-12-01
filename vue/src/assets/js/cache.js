@@ -109,3 +109,4 @@ export const searchHistory = {
         return storage.set(SEARCH_HISYSTORY,[])
     }
 }
+

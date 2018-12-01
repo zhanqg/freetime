@@ -20,8 +20,7 @@ class UserOperationController extends BaseController {
 
     // 查询用户订单
     async myOrder() {
-        const { evaluate } = this.ctx.query
-        await this.service.userOperation.myOrder(evaluate)
+        await this.service.userOperation.myOrder()
     }
 
     // 查询收藏的商品
@@ -53,6 +52,28 @@ class UserOperationController extends BaseController {
     // 查询用户订单数量
     async orderNum() {
         await this.service.userOperation.orderNum()
+    }
+
+    // 查询已经评价的商品
+    async alreadyEvaluated() {
+        await this.service.userOperation.alreadyEvaluated()
+    }
+
+    // 查询待评价的商品
+    async tobeEvaluated() {
+        await this.service.userOperation.tobeEvaluated()
+    }
+
+    // 查询单条 评价
+    async evaluateOne() {
+        const {_id} = this.ctx.request.body
+        if (!_id) {
+            return this.ctx.body = {
+                code: -1,
+                msg: '缺少重要参数id'
+            }
+        }
+        await this.service.userOperation.evaluateOne(_id)
     }
 }
 
