@@ -7,13 +7,13 @@
                 <img :src="evaluateOne.evaluateOne.comment_avatar" alt="" srcset="">
                 <div class="middle">
                     <span class="name">{{evaluateOne.evaluateOne.comment_nickname}}</span>
-                    <p class="rate"><van-rate color="#e0322b" size='14' v-model="evaluateOne.evaluateOne.rate" /></p>
+                    <p class="rate"><van-rate color="#e0322b" :size='size' readonly v-model="evaluateOne.evaluateOne.rate" /></p>
                 </div>
                 <div class="time">{{evaluateOne.evaluateOne.comment_time}}</div>
             </div>
-            <div class="content border-bottom">评价内容：{{evaluateOne.evaluateOne.content}}</div>
-            <div class="goods">
-                <img :src="evaluateOne.goods.image_path" alt="" srcset="">
+            <div v-if="evaluateOne.evaluateOne" class="content border-bottom">评价内容：{{evaluateOne.evaluateOne.content}}</div>
+            <div class="goods" v-if="evaluateOne.goods">
+                <img  :src="evaluateOne.goods.image_path" alt="" srcset="">
                 <p class="name">{{evaluateOne.goods.name}}</p>
                 <p class="cart" @click="addCard(evaluateOne.evaluateOne.cid)"><van-icon name="cart" /></p>
             </div>
@@ -31,7 +31,8 @@ export default {
     data() {
         return {
             back: true,
-            evaluateOne:''
+            evaluateOne:'',
+            size:14
         }
     },
 

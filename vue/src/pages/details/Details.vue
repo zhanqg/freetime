@@ -45,7 +45,7 @@
                             <span class='name'>{{val.comment_nickname}}：</span>
                             <span class='num'>{{val.comment_time}}</span>
                         </p>
-                        <p class="timer"><van-rate v-model="val.rate" disabled :size="12" disabled-color='#e0322b'/></p>
+                        <p class="timer"><van-rate v-model="val.rate" readonly :size="12" color='#e0322b'/></p>
                         <p class='cont'>{{val.content}}</p>
                     </div>
                 </div>

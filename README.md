@@ -60,7 +60,7 @@
 - [x] egg.js重写后端
 - [x] 商品评论
 - [x] mongodb数据库重新设计
-- [ ] 用户头像上传更改
+- [ ] 用户头像裁剪上传更改
 
 ## 项目截图
 ![home.png](./images/home.png)
@@ -77,7 +77,6 @@
 ![detailC.png](./images/detailC.png)
 ![chakan.png](./images/chakan.png)
 ![order.png](./images/order.png)
-
 ![broese.png](./images/broese.png)
 ![collectiom.png](./images/collectiom.png)
 ![my.png](./images/my.png)
