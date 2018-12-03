@@ -69,6 +69,7 @@
 ![category.png](./images/category.png)
 ![shop.png](./images/shop.png)
 ![addresse.png](./images/addresse.png)
+![caijian.png](./images/caijian.png)
 ![addresslist.png](./images/addresslist.png)
 ![ment.png](./images/ment.png)
 ![pinlun.png](./images/pinlun.png)

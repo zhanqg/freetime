@@ -184,3 +184,6 @@ input[type=checkbox]:checked::after {
     border-radius: 3px;
     background-color: rgba(0, 0, 0, 0.5);
 }
+ .my-warpper .van-cell:not(:last-child):after {
+	 left: 0;
+ }

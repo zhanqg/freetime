@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "better-scroll": "^1.12.4",
+    "cropperjs": "^1.4.3",
     "fastclick": "^1.0.6",
     "good-storage": "^1.0.1",
     "muse-ui": "^3.0.1",

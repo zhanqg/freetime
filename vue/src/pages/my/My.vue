@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="my-warpper">
     <BaseTitle title="会员中心"/>
     <!-- <img class="user-poster" src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png"> -->
     <div class="avatar" v-if="!userName">
@@ -8,7 +8,7 @@
     </div>
     <div class="avatar" v-else>
       <img
-        src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3909870665,3259015587&fm=27&gp=0.jpg"
+        :src="avatar"
       >
       <p class="usename">欢迎您：{{userName}}</p>
       <p @click="loginOut">退出登录</p>
@@ -38,13 +38,23 @@
     <van-popup v-model="show" position="right" class="popup" :overlay="false">
       <BaseTitle title="个人资料" :back="back" @goBack="show=false"/>
       <van-cell-group>
+        <div id="setAvatar" class="set-avatar border-bottom">
+          <span>头像</span>
+          <div>
+            <img :src="avatar" alt="" srcset="">
+            <van-icon name="arrow" />
+          </div>
+          <div class="cropper">
+            <Cropper  :imgStyle='imgStyle' @callback='callback'/>
+          </div>
+        </div>
         <p @click="noName">
-          <van-field v-model="username" disabled clearable label="用户名" placeholder="请输入用户名"/>
+          <van-field  class="border-bottom" v-model="username" disabled clearable label="用户名" placeholder="请输入用户名"/>
         </p>
 
         <van-field v-model="nickname" clearable label="昵称" placeholder="请输入昵称"/>
         <p @click="showGender=true" class="gender">
-          <van-field v-model="gender" clearable disabled label="性别" placeholder="男"/>
+          <van-field  class="border-bottom" v-model="gender" clearable disabled label="性别" placeholder="男"/>
         </p>
 
         <van-field v-model="email" clearable label="邮箱" placeholder="请输入邮箱"/>
@@ -90,15 +100,18 @@
 
 <script>
 import BaseTitle from "pages/other/BaseTitle";
+import Cropper from 'pages/other/Cropper'
 import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "My",
   components: {
-    BaseTitle
+    BaseTitle,
+    Cropper
   },
 
   data() {
     return {
+      avatar: 'http://img4.imgtn.bdimg.com/it/u=198369807,133263955&fm=27&gp=0.jpg',
       show: false,
       nickname: "",
       username: "",
@@ -124,7 +137,13 @@ export default {
         { status: 2, icon: "van-icon-logistics", title: "待收货" },
         { status: 3, icon: "van-icon-pending-orders", title: "评价" },
         { status: 4, icon: "van-icon-exchange", title: "已完成" },
-      ]
+      ],
+      imgStyle: {
+        width: '55px',
+        height:'55px',
+        'border-radius': '50%',
+        display: 'none'
+      }
     };
   },
 
@@ -133,6 +152,9 @@ export default {
   },
 
   methods: {
+    callback(img) {
+      this.avatar = img
+    },
     ...mapMutations({
       setName: "USERNAME"
     }),
@@ -208,7 +230,6 @@ export default {
     },
 
     onChange(picker, value) {
-      console.log(`当前值：${value}`);
       this.gender = value;
     },
 
@@ -261,7 +282,9 @@ export default {
     } catch (error) {
       this.Toast("网络错误");
     }
-  }
+  },
+
+  
 };
 </script>
 
@@ -377,4 +400,31 @@ export default {
   font-size: 14px;
   border-radius: 50%;
 }
+.set-avatar {
+  height: 80px;
+  line-height: 80px;
+  display: flex;
+  padding: 0 15px;
+  position: relative;
+  span {
+    flex: 0 0 75%
+  }
+  div {
+    flex: 1;
+    img {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+  }
+}
+.cropper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom:0;
+}
+
 </style>
