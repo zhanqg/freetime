@@ -7,10 +7,8 @@
       <p @click="login">登录/注册</p>
     </div>
     <div class="avatar" v-else>
-      <img
-        :src="avatar"
-      >
-      <p class="usename">欢迎您：{{userName}}</p>
+      <img :src="userName.avatar">
+      <p class="usename">欢迎您：{{userName.nickname}}</p>
       <p @click="loginOut">退出登录</p>
       <van-icon name="setting" class="setting" @click="setting"/>
     </div>
@@ -41,20 +39,34 @@
         <div id="setAvatar" class="set-avatar border-bottom">
           <span>头像</span>
           <div>
-            <img :src="avatar" alt="" srcset="">
-            <van-icon name="arrow" />
+            <img v-if="userName" :src="userName.avatar" alt srcset>
+            <van-icon name="arrow"/>
           </div>
           <div class="cropper">
-            <Cropper  :imgStyle='imgStyle' @callback='callback'/>
+            <Cropper :imgStyle="imgStyle" @callback="callback"/>
           </div>
         </div>
         <p @click="noName">
-          <van-field  class="border-bottom" v-model="username" disabled clearable label="用户名" placeholder="请输入用户名"/>
+          <van-field
+            class="border-bottom"
+            v-model="username"
+            disabled
+            clearable
+            label="用户名"
+            placeholder="请输入用户名"
+          />
         </p>
 
         <van-field v-model="nickname" clearable label="昵称" placeholder="请输入昵称"/>
         <p @click="showGender=true" class="gender">
-          <van-field  class="border-bottom" v-model="gender" clearable disabled label="性别" placeholder="男"/>
+          <van-field
+            class="border-bottom"
+            v-model="gender"
+            clearable
+            disabled
+            label="性别"
+            placeholder="男"
+          />
         </p>
 
         <van-field v-model="email" clearable label="邮箱" placeholder="请输入邮箱"/>
@@ -100,7 +112,7 @@
 
 <script>
 import BaseTitle from "pages/other/BaseTitle";
-import Cropper from 'pages/other/Cropper'
+import Cropper from "pages/other/Cropper";
 import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "My",
@@ -111,7 +123,7 @@ export default {
 
   data() {
     return {
-      avatar: 'http://img4.imgtn.bdimg.com/it/u=198369807,133263955&fm=27&gp=0.jpg',
+
       show: false,
       nickname: "",
       username: "",
@@ -136,13 +148,13 @@ export default {
         { status: 1, icon: "van-icon-pending-deliver", title: "待发货" },
         { status: 2, icon: "van-icon-logistics", title: "待收货" },
         { status: 3, icon: "van-icon-pending-orders", title: "评价" },
-        { status: 4, icon: "van-icon-exchange", title: "已完成" },
+        { status: 4, icon: "van-icon-exchange", title: "已完成" }
       ],
       imgStyle: {
-        width: '55px',
-        height:'55px',
-        'border-radius': '50%',
-        display: 'none'
+        width: "55px",
+        height: "55px",
+        "border-radius": "50%",
+        display: "none"
       }
     };
   },
@@ -153,7 +165,7 @@ export default {
 
   methods: {
     callback(img) {
-      this.avatar = img
+      // this.avatar = img;
     },
     ...mapMutations({
       setName: "USERNAME"
@@ -206,15 +218,17 @@ export default {
       this.show = true;
       try {
         const { data } = await this.Api.user();
-        this.username = data.username;
-        this.gender = data.gender;
-        this.birth = data.year + "年" + data.month + "月" + data.day + "日";
-        this.year = data.year;
-        this.month = data.month;
-        this.day = data.day;
-        this.email = data.email;
-        this.id = data._id;
-        this.nickname = data.nickname;
+        if (data.code == 200) {
+          this.username = data.userInfo.username;
+          this.gender = data.userInfo.gender;
+          this.birth = data.userInfo.year + "年" + data.userInfo.month + "月" + data.userInfo.day + "日";
+          this.year = data.userInfo.year;
+          this.month = data.userInfo.month;
+          this.day = data.userInfo.day;
+          this.email = data.userInfo.email;
+          this.id = data.userInfo._id;
+          this.nickname = data.userInfo.nickname;
+        }
       } catch (error) {
         this.Toast("获取用户信息失败");
       }
@@ -249,7 +263,7 @@ export default {
         const { data } = await this.Api.saveUser(datas);
         if (data.code == 200) {
           this.loading = false;
-          this.setName(this.nickname);
+          this.setName(data.userInfo);
           this.Toast(data.msg);
         } else {
           this.Toast(data.msg);
@@ -263,10 +277,10 @@ export default {
 
     status(i) {
       if (i == 3) {
-        this.$router.push({ path: "/my/evaluate"});
+        this.$router.push({ path: "/my/evaluate" });
       } else {
         if (i == 4) {
-          i = 3
+          i = 3;
         }
         this.$router.push({ path: "/my/order", query: { status: i } });
       }
@@ -282,9 +296,7 @@ export default {
     } catch (error) {
       this.Toast("网络错误");
     }
-  },
-
-  
+  }
 };
 </script>
 
@@ -407,7 +419,7 @@ export default {
   padding: 0 15px;
   position: relative;
   span {
-    flex: 0 0 75%
+    flex: 0 0 75%;
   }
   div {
     flex: 1;
@@ -424,7 +436,6 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  bottom:0;
+  bottom: 0;
 }
-
 </style>

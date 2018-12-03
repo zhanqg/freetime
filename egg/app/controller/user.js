@@ -33,9 +33,19 @@ class UserController extends BaseController {
     async keepLogin() {
         const { ctx } = this
         if (ctx.session.userInfo) {
+            let user = ctx.session.userInfo
+            let userInfo = {
+                avatar: user.avatar,
+                day: user.day,
+                gender: user.gender,
+                month: user.month,
+                nickname: user.nickname,
+                username: user.username,
+                year: user.year
+            }
             ctx.body = {
                 code: 200,
-                nickname: ctx.session.userInfo.nickname,
+                userInfo
             }
         } else {
             ctx.body = {

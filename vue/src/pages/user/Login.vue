@@ -65,7 +65,7 @@ export default {
                 this.regLoding = true
                 const {data} = await this.Api.register(this.nickname,this.password)
                 if (data.code == 200) {
-                    this.setName(this.nickname)
+                    this.setName(data.userInfo)
                     setTimeout(() => {
                         this.$router.go(-1)
                     }, 1500);
@@ -83,7 +83,7 @@ export default {
                     this.loginLoding = true
                     const {data} = await this.Api.login(this.nickname,this.password)
                     if (data.code == 200) {
-                        this.setName(this.nickname)
+                        this.setName(data.userInfo)
                         setTimeout(() => {
                             this.$router.go(-1)
                         }, 1500);

@@ -89,6 +89,7 @@ class OperatingGoodsService extends BsseService {
                 }
             })
         }
+
         if (data.id) {    // 说明是更新地址
             await ctx.model.Address.updateOne({ _id: data.id, uid: _id }, data)
             this.success('修改成功')
@@ -101,6 +102,17 @@ class OperatingGoodsService extends BsseService {
 
             const address = new ctx.model.Address(datas)
             await address.save()
+            // 保存后查询一次
+            const addressDef = await ctx.model.Address.find({ uid: _id })
+            if (addressDef.length == 1) { // 如果数据库只有1条，设置这一条为默认地址
+                if (!addressDef.isDefault) {
+                    await ctx.model.Address.findOneAndUpdate({ uid: _id, _id: addressDef[0]._id }, {
+                        $set: {
+                            'isDefault': true
+                        }
+                    })
+                }
+            }
             this.success('添加成功')
         }
     }
@@ -198,17 +210,18 @@ class OperatingGoodsService extends BsseService {
             rate: data.rate,
             anonymous: data.anonymous,
             content: data.content,
+            comment_avatar: userInfo.avatar
         }
         const comment = new ctx.model.Comment(datas)
         await comment.save()
         // 删除需要评论的那条数据或者把是否已经评论的状态改变(这里是改变状态)
         // 1，查到对应的订单,直接修改
-        await ctx.model.OrderList.findOneAndUpdate({uid:userInfo._id, order_id: data.order_id,'order_list._id': data._id },{
+        await ctx.model.OrderList.findOneAndUpdate({ uid: userInfo._id, order_id: data.order_id, 'order_list._id': data._id }, {
             $set: {
-                'order_list.$.isComment':true
-              }
+                'order_list.$.isComment': true
+            }
         })
-        
+
         this.success('提交成功')
     }
 }

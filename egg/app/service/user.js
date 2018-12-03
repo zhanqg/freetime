@@ -15,9 +15,21 @@ class UserService extends BsseService {
                 password: md5(pwd)
             })
             await user.save()
-
-            this.success('注册成功')
             ctx.session.userInfo = user
+            let userInfo = {
+                avatar: user.avatar,
+                day: user.day,
+                gender: user.gender,
+                month: user.month,
+                nickname: user.nickname,
+                username: user.username,
+                year: user.year
+            }
+            ctx.body = {
+                code: 200,
+                userInfo,
+                msg: '注册成功'
+            }
 
         } else {
             if (data.nickname === nickname) {
@@ -37,8 +49,23 @@ class UserService extends BsseService {
                 this.error('密码错误')
             } else {
                 ctx.session.userInfo = data
-                this.success('登录成功')
-                
+                let user = ctx.session.userInfo
+                let userInfo = {
+                    avatar: user.avatar,
+                    day: user.day,
+                    gender: user.gender,
+                    month: user.month,
+                    nickname: user.nickname,
+                    username: user.username,
+                    year: user.year
+                }
+                ctx.body = {
+                    code: 200,
+                    msg: '登录成功',
+                    userInfo: userInfo
+                }
+                // this.success('登录成功')
+
             }
         }
     }
@@ -50,15 +77,44 @@ class UserService extends BsseService {
             this.error('用户名不存在')
             return
         }
-        this.ctx.body = data
+        let userInfo = {
+            avatar: data.avatar,
+            day: data.day,
+            gender: data.gender,
+            month: data.month,
+            nickname: data.nickname,
+            username: data.username,
+            _id:data._id,
+            year: data.year
+        }
+        this.ctx.body = {
+            code:200,
+            userInfo
+        }
     }
 
     // 修改保存用户
     async saveUser(data) {
+        
         if (data.nickname === this.ctx.session.userInfo.nickname) {
             await this.ctx.model.Admin.updateOne({ '_id': data.id }, data)
             this.ctx.session.userInfo['nickname'] = data.nickname
-            this.success('更改成功')
+            let datas = await this.ctx.model.Admin.findOne({ '_id': data.id })
+            this.ctx.body = {
+                code: 200,
+                msg: '更改成功',
+                userInfo: {
+                    avatar: datas.avatar,
+                    day: datas.day,
+                    gender: datas.gender,
+                    month: datas.month,
+                    nickname: datas.nickname,
+                    username: datas.username,
+                    _id:datas._id,
+                    year: datas.year
+                }
+            }
+            // this.success('更改成功')
         } else {
             let user = await this.ctx.model.Admin.findOne({ nickname: data.nickname })
             if (user) {
