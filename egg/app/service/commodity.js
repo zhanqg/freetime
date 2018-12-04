@@ -58,7 +58,7 @@ class CommodityService extends BsseService {
                     item.comment_nickname = '匿名人士'
                     delete item.comment_uid
                     item.comment_avatar = 'http://img4.imgtn.bdimg.com/it/u=198369807,133263955&fm=27&gp=0.jpg'
-                }
+                } 
             })
             return ctx.body = {
                 code: 200,

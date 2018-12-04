@@ -43,7 +43,7 @@ export default {
             rate: 5,
             message: '',
             back: true,
-            checked: true,
+            checked: false,
             goodsOne: '',
             id: '',  //商品id
             _id: '',   // 数据库单条id

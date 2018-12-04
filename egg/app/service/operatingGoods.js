@@ -166,8 +166,6 @@ class OperatingGoodsService extends BsseService {
                     uid,
                     order_id
                 }
-                // shopList[i].uid = uid
-                // shopList[i].order_id = '112345'
             }
         }
         // 计算商品的总价（后端计算）
@@ -210,7 +208,7 @@ class OperatingGoodsService extends BsseService {
             rate: data.rate,
             anonymous: data.anonymous,
             content: data.content,
-            comment_avatar: userInfo.avatar
+            comment_avatar: userInfo.avatar,
         }
         const comment = new ctx.model.Comment(datas)
         await comment.save()

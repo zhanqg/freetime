@@ -39,7 +39,7 @@
           <div v-show="active == 1" class="active-1" >
               <div class='comment' v-for="val of comment" :key="val._id">
                 <div class="comment-content">
-                    <div class='avatar'><img :src="val.comment_avatar" alt="" srcset=""></div>
+                    <div class='avatar'><img :src="val.comment_avatar" :onerror="defaultImg" alt="" srcset=""></div>
                     <div class='desc border-bottom'>
                         <p class='fist'>
                             <span class='name'>{{val.comment_nickname}}：</span>

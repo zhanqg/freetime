@@ -1,8 +1,8 @@
 'use strict';
+var fs = require('fs');
 
 const BsseService = require('./base')
 class UserOperationService extends BsseService {
-
 
     // 查询商品是否已经收藏
     async isCollection(res) {
@@ -107,6 +107,9 @@ class UserOperationService extends BsseService {
             code: 200,
             defaultAdd
         }
+
+
+
     }
 
     // 设置单条默认收获地址
@@ -145,8 +148,8 @@ class UserOperationService extends BsseService {
             },
             {
                 $match: {
-                    comment_uid: uid,
-                    anonymous: true
+                    comment_uid: this.app.mongoose.Types.ObjectId(uid),
+                    // anonymous: true
                 },
             },
         ]).sort({ comment_time: -1 }).skip(skip).limit(pageSize)
@@ -197,12 +200,9 @@ class UserOperationService extends BsseService {
         }
     }
 
-    // 查询单条 评价
+    // 查询单条 评价详情
     async evaluateOne(_id) {
         const { ctx } = this
-        // const data2 = await ctx.model.Comment.findOne({ _id })
-        // const data3 = await ctx.model.Goods.findOne({ id: data2.cid })
-        // const aa =  await ctx.model.Goods.findOne({ id: data2.cid })
         const evaluateOne = await ctx.model.Comment.aggregate([
             {
                 $lookup: {
@@ -213,12 +213,20 @@ class UserOperationService extends BsseService {
                 }
             },
             {
+                $lookup: {
+                    from: "admin",
+                    localField: "comment_uid",
+                    foreignField: "_id",
+                    as: "user"
+                }
+            },
+            {
                 $match: {
                     '_id': this.app.mongoose.Types.ObjectId(_id)
                 },
             },
         ])
-        
+
         ctx.body = {
             code: 200,
             evaluateOne: evaluateOne[0],

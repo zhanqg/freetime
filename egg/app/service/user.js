@@ -2,6 +2,7 @@
 
 const BsseService = require('./base')
 const md5 = require('md5')
+const USERStR = '_id avatar day gender month nickname username year'
 class UserService extends BsseService {
     // 处理用户注册
     async register(nickname, pwd) {
@@ -72,49 +73,40 @@ class UserService extends BsseService {
 
     // 用户查询
     async queryUser() {
-        let data = await this.ctx.model.Admin.findOne({ 'username': this.ctx.session.userInfo.username })
-        if (!data) {
+        let userInfo = await this.ctx.model.Admin.findById(this.ctx.session.userInfo._id, USERStR)
+        if (!userInfo) {
             this.error('用户名不存在')
             return
         }
-        let userInfo = {
-            avatar: data.avatar,
-            day: data.day,
-            gender: data.gender,
-            month: data.month,
-            nickname: data.nickname,
-            username: data.username,
-            _id:data._id,
-            year: data.year
-        }
         this.ctx.body = {
-            code:200,
+            code: 200,
             userInfo
         }
     }
 
     // 修改保存用户
     async saveUser(data) {
-        
+        if (data.avatar) {  // 判断是否修改头像
+            let { saveDir } = await this.service.tools.getUploadFile(data.avatar)
+            data.avatar = saveDir
+            this.ctx.session.userInfo['avatar'] = data.avatar
+            await this.ctx.model.Comment.updateMany({ comment_uid: data.id }, {
+                $set: {
+                    comment_avatar: saveDir
+                }
+            })
+        }
         if (data.nickname === this.ctx.session.userInfo.nickname) {
             await this.ctx.model.Admin.updateOne({ '_id': data.id }, data)
             this.ctx.session.userInfo['nickname'] = data.nickname
-            let datas = await this.ctx.model.Admin.findOne({ '_id': data.id })
+
+            let user = await this.ctx.model.Admin.findById(data.id, USERStR)
+
             this.ctx.body = {
                 code: 200,
                 msg: '更改成功',
-                userInfo: {
-                    avatar: datas.avatar,
-                    day: datas.day,
-                    gender: datas.gender,
-                    month: datas.month,
-                    nickname: datas.nickname,
-                    username: datas.username,
-                    _id:datas._id,
-                    year: datas.year
-                }
+                user
             }
-            // this.success('更改成功')
         } else {
             let user = await this.ctx.model.Admin.findOne({ nickname: data.nickname })
             if (user) {
@@ -123,7 +115,12 @@ class UserService extends BsseService {
             } else {
                 await this.ctx.model.Admin.updateOne({ '_id': data.id }, data)
                 this.ctx.session.userInfo['nickname'] = data.nickname
-                this.success('更改成功')
+                let user = await this.ctx.model.Admin.findById(data.id, USERStR)
+                this.ctx.body = {
+                    code: 200,
+                    msg: '更改成功',
+                    user
+                }
             }
         }
     }

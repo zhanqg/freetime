@@ -4,7 +4,7 @@ module.exports = appInfo => {
   const config = exports = {};
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1542473992654_7948';
-  
+
   // add your config here
   config.middleware = ['isLogin'];
 
@@ -39,5 +39,12 @@ module.exports = appInfo => {
     rolling: false,  //在每次请求时强行设置cookie，这将重置cookie过期时间（默认：false）
     renew: false,  //(boolean) renew session when session is nearly expired,
   }
+
+  config.bodyParser = {
+    jsonLimit: '100mb',
+  }
+
+  config.url = 'http://localhost:3000'
+  config.uploadDir = 'app/public/avatar/'
   return config;
 };

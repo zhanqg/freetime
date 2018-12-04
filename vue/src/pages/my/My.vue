@@ -7,7 +7,7 @@
       <p @click="login">登录/注册</p>
     </div>
     <div class="avatar" v-else>
-      <img :src="userName.avatar">
+      <img :src="userName.avatar" :onerror="defaultImg">
       <p class="usename">欢迎您：{{userName.nickname}}</p>
       <p @click="loginOut">退出登录</p>
       <van-icon name="setting" class="setting" @click="setting"/>
@@ -34,12 +34,12 @@
       <van-cell icon="gift" title="最近浏览" is-link @click="browse"/>
     </van-cell-group>
     <van-popup v-model="show" position="right" class="popup" :overlay="false">
-      <BaseTitle title="个人资料" :back="back" @goBack="show=false"/>
+      <BaseTitle title="个人资料" :back="back" @goBack="goBack"/>
       <van-cell-group>
         <div id="setAvatar" class="set-avatar border-bottom">
           <span>头像</span>
           <div>
-            <img v-if="userName" :src="userName.avatar" alt srcset>
+            <img v-if="userName" :onerror="defaultImg" :src="tempAvatar || userName.avatar" alt srcset>
             <van-icon name="arrow"/>
           </div>
           <div class="cropper">
@@ -112,7 +112,7 @@
 
 <script>
 import BaseTitle from "pages/other/BaseTitle";
-import Cropper from "pages/other/Cropper";
+import Cropper from "./components/Cropper";
 import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "My",
@@ -121,12 +121,12 @@ export default {
     Cropper
   },
 
-  data() {
+  data() { 
     return {
-
       show: false,
       nickname: "",
       username: "",
+      defaultImg: 'this.src="' + require('img/vue.jpg') + '"',
       gender: "男",
       email: "",
       back: true,
@@ -155,7 +155,8 @@ export default {
         height: "55px",
         "border-radius": "50%",
         display: "none"
-      }
+      },
+      tempAvatar: '',   //裁剪的临时图片
     };
   },
 
@@ -164,8 +165,17 @@ export default {
   },
 
   methods: {
+    goBack() {
+      this.show = false
+      setTimeout(() => {
+        this.tempAvatar = ''
+      }, 300);
+    },
+
     callback(img) {
-      // this.avatar = img;
+      console.log(img);
+      
+      this.tempAvatar = img;
     },
     ...mapMutations({
       setName: "USERNAME"
@@ -257,13 +267,14 @@ export default {
         month: this.month,
         day: this.day,
         id: this.id,
-        nickname: this.nickname
+        nickname: this.nickname,
+        avatar: this.tempAvatar ? this.tempAvatar : undefined
       };
       try {
         const { data } = await this.Api.saveUser(datas);
         if (data.code == 200) {
           this.loading = false;
-          this.setName(data.userInfo);
+          this.setName(data.user);
           this.Toast(data.msg);
         } else {
           this.Toast(data.msg);
@@ -296,7 +307,8 @@ export default {
     } catch (error) {
       this.Toast("网络错误");
     }
-  }
+  },
+
 };
 </script>
 

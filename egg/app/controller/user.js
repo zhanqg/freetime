@@ -33,16 +33,7 @@ class UserController extends BaseController {
     async keepLogin() {
         const { ctx } = this
         if (ctx.session.userInfo) {
-            let user = ctx.session.userInfo
-            let userInfo = {
-                avatar: user.avatar,
-                day: user.day,
-                gender: user.gender,
-                month: user.month,
-                nickname: user.nickname,
-                username: user.username,
-                year: user.year
-            }
+            let userInfo = await this.ctx.model.Admin.findById(ctx.session.userInfo._id, '_id avatar day gender month nickname username year')
             ctx.body = {
                 code: 200,
                 userInfo

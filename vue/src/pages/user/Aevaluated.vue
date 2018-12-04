@@ -4,7 +4,7 @@
         <div class="aevaluated-warp">
             <BaseTitle :back='back' title="评价详情" @goBack='goBack'/>
             <div v-if="evaluateOne" class="evaluateOne"> 
-                <img :src="evaluateOne.comment_avatar" alt="" srcset="">
+                <img :src="evaluateOne.user[0].avatar" alt="" srcset="">
                 <div class="middle">
                     <span class="name">{{evaluateOne.comment_nickname}}</span>
                     <p class="rate"><van-rate color="#e0322b" :size='size' readonly v-model="evaluateOne.rate" /></p>
