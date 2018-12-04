@@ -200,14 +200,28 @@ class UserOperationService extends BsseService {
     // 查询单条 评价
     async evaluateOne(_id) {
         const { ctx } = this
-        const data2 = await ctx.model.Comment.findOne({ _id })
-        const data3 = await ctx.model.Goods.findOne({ id: data2.cid })
+        // const data2 = await ctx.model.Comment.findOne({ _id })
+        // const data3 = await ctx.model.Goods.findOne({ id: data2.cid })
+        // const aa =  await ctx.model.Goods.findOne({ id: data2.cid })
+        const evaluateOne = await ctx.model.Comment.aggregate([
+            {
+                $lookup: {
+                    from: "goods",
+                    localField: "cid",
+                    foreignField: "id",
+                    as: "goods"
+                }
+            },
+            {
+                $match: {
+                    '_id': this.app.mongoose.Types.ObjectId(_id)
+                },
+            },
+        ])
+        
         ctx.body = {
             code: 200,
-            data: {
-                evaluateOne: data2,
-                goods: data3
-            }
+            evaluateOne: evaluateOne[0],
         }
     }
 }

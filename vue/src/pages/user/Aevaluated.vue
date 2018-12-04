@@ -4,18 +4,18 @@
         <div class="aevaluated-warp">
             <BaseTitle :back='back' title="评价详情" @goBack='goBack'/>
             <div v-if="evaluateOne" class="evaluateOne"> 
-                <img :src="evaluateOne.evaluateOne.comment_avatar" alt="" srcset="">
+                <img :src="evaluateOne.comment_avatar" alt="" srcset="">
                 <div class="middle">
-                    <span class="name">{{evaluateOne.evaluateOne.comment_nickname}}</span>
-                    <p class="rate"><van-rate color="#e0322b" :size='size' readonly v-model="evaluateOne.evaluateOne.rate" /></p>
+                    <span class="name">{{evaluateOne.comment_nickname}}</span>
+                    <p class="rate"><van-rate color="#e0322b" :size='size' readonly v-model="evaluateOne.rate" /></p>
                 </div>
-                <div class="time">{{evaluateOne.evaluateOne.comment_time}}</div>
+                <div class="time">{{evaluateOne.comment_time}}</div>
             </div>
-            <div v-if="evaluateOne.evaluateOne" class="content border-bottom">评价内容：{{evaluateOne.evaluateOne.content}}</div>
+            <div  class="content border-bottom">评价内容：{{evaluateOne.content}}</div>
             <div class="goods" v-if="evaluateOne.goods">
-                <img  :src="evaluateOne.goods.image_path" alt="" srcset="">
-                <p class="name">{{evaluateOne.goods.name}}</p>
-                <p class="cart" @click="addCard(evaluateOne.evaluateOne.cid)"><van-icon name="cart" /></p>
+                <img  :src="evaluateOne.goods[0].image_path" alt="" srcset="">
+                <p class="name">{{evaluateOne.goods[0].name}}</p>
+                <p class="cart" @click="addCard(evaluateOne.cid)"><van-icon name="cart" /></p>
             </div>
             <div class="btn">
                 <van-button type="primary" size="large" @click='goBack'>返回</van-button>
@@ -67,13 +67,10 @@ export default {
 
     async created() {
         let _id = this.$route.params._id
-        
         try {
             const {data} = await this.Api.evaluateOne(_id)
             if (data.code == 200) {
-                this.evaluateOne = data.data
-                console.log(this.evaluateOne);
-                
+                this.evaluateOne = data.evaluateOne
             }
         } catch (error) {
             this.Toast('网络错误')
@@ -115,6 +112,8 @@ export default {
     .content
         margin 15px 10px 10px 10px
         padding-bottom 15px
+        line-height 1.4
+        letter-spacing 1px
     .goods
         display flex 
         padding 0 10px
