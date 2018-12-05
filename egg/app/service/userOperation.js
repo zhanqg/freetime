@@ -80,10 +80,19 @@ class UserOperationService extends BsseService {
     async collectionList() {
         const { ctx } = this
         const { _id } = ctx.session.userInfo
-        const collection = await ctx.model.Collection.find({ uid: _id }).sort({ 'add_time': -1 })
+        let pageSize = 10
+        let page = ctx.query.page || 1
+        let skip = (page - 1) * pageSize
+        const list = await ctx.model.Collection.find({ uid: _id }).sort({ 'add_time': -1 }).skip(skip).limit(pageSize)
+        const count = await ctx.model.Collection.find({ uid: _id }).count()
         ctx.body = {
             code: 200,
-            collection
+            data: {
+                count,
+                list,
+                page
+            }
+            
         }
     }
 
@@ -149,7 +158,6 @@ class UserOperationService extends BsseService {
             {
                 $match: {
                     comment_uid: this.app.mongoose.Types.ObjectId(uid),
-                    // anonymous: true
                 },
             },
         ]).sort({ comment_time: -1 }).skip(skip).limit(pageSize)

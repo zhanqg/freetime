@@ -130,7 +130,7 @@ export default class Api {
             *                                province：省，city：市，county：区，addressDetail：详情地址，
             *                                areaCode：地区代码，id：修改地址时候要传id
      * deleteAddress        删除地址            参数： id：地址id
-     * getCollection        查询我的收藏
+     * getCollection        查询我的收藏    参数：page，页码，默认第一页
      * register             注册
      * login                登录
      * getMyOrder           订单查询        参数：evaluate：用来判断是不是查询订单，默认false
@@ -160,8 +160,10 @@ export default class Api {
         })
     }
 
-    static getCollection() {
-        return axios.get(`/api/collection/list`)
+    static getCollection(page = 1) {
+        return axios.get(`/api/collection/list`, {
+            params: { page }
+        })
     }
 
     static register(nickname, password) {

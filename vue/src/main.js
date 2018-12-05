@@ -5,7 +5,7 @@ import store from './store'
 import { Toast, Dialog } from 'vant'
 import Api from './api'
 Vue.prototype.Api = Api           // 请求接口类
-Vue.prototype.Toast = Toast       //全局提示
+Vue.prototype.Toast = Toast       // 全局提示
 Vue.prototype.Dialog = Dialog     // 全局弹框
 import './vant'                   // 有赞组件库
 import FastClick from 'fastclick' // 解决300毫秒延时

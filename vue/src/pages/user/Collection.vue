@@ -3,16 +3,16 @@
 <transition name='bounce'>
     <div class="browse-warp">
         <BaseTitle :back='back' title="我的收藏" @goBack='goBack'/>
-        <Scroll v-show="!showFlag" :data='list' class="scroll">
+        <Scroll  :pullup='true' @scrollToEnd='scrollToEnd'  :data='dataArr' class="scroll">
             <div>
-                <GoodsList :list='list' :isCollection='isCollection' @details='details' @close='close'/>
+                <GoodsList  :list='dataArr' :isCollection='isCollection' @details='details' @close='close'/>
             </div>
-            <div v-if="!list.length" class="null">
-                 {{userName&&!showFlag? '暂无收藏~~' : '请先登录噢~~'}}
+            <div v-if="!dataArr.length" class="null">
+                 {{userName ?'暂无收藏~~' : '请先登录噢~~'}}
             </div>
+            <div v-show="loading2" class="van-loading van-loading--circular van-loading--white" style="color: white;"><span class="van-loading__spinner van-loading__spinner--circular"><svg viewBox="25 25 50 50" class="van-loading__circular"><circle cx="50" cy="50" r="20" fill="none"></circle></svg></span></div>
         </Scroll>
         <router-view/>
-         <BaseLoding :showFlag='showFlag'/>
     </div>
 </transition>     
 </template>
@@ -23,9 +23,10 @@ import BaseTitle from 'pages/other/BaseTitle'
 import GoodsList from 'pages/other/GoodsList'
 import {loading} from 'js/mixin'
 import {mapActions,mapMutations,mapGetters} from 'vuex'
+import {page} from 'js/mixin'
 export default {
     name: 'Collection',
-    mixins: [loading],
+    mixins: [loading,page],
     components: {
         Scroll,
         BaseTitle,
@@ -41,7 +42,9 @@ export default {
             back: true,
             isCollection: true,
             list: [],
-            isText: false
+            isText: false,
+            page: 1,
+            loading2: false,
         }
     },
 
@@ -60,28 +63,38 @@ export default {
             this.$router.go(-1)
         },
 
-        async getCollection() {
+        async getCollection(flag) {
             if (!this.userName) {
                 this.showFlag = false
                 return
             }
             try {
-                this.showFlag = true
-                const {data} = await this.Api.getCollection()
+                if (this.isLocked()) return // 必须等待上一次请求完成
+                this.locked()//开始请求之前锁住
+                // this.showFlag = true
+                this.loading2 = true
+                const {data} = await this.Api.getCollection(this.page)
                 if (data.code == 200) {
-                    this.showFlag = false
-                    this.list = data.collection
+                    // this.showFlag = false
+                    this.loading2 = false
+                    this.setTotal(data.data.count)  // 总条数
+                    this.unLocked() // 解锁
+                    if (flag) {
+                        this.setNewData(data.data.list)
+                    } else {
+                        this.dataArr = data.data.list
+                    }
                 } else {
                     this.isText = true
                 }
             } catch (error) {
+                this.unLocked() // 解锁
                 this.Toast('网络错误')
-                this.showFlag = false
+                this.loading2 = false
             }
         },
 
         details(item) {
-            
             this.setGoodDetails(item)
             this.$router.push({path:`/user/collection/details`,query: {id:item.cid}})
             setTimeout(() => {
@@ -91,11 +104,11 @@ export default {
 
         // 这里是取消收藏
         async close(item,index) {
-            this.list.splice(index,1)
+            this.dataArr.splice(index,1)
             try {
                 const {data} = await this.Api.cancelCollection(item.cid)
                 if (data.code == 200) {
-                    this.Toast(data.msg);
+                    // this.getCollection()
                 }
             } catch (error) {
                 this.Toast('网络错误')
@@ -107,6 +120,19 @@ export default {
         ...mapMutations({
             setGoodDetails: 'GOODSDETAILS'
         }),
+
+        // 上拉加载
+        scrollToEnd() {
+            if (this.dataArr.length >= 10) {
+                if (this.hasMore()) {
+                    this.page++
+                    this.getCollection(true)
+                } else {
+                    this.Toast('没有很多数据了~~')
+                }
+            }
+            
+        }
     }
 }
 </script>

@@ -6,7 +6,7 @@
             <img :src="evaluateImg" class="evaluateImg" alt="">
             <van-tabs v-model="active" >
                 <van-tab :title="val.title+ 10" v-for="val of tabs" :key="val.id">
-                     <Scroll class="scroll" v-if="active==0"  :pullup='pullup' :data='alreadyEvaluatedList' :listenScroll='listenScroll' :probeType='probeType' @scrollToEnd='scrollToEnd'>
+                     <Scroll class="scroll" v-if="active==0"  :data='alreadyEvaluatedList'  >
                          <div class="warp">
                              <div class="item border-bottom" v-for="(val,index) in evaluateList" :key="index">
                                  <img :onerror="defaultImg" :src="val.image_path" alt="" srcset="">
@@ -24,7 +24,7 @@
                      </Scroll>    
 
 
-                     <Scroll class="scroll" v-if="active==1"  :pullup='pullup' :data='dataArr' :listenScroll='listenScroll' :probeType='probeType' @scrollToEnd='scrollToEnd2'>
+                     <Scroll class="scroll" v-if="active==1"  :pullup='true' :data='dataArr'  @scrollToEnd='scrollToEnd2'>
                          <div class="warp">
                             
                               <h6 v-if="!dataArr.length " class="noevaluate">
@@ -84,10 +84,6 @@ export default {
             page: 1,
             page2:1,
             alreadyEvaluatedList: '',
-            pullup: true,
-            listenScroll:true,
-            probeType: 3,
-            // locked: false,
             loading: false,
             loading2: false,
             defaultImg: 'this.src="' + require('img/vue.jpg') + '"',
@@ -144,7 +140,6 @@ export default {
         },
 
         async scrollToEnd() {
-            console.log(11111111);
             
         },
 

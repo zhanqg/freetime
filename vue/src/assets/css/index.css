@@ -19,7 +19,11 @@
 .bounce-leave-active {
     animation: bounce-in .3s reverse;
 }
-
+.swip {
+    width: 94px!important;
+    transform: translateX(47px)!important;
+    transition-duration: 0.4s!important;
+}
 @keyframes bounce-in {
     0% {
         transform: translate3d(100%,0,0)
