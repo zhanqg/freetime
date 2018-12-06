@@ -1,7 +1,7 @@
 <template>
 <transition name='bounce'>
     <div class="search-content">
-        <Scroll :data='list' class="scroll">
+        <Scroll :data='list' class="scroll" :pullup='true' @scrollToEnd='scrollToEnd'>
             <ul>
                 <li class="item border-bottom"  v-for="val of list" @click="details(val)" :key="val.id" v-html="keyWord(val.name,value)">
                 </li>
@@ -112,6 +112,9 @@ export default {
                      this.clearSearchHistory() 
                 })
 
+        },
+        scrollToEnd() {
+            this.$emit('scrollToEnd')
         }
     },
 

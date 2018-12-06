@@ -73,10 +73,17 @@ class CommodityService extends BsseService {
 
     // 搜索
     async search(value) {
-        const list = await this.ctx.model.Goods.find({ 'name': { $regex: value } })
+        let pageSize = 20
+        let page = this.ctx.request.body.page || 1
+        let skip = (page - 1) * pageSize
+        const count = await this.ctx.model.Goods.find({ 'name': { $regex: value } }).count()
+        const list = await this.ctx.model.Goods.find({ 'name': { $regex: value } }).skip(skip).limit(pageSize)
         this.ctx.body = {
             code: 200,
-            list
+            data: {
+                list,
+                count
+            }
         }
     }
 }

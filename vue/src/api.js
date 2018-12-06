@@ -12,9 +12,10 @@ export default class Api {
         return axios.get('/api/recommend')
     }
 
-    static search(value) {
+    static search(value, page = 1) {
         return axios.post('/api/search', {
-            value
+            value,
+            page
         })
     }
 

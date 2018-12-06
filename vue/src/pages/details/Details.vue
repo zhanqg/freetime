@@ -1,15 +1,34 @@
 <template>
   <transition name="bounce">
     <div class="goods">
-      <Scroll class="scroll" :bounce='bounce' ref="scroll" :pullup="true" @scrollToEnd="scrollToEnd">
+      <Scroll
+        class="scroll"
+        :bounce="bounce"
+        ref="scroll"
+        :pullup="true"
+        @scrollToEnd="scrollToEnd"
+      >
         <div>
-          <van-swipe class="goods-swipe" :autoplay="3000">
+          <van-swipe class="goods-swipe" :autoplay="3000" @change="onChange" :touchable='false'>
             <van-swipe-item>
-              <img :src="goods.image" :onerror="defaultImg">
+              <img
+                :src="goods.image"
+                @click="showImagePreview"
+                ref="swiperImg"
+                :onerror="defaultImg"
+              >
             </van-swipe-item>
             <van-swipe-item>
-              <img :src="goods.image" :onerror="defaultImg">
+              <img
+                :src="goods.image"
+                @click="showImagePreview"
+                ref="swiperImg2"
+                :onerror="defaultImg"
+              >
             </van-swipe-item>
+            <div class="custom-indicator" slot="indicator">
+              {{ current + 1 }}/2
+            </div>
           </van-swipe>
           <div v-show="!showFlag">
             <van-cell-group>
@@ -121,6 +140,7 @@ import Scroll from "pages/other/Scroll";
 import Back from "pages/other/Back";
 import { loading, goBack } from "js/mixin";
 import { mapGetters, mapActions, mapMutations } from "vuex";
+import { ImagePreview } from 'vant';
 import AdditionAndSubtraction from "pages/other/AdditionAndSubtraction";
 export default {
   name: "Details",
@@ -140,6 +160,7 @@ export default {
       showBase: false, // 显示sku
       newCount: 1,
       comment: "",
+       current: 0,
       bounce: {
         bottom: false
       }
@@ -153,6 +174,9 @@ export default {
   methods: {
     formatPrice() {
       return "¥" + (this.goods.price / 100).toFixed(2);
+    },
+    onChange(index) {
+      this.current = index;
     },
 
     onClickCart() {
@@ -168,6 +192,8 @@ export default {
       try {
         const { data } = await this.Api.goodOne(id);
         if (data.code == 200) {
+          this.$refs.swiperImg.style.opacity = 1;
+          this.$refs.swiperImg2.style.opacity = 1;
           if (data.goodsOne.id) {
             this.setBrowse(data.goodsOne);
             this.goods = data.goodsOne;
@@ -292,6 +318,18 @@ export default {
       setTimeout(() => {
         this.$refs.scroll.refresh();
       }, 20);
+    },
+
+    // 预览图片
+    showImagePreview() {
+      ImagePreview({
+        images: [
+          this.goods.image,
+          this.goods.image
+        ],
+        startPosition: 0,
+        showIndicators:true
+      });
     }
   },
 
@@ -303,18 +341,19 @@ export default {
 
   mounted() {
     document.querySelector(".van-tabs__line").classList.add("swip");
+    this.$refs.swiperImg.style.opacity = 0;
+    this.$refs.swiperImg2.style.opacity = 0;
   },
 
   watch: {
     active(newV, oldV) {
       console.log(newV);
       if (newV == 1) {
-        document.querySelector(".van-tabs__line").classList.remove("swip")
-        this.bounce.bottom = true
+        document.querySelector(".van-tabs__line").classList.remove("swip");
+        this.bounce.bottom = true;
       } else {
-        this.bounce.bottom = false
+        this.bounce.bottom = false;
       }
-      
     }
   }
 };

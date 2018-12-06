@@ -52,7 +52,8 @@
      </div>
 </div>
      <BaseLoding :showFlag='showFlag'/>
-     <HomeSearch v-show="query" :list='serachList' @details='searchDetails' :len='len' :value='value' @vals='vals'/>
+     <HomeSearch v-show="query" @scrollToEnd='scrollToEnd' :list='dataArr' @details='searchDetails' :len='len' :value='value' @vals='vals'/>
+     <div v-show="searchLoading" class="van-loading van-loading--circular van-loading--white" style="color: white;z-index:999"><span class="van-loading__spinner van-loading__spinner--circular"><svg viewBox="25 25 50 50" class="van-loading__circular"><circle cx="50" cy="50" r="20" fill="none"></circle></svg></span></div>
      <router-view/>
 
  </div>
@@ -69,8 +70,9 @@ import BaseRefresh from 'pages/other/BaseRefresh'
 import {mapActions,mapMutations,mapGetters} from 'vuex'
 import {loading} from 'js/mixin'
 import {throttle} from 'js/util'
+import {page} from 'js/mixin'
 export default {
-    mixins: [loading],
+    mixins: [loading,page],
     data() {
         return {
             value: '',
@@ -92,9 +94,10 @@ export default {
             trans: false,
             opac: 0,
             currentCity: '',
-            serachList: [],     // 搜索结果
             query: false,       // 显示搜索
             len: false,        // 是否含有搜索结果
+            page: 1,
+            searchLoading: false,
         }
     },
     
@@ -236,17 +239,28 @@ export default {
         },
 
         //搜索
-        async search(value) {
+        async search(value,flag) {
             try {
+                if (this.isLocked()) return // 必须等待上一次请求完成
+                this.locked()//开始请求之前锁住
+                this.searchLoading = true
                 this.len = false
-                const {data} = await this.Api.search(value)
+                const {data} = await this.Api.search(value,this.page)
                 if (data.code == 200) {
-                    this.serachList = data.list
-                    if (!this.serachList.length) {
+                    this.setTotal(data.data.count)  // 总条数
+                    this.unLocked() // 解锁
+                    this.searchLoading = false
+                    if (flag) {
+                        this.setNewData(data.data.list)
+                    } else {
+                        this.dataArr = data.data.list
+                    }
+                    if (!this.dataArr.length) {
                         this.len = true
                     }
                 }
             } catch (error) {
+                this.unLocked() // 解锁
                 this.len = false
                 this.Toast('网络错误')
             }
@@ -269,7 +283,10 @@ export default {
             let width =  '100%'
             this.tran(width)
             this.query = false
-            this.value = ''
+            setTimeout(() => {
+                this.value = ''
+            }, 300);
+            
         },
 
         tran(width) {
@@ -278,18 +295,29 @@ export default {
         },
 
         vals(val) {
-            console.log(val);
             this.value = val
-        } 
+        } ,
+
+        scrollToEnd() {
+            if (this.dataArr.length >= 20) {
+                if (this.hasMore()) {
+                    this.page++
+                    this.search(this.value,true)
+                } else {
+                    this.Toast('没有很多数据了~~')
+                }
+            }
+        }
     },
     
     created() {
         this.getHome()
         // 节流函数处理
         this.$watch('value',throttle((newQuery) => {
-            this.serachList = []
+            this.dataArr = []
             if (this.value) {
-                this.search(this.value)
+                this.page = 1
+                this.search(this.value,false)
             } 
         },500,1000))
     },

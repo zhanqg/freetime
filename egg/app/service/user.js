@@ -86,16 +86,22 @@ class UserService extends BsseService {
 
     // 修改保存用户
     async saveUser(data) {
+        // 更改评论表里面信息
         if (data.avatar) {  // 判断是否修改头像
             let { saveDir } = await this.service.tools.getUploadFile(data.avatar)
             data.avatar = saveDir
             this.ctx.session.userInfo['avatar'] = data.avatar
             await this.ctx.model.Comment.updateMany({ comment_uid: data.id }, {
                 $set: {
-                    comment_avatar: saveDir
+                    comment_avatar: saveDir,
                 }
             })
-        }
+        } 
+        await this.ctx.model.Comment.updateMany({ comment_uid: data.id }, {
+            $set: {
+                comment_nickname: data.nickname
+            }
+        })
         if (data.nickname === this.ctx.session.userInfo.nickname) {
             await this.ctx.model.Admin.updateOne({ '_id': data.id }, data)
             this.ctx.session.userInfo['nickname'] = data.nickname

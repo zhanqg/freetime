@@ -71,7 +71,6 @@ export default {
             try {
                 if (this.isLocked()) return // 必须等待上一次请求完成
                 this.locked()//开始请求之前锁住
-                // this.showFlag = true
                 this.loading2 = true
                 const {data} = await this.Api.getCollection(this.page)
                 if (data.code == 200) {
