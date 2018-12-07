@@ -91,17 +91,8 @@ class UserService extends BsseService {
             let { saveDir } = await this.service.tools.getUploadFile(data.avatar)
             data.avatar = saveDir
             this.ctx.session.userInfo['avatar'] = data.avatar
-            await this.ctx.model.Comment.updateMany({ comment_uid: data.id }, {
-                $set: {
-                    comment_avatar: saveDir,
-                }
-            })
         } 
-        await this.ctx.model.Comment.updateMany({ comment_uid: data.id }, {
-            $set: {
-                comment_nickname: data.nickname
-            }
-        })
+       
         if (data.nickname === this.ctx.session.userInfo.nickname) {
             await this.ctx.model.Admin.updateOne({ '_id': data.id }, data)
             this.ctx.session.userInfo['nickname'] = data.nickname

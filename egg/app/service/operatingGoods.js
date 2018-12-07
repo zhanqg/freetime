@@ -197,18 +197,15 @@ class OperatingGoodsService extends BsseService {
 
     // 商品评论
     async comment(data) {
-        console.log(data);
         const { ctx } = this
         const userInfo = ctx.session.userInfo
         const datas = {
             comment_uid: userInfo._id,
-            comment_nickname: userInfo.nickname,
             cid: data.id,
             comment_time: ctx.helper.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),   // 订单创建时间,
             rate: data.rate,
             anonymous: data.anonymous,
             content: data.content,
-            comment_avatar: userInfo.avatar,
         }
         const comment = new ctx.model.Comment(datas)
         await comment.save()

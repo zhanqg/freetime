@@ -127,7 +127,7 @@ export default {
                     this.page++
                     this.getCollection(true)
                 } else {
-                    this.Toast('没有很多数据了~~')
+                    this.Toast('没有更多数据了~~')
                 }
             }
             

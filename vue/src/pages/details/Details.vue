@@ -9,7 +9,7 @@
         @scrollToEnd="scrollToEnd"
       >
         <div>
-          <van-swipe class="goods-swipe" :autoplay="3000" @change="onChange" :touchable='false'>
+          <van-swipe class="goods-swipe" :autoplay="3000" @change="onChange" :touchable="false">
             <van-swipe-item>
               <img
                 :src="goods.image"
@@ -26,9 +26,7 @@
                 :onerror="defaultImg"
               >
             </van-swipe-item>
-            <div class="custom-indicator" slot="indicator">
-              {{ current + 1 }}/2
-            </div>
+            <div class="custom-indicator" slot="indicator">{{ current + 1 }}/2</div>
           </van-swipe>
           <div v-show="!showFlag">
             <van-cell-group>
@@ -69,14 +67,16 @@
                     class="active-0"
                   ></div>
                   <div v-show="active == 1" class="active-1">
-                    <div class="comment" v-for="val of comment" :key="val._id">
+                    <div class="comment" v-for="val of dataArr" :key="val._id">
                       <div class="comment-content">
                         <div class="avatar">
-                          <img :src="val.comment_avatar" :onerror="defaultImg" alt srcset>
+                          <img v-if="!val.anonymous" :src="val.user[0].avatar" :onerror="defaultImg" alt srcset>
+                          <img v-else :src="val.comment_avatar" alt srcset>
                         </div>
                         <div class="desc border-bottom">
                           <p class="fist">
-                            <span class="name">{{val.comment_nickname}}：</span>
+                            <span class="name" v-if="!val.anonymous">{{val.user[0].nickname}}：</span>
+                            <span class="name" v-else>{{val.comment_nickname}}：</span>
                             <span class="num">{{val.comment_time}}</span>
                           </p>
                           <p class="timer">
@@ -86,7 +86,7 @@
                         </div>
                       </div>
                     </div>
-                    <div v-show="!comment.length" class="nocomment">该商品暂无评论噢~~</div>
+                    <div v-show="!dataArr.length" class="nocomment">该商品暂无评论噢~~</div>
                   </div>
                 </van-tab>
               </van-tabs>
@@ -138,13 +138,13 @@
 <script>
 import Scroll from "pages/other/Scroll";
 import Back from "pages/other/Back";
-import { loading, goBack } from "js/mixin";
+import { loading, goBack, page } from "js/mixin";
 import { mapGetters, mapActions, mapMutations } from "vuex";
-import { ImagePreview } from 'vant';
+import { ImagePreview } from "vant";
 import AdditionAndSubtraction from "pages/other/AdditionAndSubtraction";
 export default {
   name: "Details",
-  mixins: [loading, goBack],
+  mixins: [loading, goBack, page],
   components: {
     Back,
     AdditionAndSubtraction,
@@ -160,7 +160,8 @@ export default {
       showBase: false, // 显示sku
       newCount: 1,
       comment: "",
-       current: 0,
+      current: 0,
+      page: 1,
       bounce: {
         bottom: false
       }
@@ -188,22 +189,49 @@ export default {
     },
 
     // 请求商品详情
-    async goodsItem(id = this.goodsDetails.goodsId) {
+    async goodsItem(id = this.goodsDetails.goodsId, flag = false) {
       try {
-        const { data } = await this.Api.goodOne(id);
+        if (this.isLocked()) return; // 必须等待上一次请求完成
+        this.locked(); //开始请求之前锁住
+        const { data } = await this.Api.goodOne(id, this.page);
         if (data.code == 200) {
+          this.setTotal(data.goods.count); // 总条数
+          this.unLocked(); // 解锁
           this.$refs.swiperImg.style.opacity = 1;
           this.$refs.swiperImg2.style.opacity = 1;
-          if (data.goodsOne.id) {
-            this.setBrowse(data.goodsOne);
-            this.goods = data.goodsOne;
-            this.comment = data.goodsOne.comment;
+
+          if (data.goods.goodsOne) {
+            this.setBrowse(data.goods.goodsOne);
+            this.goods = data.goods.goodsOne;
+          }
+          if (flag) {
+            this.setNewData(data.goods.comment);
+          } else {
+            this.dataArr = data.goods.comment;
           }
         }
       } catch (error) {
         this.showFlag = false;
         this.isCollectionFlag = true;
+        this.unLocked(); // 解锁
         this.Toast("网络错误");
+      }
+    },
+
+    scrollToEnd() {
+      setTimeout(() => {
+        this.$refs.scroll.refresh();
+      }, 20);
+      // 评论分页
+      if (this.active == 1) {
+        if (this.dataArr.length >= 5) {
+          this.page++;
+          if (this.hasMore()) {
+            this.goodsItem(this.id, true);
+          } else {
+            this.Toast("没有更多评论了~~");
+          }
+        }
       }
     },
 
@@ -314,29 +342,22 @@ export default {
 
     ...mapActions(["setBrowse"]),
 
-    scrollToEnd() {
-      setTimeout(() => {
-        this.$refs.scroll.refresh();
-      }, 20);
-    },
-
     // 预览图片
     showImagePreview() {
       ImagePreview({
-        images: [
-          this.goods.image,
-          this.goods.image
-        ],
+        images: [this.goods.image, this.goods.image],
         startPosition: 0,
-        showIndicators:true
+        showIndicators: true
       });
     }
   },
 
   created() {
-    let id = this.$route.query.id;
-    this.goodsItem(id);
-    this.isCollection(this.goodsDetails.goodsId || this.goodsDetails.id || id);
+    this.id = this.$route.query.id;
+    this.goodsItem(this.id);
+    this.isCollection(
+      this.goodsDetails.goodsId || this.goodsDetails.id || this.id
+    );
   },
 
   mounted() {
@@ -347,7 +368,6 @@ export default {
 
   watch: {
     active(newV, oldV) {
-      console.log(newV);
       if (newV == 1) {
         document.querySelector(".van-tabs__line").classList.remove("swip");
         this.bounce.bottom = true;

@@ -93,7 +93,7 @@ export default {
         try {
             const {data} = await this.Api.goodOne(this.id )
             if (data.code == 200) {
-                this.goodsOne = data.goodsOne
+                this.goodsOne = data.goods.goodsOne
             } else {
                 this.Toast('请先登录')
             }

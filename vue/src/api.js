@@ -67,14 +67,14 @@ export default class Api {
     // ===============================================================================================================
     /**
      * 商品详情页面(Details)所有接口
-     * goodOne          请求单个商品详情,        参数： id:商品的id
+     * goodOne          请求单个商品详情,        参数： id:商品的id,page: 商品评论的页码
      * collection       收藏单个商品            参数：  goods:商品的详情信息
      * cancelCollection 取消收藏单个商品        参数：  id:商品的id
      * isCollection     查询商品是否已收藏      参数：  id:商品的id
      * addShop          加入购物车             参数：  id:商品的id
      */
-    static goodOne(id) {
-        return axios.get(`/api/goods/one?id=${id}`)
+    static goodOne(id, page = 1) {
+        return axios.get(`/api/goods/one?id=${id}&page=${page}`)
     }
 
     static collection(goods) {

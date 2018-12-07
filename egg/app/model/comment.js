@@ -5,7 +5,6 @@ module.exports = app => {
 
     const CommentSchema = new Schema({
         comment_uid: Schema.Types.ObjectId,        // 评论人的id
-        comment_nickname: String,   // 评论人的昵称
         cid: String,                // 商品的id
         comment_time: String,
         rate: Number,                // 商品评分
@@ -13,11 +12,6 @@ module.exports = app => {
         content: {                  // 评论的内容
             type: String,
             required: true
-        },
-        
-        comment_avatar: {            // 评论人的头像
-            type: String,
-            default: 'http://img4.imgtn.bdimg.com/it/u=198369807,133263955&fm=27&gp=0.jpg'
         },
     });
 
