@@ -144,11 +144,11 @@ export default {
       orderNum: "", //订单数量，
       // 0,待付款 1，待发货 2，待收货 3，评价 4，已完成
       tabs: [
-        { status: 0, icon: "van-icon-pending-payment", title: "待付款" },
-        { status: 1, icon: "van-icon-pending-deliver", title: "待发货" },
-        { status: 2, icon: "van-icon-logistics", title: "待收货" },
-        { status: 3, icon: "van-icon-pending-orders", title: "评价" },
-        { status: 4, icon: "van-icon-exchange", title: "已完成" }
+        { status: 1, icon: "van-icon-pending-payment", title: "待付款" },
+        { status: 2, icon: "van-icon-pending-deliver", title: "待发货" },
+        { status: 3, icon: "van-icon-logistics", title: "待收货" },
+        { status: 4, icon: "van-icon-pending-orders", title: "评价" },
+        { status: 5, icon: "van-icon-exchange", title: "已完成" }
       ],
       imgStyle: {
         width: "55px",
@@ -287,11 +287,11 @@ export default {
     },
 
     status(i) {
-      if (i == 3) {
+      if (i == 4) {
         this.$router.push({ path: "/my/evaluate" });
       } else {
-        if (i == 4) {
-          i = 3;
+        if (i == 5) {
+          i = 4
         }
         this.$router.push({ path: "/my/order", query: { status: i } });
       }

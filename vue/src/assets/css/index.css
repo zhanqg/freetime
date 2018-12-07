@@ -2,7 +2,8 @@
     align-items: center
 }
 .van-tabs__wrap--scrollable .van-tab {
-    flex: 0 0 25%;
+	flex: 0 0 20%;
+	flex-basis: 20%!important;
 }
 
 .van-tabs__content {

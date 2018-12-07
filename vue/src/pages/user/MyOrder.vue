@@ -51,7 +51,7 @@ export default {
             active: 0,
             list: '',
             defaultImg: 'this.src="' + require('img/vue.jpg') + '"',
-            tabs:['待支付','待发货','待收货','已完成'],
+            tabs:['全部','待支付','待发货','待收货','已完成'],
         }
     },
 
@@ -73,13 +73,13 @@ export default {
             this.$router.go(-1)
         },
         status(status) {
-            if (status == 0) {
+            if (status == 1) {
                 return '待支付'
-            } else if(status == 1) {
-                return '待发货'
             } else if(status == 2) {
+                return '待发货'
+            } else if(status == 3) {
                 return '待收货'
-            }else {
+            }else if(status == 5){
                 return '已完成'
             }
         },
@@ -104,6 +104,8 @@ export default {
         let status = this.$route.query.status
         if (status) {
             this.active = status
+            console.log(this.active );
+            
         } 
         this.getMyOrder()
     },
