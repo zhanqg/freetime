@@ -116,6 +116,19 @@ export default {
             setName: 'USERNAME'
         })
     },
+    // 判断如果已经登录，就不让进入这个页面
+    beforeRouteEnter   (to, from, next) {
+        next(async vm => {
+           try {
+                const { data } = await vm.Api.keeplogin();
+                if (data.code == 200) {
+                    vm.$router.push({ path: `/`})
+                }
+                } catch (error) {
+                    vm.Toast("网络错误");
+            }
+        })
+    },
 }
 </script>
 

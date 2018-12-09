@@ -5,7 +5,7 @@
             <BaseTitle :back='back' title="评价中心" @goBack='goBack'/>
             <img :src="evaluateImg" class="evaluateImg" alt="">
             <van-tabs v-model="active" >
-                <van-tab :title="val.title+ 10" v-for="val of tabs" :key="val.id">
+                <van-tab :title="val.title" v-for="val of tabs" :key="val.id">
                      <Scroll class="scroll" v-if="active==0"  :data='alreadyEvaluatedList'  >
                          <div class="warp">
                              <div class="item border-bottom" v-for="(val,index) in evaluateList" :key="index">

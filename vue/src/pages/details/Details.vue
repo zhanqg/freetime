@@ -59,7 +59,7 @@
             </van-cell-group>
 
             <div>
-              <van-tabs v-model="active" class="datails-tabs" swipeable>
+              <van-tabs v-model="active" class="datails-tabs" >
                 <van-tab v-for="val in item" :title="val.title" :key="val.id">
                   <div
                     v-show="active == 0"

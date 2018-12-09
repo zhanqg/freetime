@@ -36,6 +36,15 @@
     <van-popup v-model="show" position="right" class="popup" :overlay="false">
       <BaseTitle title="个人资料" :back="back" @goBack="goBack"/>
       <van-cell-group>
+        <p @click="github">
+          <van-field
+            class="border-bottom"
+            value='https://github.com/yzbgyq/Vue-shopping'
+            disabled
+            clearable
+            label="github"
+          />
+        </p>
         <div id="setAvatar" class="set-avatar border-bottom">
           <span>头像</span>
           <div>
@@ -53,7 +62,6 @@
             disabled
             clearable
             label="用户名"
-            placeholder="请输入用户名"
           />
         </p>
 
@@ -295,6 +303,10 @@ export default {
         }
         this.$router.push({ path: "/my/order", query: { status: i } });
       }
+    },
+
+    github() {
+      window.open('https://github.com/yzbgyq/Vue-shopping', '_blank');
     }
   },
 
