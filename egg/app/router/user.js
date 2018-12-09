@@ -7,4 +7,5 @@ module.exports = app => {
     router.post('/saveUser', controller.user.saveUser);     // 单个用户资料修改保存
     router.post('/keeplogin', controller.user.keepLogin);   // 保持登录
     router.post('/loginOut', controller.user.loginOut);     // 退出登录
+
 }

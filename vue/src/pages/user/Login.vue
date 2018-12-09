@@ -13,6 +13,14 @@
                     <label for="password" class="sr-only">PASSWORD</label>
                     <input type="password" v-model="password" class="form-control" maxlength="16" placeholder="PASSWORD" autocomplete="off">
                 </div>
+                <div class="form-group verify">
+                    <label for="inputEmail3" class="col-sm-2 control-label">验证码：</label>
+                    <input type="text" placeholder="请输入验证码" v-model="verifyTxt"  class="form-control verify-input" maxlength="4"  autocomplete="off">
+                    <div class="col-sm-10">
+                        <img :src="verify" alt="" ref="eleVerify" onclick="javascript:this.src='/api/verify?mt='+Math.random()" srcset="" title="看不清？点击刷新">
+                    </div>
+                </div>
+
                 <div class="form-group form-group2">
                     <van-button :loading='loginLoding' type="primary" @click="login(false)">登 录</van-button>
                     <van-button :loading='regLoding'  type="danger" @click="login(true)" >注册</van-button>
@@ -38,7 +46,9 @@ export default {
             tip:'',
             timer:0,
             regLoding:false,
-            loginLoding: false
+            loginLoding: false,
+            verify: this.Api.averify() , // svg验证码
+            verifyTxt: ''
         }
     },
     components: {
@@ -46,10 +56,13 @@ export default {
     },
 
     methods: {
-
         login(flag) {
             if (!this.nickname || !this.password) {
                 Toast('请输入用户名或者密码');
+                return
+            }
+            if (!this.verifyTxt) {
+                Toast('请输入验证码');
                 return
             }
             if (!flag) {    // 登录
@@ -61,27 +74,27 @@ export default {
 
         async register(flag) {
             if (flag) { //  注册
-            try {
-                this.regLoding = true
-                const {data} = await this.Api.register(this.nickname,this.password)
-                if (data.code == 200) {
-                    this.setName(data.userInfo)
-                    setTimeout(() => {
-                        this.$router.go(-1)
-                    }, 1500);
-                    
+                try {
+                    this.regLoding = true
+                    const {data} = await this.Api.register(this.nickname,this.password,this.verifyTxt)
+                    if (data.code == 200) {
+                        this.setName(data.userInfo)
+                        setTimeout(() => {
+                            this.$router.go(-1)
+                        }, 1500);
+                        
+                    }
+                    this.regLoding = false
+                    this.Toast(data.msg);
+                } catch (error) {
+                    this.Toast('网络错误')
+                    this.regLoding = false
                 }
-                this.regLoding = false
-                this.Toast(data.msg);
-            } catch (error) {
-                this.Toast('网络错误')
-                this.regLoding = false
-            }
                 
             } else {    // 登录
                 try {
                     this.loginLoding = true
-                    const {data} = await this.Api.login(this.nickname,this.password)
+                    const {data} = await this.Api.login(this.nickname,this.password,this.verifyTxt)
                     if (data.code == 200) {
                         this.setName(data.userInfo)
                         setTimeout(() => {
@@ -102,9 +115,7 @@ export default {
         ...mapMutations({
             setName: 'USERNAME'
         })
-
     },
- 
 }
 </script>
 
@@ -159,6 +170,8 @@ export default {
                         font-size: 14px;
                         font-weight: 300;
                         font-family: "Open Sans", Arial, sans-serif!important
+                    
+
                     .form-control
                         font-size: 16px
                         font-weight: 300
@@ -233,7 +246,19 @@ export default {
                             border-color: #122b40;
                             box-shadow: inset 0 1.5px 2.5px rgba(0,0,0,.125);
                     .reg
-                        box-shadow: -1px 5px 10px -1px rgba(255, 0, 128, 0.4);         
+                        box-shadow: -1px 5px 10px -1px rgba(255, 0, 128, 0.4);       
+                .verify
+                    display flex
+                    align-items center
+                    label
+                        flex 0 0 20% 
+                    .verify-input
+                        flex 0 0 45%
+                        margin-right 5%
+                        height 40px
+                    .col-sm-10
+                        flex 1        
+
         
                     
 </style>

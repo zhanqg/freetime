@@ -2,13 +2,13 @@
 
 const Service = require('egg').Service;
 const fs = require('fs')
+const svgCaptcha = require('svg-captcha') // 生成验证码
 class ToolsService extends Service {
     // 写入文件
     async writeFile(path, dataBuffer) {
         return new Promise((resolve, reject) => {
             fs.writeFile(path, dataBuffer, function (err) {//用fs写入文件
                 if (err) {
-                    console.log(err);
                     reject(err)
                 } else {
                     resolve()
@@ -27,7 +27,21 @@ class ToolsService extends Service {
         return {
             saveDir: this.app.config.url + paths.slice(3).replace(/\\/g, '/')
         }
+    }
 
+    //生成验证码
+    async captcha() {
+        const captcha = svgCaptcha.create({
+            size: 4,
+            fontSize: 50,
+            width: 100,
+            height: 40,
+            background: "#cc9966"
+        });
+
+        this.ctx.session.code = captcha.text;   /*验证码上面的信息*/
+
+        return captcha;
     }
 }
 

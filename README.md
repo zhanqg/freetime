@@ -65,6 +65,7 @@
 ## 项目截图
 ![home.png](./images/home.png)
 ![city.png](./images/city.png)
+![login.png](./images/login.png)
 ![search.png](./images/search.png)
 ![category.png](./images/category.png)
 ![shop.png](./images/shop.png)

@@ -6,7 +6,16 @@ class UserController extends BaseController {
     // 用户注册
     async register() {
         const { ctx } = this
-        const { nickname, password } = ctx.request.body
+        const { nickname, password, verify } = ctx.request.body
+        console.log(this.ctx.session.code);
+        console.log(verify);
+
+        if (this.ctx.session.code.toUpperCase() !== verify.toUpperCase()) {
+            return ctx.body = {
+                code: -2,
+                msg: '验证码错误'
+            }
+        }
         if (!nickname || !password) {
             return ctx.body = {
                 code: -1,
@@ -19,7 +28,13 @@ class UserController extends BaseController {
     // 用户登录
     async login() {
         const { ctx } = this
-        const { nickname, password } = ctx.request.body
+        const { nickname, password, verify } = ctx.request.body
+        if (this.ctx.session.code.toUpperCase() !== verify.toUpperCase()) {
+            return ctx.body = {
+                code: -2,
+                msg: '验证码错误'
+            }
+        }
         if (!nickname || !password) {
             return ctx.body = {
                 code: -1,
@@ -67,6 +82,7 @@ class UserController extends BaseController {
         const data = this.ctx.request.body
         await this.service.user.saveUser(data)
     }
+
 }
 
 module.exports = UserController;

@@ -124,6 +124,7 @@ export default class Api {
     // ===============================================================================================================
     /**
      * 用户相关(user文件夹下)所有接口
+     * getAverify           登录注册验证码
      * getAddress           查询用户收货地址 
      * getDefaultAddress    查询默认收货地址
      * setDefaultAddress    设置默认收货地址    参数：id：地址id
@@ -132,13 +133,17 @@ export default class Api {
             *                                areaCode：地区代码，id：修改地址时候要传id
      * deleteAddress        删除地址            参数： id：地址id
      * getCollection        查询我的收藏    参数：page，页码，默认第一页
-     * register             注册
+     * register             注册            参数：nickname，用户名 password：密码，verify:验证码
      * login                登录
      * getMyOrder           订单查询        参数：evaluate：用来判断是不是查询订单，默认false
      * alreadyEvaluated     查询已评价      参数： page：页面
      * tobeEvaluated        查询待评价      参数： page：页面
      * evaluateOne          查询单条评论    参数： id：商品id，_id：数据库的那条id
      */
+    static averify() {
+        return '/api/verify'
+    }
+
     static getAddress() {
         return axios.get(`/api/getAddress`)
     }
@@ -167,17 +172,19 @@ export default class Api {
         })
     }
 
-    static register(nickname, password) {
+    static register(nickname, password,verify) {
         return axios.post('/api/register', {
             nickname,
-            password
+            password,
+            verify
         })
     }
 
-    static login(nickname, password) {
+    static login(nickname, password,verify,) {
         return axios.post('/api/login', {
             nickname,
-            password
+            password,
+            verify
         })
     }
 
