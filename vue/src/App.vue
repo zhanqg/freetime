@@ -46,19 +46,57 @@ export default {
 
     ...mapMutations({
       setName: "USERNAME"
-    })
+    }),
+
+    async keeplogin() {
+      try {
+        const { data } = await this.Api.keeplogin();
+        if (data.code == 200) {
+          
+          this.setName(data.userInfo);
+        }
+      } catch (error) {
+        this.Toast("网络错误");
+      }
+    },
   },
 
-  async created() {
-    try {
-      const { data } = await this.Api.keeplogin();
-      if (data.code == 200) {
-        
-        this.setName(data.userInfo);
-      }
-    } catch (error) {
-      this.Toast("网络错误");
-    }
+  created() {
+    this.keeplogin()
+    // let fact = (n) => {
+    //   if (n===0) {
+    //     return 1
+    //   }
+    //   return n * fact(n-1)
+    // }
+    // const memoized = (fn) => {
+    //   let lookupTable = {}
+    //   return (arg) => {
+    //     return lookupTable[arg] || (lookupTable[arg] = fn(arg))
+    //   }
+    // }
+
+    // let fast = memoized( n => {
+    //   if (n === 0) {
+    //     return 1
+    //   }
+    //   return n * fast(n-1)
+    // })
+    // console.log(fast(5));
+    // const map = (arr,fn) => {
+    //   let result = []
+    //   for (const value of arr) {
+    //     result.push(fn(value))
+    //   }
+    //   return result
+    // }
+
+    // let arr = [1,2,3,4]
+    // let newArr = map(arr,item => {
+    //   return item * 2
+    // })
+    // console.log(newArr);
+    
   }
 };
 </script>
