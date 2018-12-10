@@ -9,6 +9,7 @@ Vue.prototype.Toast = Toast       // 全局提示
 Vue.prototype.Dialog = Dialog     // 全局弹框
 import './vant'                   // 有赞组件库
 import FastClick from 'fastclick' // 解决300毫秒延时
+
 FastClick.attach(document.body)
 import 'babel-polyfill'
 import 'vant/lib/index.css'

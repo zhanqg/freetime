@@ -15,16 +15,52 @@
 }
 
 .bounce-enter-active {
-    animation: bounce-in .3s;
+	/* animation: bounce-in .3s; */
+	animation: pageFromRightToCenter 400ms forwards;
+	z-index: 10;
+	box-shadow: -3px 0  5px rgba(0,0,0,.1);
 }
 .bounce-leave-active {
-    animation: bounce-in .3s reverse;
+	/* animation: bounce-in .3s reverse; */
+	animation: pageFromCenterToRight 400ms forwards;
+	z-index: 10;
+	box-shadow: -3px 0  5px rgba(0,0,0,.1);
+	
 }
 .swip {
     width: 94px!important;
     transform: translateX(47px)!important;
     transition-duration: 0.4s!important;
 }
+
+/*路由前进，进入*/
+
+@keyframes pageFromRightToCenter {
+	from {
+	  /* left: 100%; */
+	  transform: translate3d(100%, 0, 0);
+	  opacity: 1;
+	}
+	to {
+	  /* left: 0; */
+	  transform: translate3d(0, 0, 0);
+	  opacity: 1;
+	}
+  }
+/*路由后退，退出*/
+
+@keyframes pageFromCenterToRight {
+	from {
+	  /* left: 0; */
+	  transform: translate3d(0, 0, 0);
+	  opacity: 1;
+	}
+	to {
+	  /* left: 100%; */
+	  transform: translate3d(100%, 0, 0);
+	  opacity: 1;
+	}
+  }
 @keyframes bounce-in {
     0% {
         transform: translate3d(100%,0,0)
