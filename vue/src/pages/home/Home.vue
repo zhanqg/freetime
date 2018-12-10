@@ -19,7 +19,7 @@
             </van-row>
         </div>
     <div v-show="!showFlag"  class="content" @touchmove.prevent='touchmove' @touchstart.prevent='touchstart' @touchend.prevent='touchend'>
-        <Scroll :listenScroll='listenScroll' @scroll='scroll' :probeType='probeType'  :data='recommend.hotGoods' class="content-scroll" :bounce='bounce' ref="scroll">
+        <Scroll v-if="recommend" :listenScroll='listenScroll' @scroll='scroll' :probeType='probeType'  :data='recommend.hotGoods' class="content-scroll" :bounce='bounce' ref="scroll">
             <div>
                 <div class="swiper">
                     <van-row>
@@ -76,7 +76,7 @@ export default {
     data() {
         return {
             value: '',
-            recommend: {},
+            recommend: '',
             advertesPicture: '',
             num1: 1,
             num2: 2,
@@ -215,6 +215,8 @@ export default {
                 if (data.code == 200) {
                     this.showFlag = false
                     this.recommend = data.data
+                    console.log(this.recommend.recommend);
+                    
                     this.advertesPicture = data.data.advertesPicture.PICTURE_ADDRESS
                     this.floorName = data.data.floorName
                     this.setTab(data.data.category)

@@ -4,8 +4,10 @@
       <router-view/>
     </keep-alive>
     <div class="tab" v-show="payMent">
-      <van-tabbar  @change='change'>
-        <van-tabbar-item v-for="(val,index) of item" :key="val.id" :icon="val.icon" :class="{active:active==index}">{{val.title}}</van-tabbar-item>
+      <van-tabbar >
+        <van-tabbar-item @click="change(index)" v-for="(val,index) of item" :key="val.id" :icon="val.icon" :class="{active:active==index}">
+          {{val.title}}
+        </van-tabbar-item>
       </van-tabbar>
     </div>
   </div>
@@ -32,6 +34,8 @@ export default {
 
   methods: {
     change(i) {
+      console.log(i);
+      
       const rout = this.$router;
       if (i == 0) {
         rout.push({ path: "/" });
@@ -61,48 +65,17 @@ export default {
     },
   },
 
+  mounted() {
+  },
+
   created() {
     this.keeplogin()
-    // let fact = (n) => {
-    //   if (n===0) {
-    //     return 1
-    //   }
-    //   return n * fact(n-1)
-    // }
-    // const memoized = (fn) => {
-    //   let lookupTable = {}
-    //   return (arg) => {
-    //     return lookupTable[arg] || (lookupTable[arg] = fn(arg))
-    //   }
-    // }
-
-    // let fast = memoized( n => {
-    //   if (n === 0) {
-    //     return 1
-    //   }
-    //   return n * fast(n-1)
-    // })
-    // console.log(fast(5));
-    // const map = (arr,fn) => {
-    //   let result = []
-    //   for (const value of arr) {
-    //     result.push(fn(value))
-    //   }
-    //   return result
-    // }
-
-    // let arr = [1,2,3,4]
-    // let newArr = map(arr,item => {
-    //   return item * 2
-    // })
-    // console.log(newArr);
-    
   }
 };
 </script>
 <style>
 .van-tabbar-item--active {
-  color: #e0322b;
+      color: #7d7e80
 }
  
 </style>

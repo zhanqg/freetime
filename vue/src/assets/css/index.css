@@ -134,7 +134,7 @@ input[type=checkbox]:checked::after {
 	padding-left: 0;
 }
 .van-tabbar .active {
-	color: #e0322b
+	color: #e0322b!important;
 }
 .gender .van-field__control, .birth .van-field__control {
 	color: #000;
