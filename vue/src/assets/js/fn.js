@@ -60,3 +60,21 @@ const mmemoize = (fn) => {
         return lookupTable[arg] || (lookupTable[arg] = fn(arg))
     }
 }
+
+// map
+const map = (arr, fn) => {
+    let res = []
+    for (const val of arr) {
+        res.push(fn(val))
+    }
+    return res
+}
+
+// filter
+const filter = (arr,fn) => {
+    let res = []
+    for (const val of arr) {
+        (fn(val)) ? res.push(val) : undefined
+    }
+    return res
+}

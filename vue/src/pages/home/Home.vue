@@ -215,8 +215,6 @@ export default {
                 if (data.code == 200) {
                     this.showFlag = false
                     this.recommend = data.data
-                    console.log(this.recommend.recommend);
-                    
                     this.advertesPicture = data.data.advertesPicture.PICTURE_ADDRESS
                     this.floorName = data.data.floorName
                     this.setTab(data.data.category)
