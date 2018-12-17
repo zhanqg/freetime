@@ -1,7 +1,6 @@
-'use strict';
-
-const BsseService = require('./base')
-class CommodityService extends BsseService {
+const BaseController = require('../base')
+// 商品相关
+class GoodsController extends BaseController {
     // 首页商品查询
     async recommend() {
         const { ctx } = this
@@ -19,8 +18,15 @@ class CommodityService extends BsseService {
     }
 
     // 分类商品查询
-    async classification(mallSubId) {
+    async classification() {
         const { ctx } = this
+        const { mallSubId } = ctx.query
+        if (!mallSubId) {
+            return ctx.body = {
+                code: -1,
+                msg: '缺少参数mallSubId'
+            }
+        }
         const res = await ctx.model.Goods.find({ 'sub_id': mallSubId })
         if (res) {
             return ctx.body = {
@@ -35,36 +41,15 @@ class CommodityService extends BsseService {
     }
 
     // 单个商品详情查询
-    async goodsOne(id) {
+    async goodsOne() {
         const { ctx } = this
-        // const res2 = await ctx.model.Goods.aggregate([
-        //     {
-        //         $lookup:{
-        //             from: "comment",
-        //             localField: "id", 
-        //             foreignField: "cid", 
-        //             as: "comment"
-        //         }
-        //     },
-        //     {
-        //         $match:{
-        //             "id":id
-        //         },
-        //     }
-        // ])
-        // if (res2.length) {
-        //     res2[0].comment.forEach(item => {
-        //         if (item.anonymous) {
-        //             item.comment_nickname = '匿名人士'
-        //             delete item.comment_uid
-        //             item.comment_avatar = 'http://img4.imgtn.bdimg.com/it/u=198369807,133263955&fm=27&gp=0.jpg'
-        //         } 
-        //     })
-        //     return ctx.body = {
-        //         code: 200,
-        //         goodsOne: res2[0]
-        //     }
-        // }
+        const { id } = ctx.query
+        if (!id) {
+            return ctx.body = {
+                code: -1,
+                msg: '缺少参数id'
+            }
+        }
         let pageSize = 5
         let page = ctx.query.page || 1
         let skip = (page - 1) * pageSize
@@ -84,9 +69,15 @@ class CommodityService extends BsseService {
                 $match: {
                     "cid": id
                 },
+            },
+            {
+                $skip: skip
+            },
+            {
+                $limit: pageSize
             }
 
-        ]).skip(skip).limit(pageSize)
+        ])
         const count = await ctx.model.Comment.find({ cid: id }).count()
         if (comment.length) {
             comment.forEach(item => {
@@ -121,7 +112,14 @@ class CommodityService extends BsseService {
     }
 
     // 搜索
-    async search(value) {
+    async search() {
+        let { value } = this.ctx.request.body
+        if (!value) {
+            return ctx.body = {
+                code: -1,
+                msg: '缺少参数value'
+            }
+        }
         let pageSize = 20
         let page = this.ctx.request.body.page || 1
         let skip = (page - 1) * pageSize
@@ -136,5 +134,4 @@ class CommodityService extends BsseService {
         }
     }
 }
-
-module.exports = CommodityService;
+module.exports = GoodsController;
