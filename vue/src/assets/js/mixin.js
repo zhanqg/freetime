@@ -6,10 +6,8 @@ export const details = {
         ...mapMutations({
             setGoodDetails: 'GOODSDETAILS',
         }),
-        ...mapActions(['setBrowse']),
         details(val) {
             this.setGoodDetails(val)
-            this.setBrowse(val)     // 加入最近浏览
             this.$router.push({ path: `/home/details`, query: { id: val.goodsId || val.id} })
         }
     }

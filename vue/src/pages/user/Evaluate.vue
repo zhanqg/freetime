@@ -2,7 +2,11 @@
     <!-- 评价 -->
     <transition name='bounce'>
         <div class="evaluate-warp">
-            <BaseTitle :back='back' title="评价中心" @goBack='goBack'/>
+            <van-nav-bar
+                title="评价中心"
+                left-arrow
+                @click-left="goBack"
+            />
             <img :src="evaluateImg" class="evaluateImg" alt="">
             <van-tabs v-model="active" >
                 <van-tab :title="val.title" v-for="val of tabs" :key="val.id">
@@ -61,18 +65,15 @@
 
 <script>
 import Scroll from 'pages/other/Scroll'
-import BaseTitle from 'pages/other/BaseTitle'
 import {page} from 'js/mixin'
 export default {
     mixins:[page],
     components: {
         Scroll,
-        BaseTitle
     },
     
     data() {
         return {
-            back: true,
             evaluateImg: require('img/evaluate.jpg'),
             active:0,
             tabs:[

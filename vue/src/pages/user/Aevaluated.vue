@@ -2,7 +2,11 @@
     <transition name='bounce'>
         <!-- 查看已评价 -->
         <div class="aevaluated-warp">
-            <BaseTitle :back='back' title="评价详情" @goBack='goBack'/>
+            <van-nav-bar
+                title="评价详情"
+                left-arrow
+                @click-left="goBack"
+            />
             <div v-if="evaluateOne" class="evaluateOne"> 
                 <img :src="evaluateOne.user[0].avatar" alt="" srcset="">
                 <div class="middle">
@@ -25,12 +29,10 @@
 </template>
 
 <script>
-import BaseTitle from 'pages/other/BaseTitle'
 import {mapGetters} from 'vuex'
 export default {
     data() {
         return {
-            back: true,
             evaluateOne:'',
             size:14
         }
@@ -40,9 +42,6 @@ export default {
         ...mapGetters(['userName'])
     },
 
-    components: {
-        BaseTitle,
-    },
 
     methods: {
         goBack() {

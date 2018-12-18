@@ -2,7 +2,11 @@
     <!-- 我的订单列表 -->
 <transition name='bounce'>
     <div class="order-warp">
-        <BaseTitle :back='back' title="我的订单" @goBack='goBack'/>
+        <van-nav-bar
+        title="我的订单"
+        left-arrow
+        @click-left="goBack"
+      />
         <van-tabs v-model="active" @change='change'>
             <van-tab :title="val" v-for="(val,index) in tabs" :key="index">
                 <Scroll v-show="!showFlag" :data='list' ref="scroll" class="scroll">
@@ -37,7 +41,6 @@
 </template>
 
 <script>
-import BaseTitle from 'pages/other/BaseTitle'
 import GoodsList from 'pages/other/GoodsList'
 import Scroll from 'pages/other/Scroll'
 import {mapGetters} from 'vuex'
@@ -47,7 +50,6 @@ export default {
     mixins: [loading],
     data() {
         return {
-            back: true,
             active: 0,
             list: '',
             defaultImg: 'this.src="' + require('img/vue.jpg') + '"',
@@ -60,7 +62,6 @@ export default {
     },
 
     components: {
-        BaseTitle,
         GoodsList,
         Scroll
     },

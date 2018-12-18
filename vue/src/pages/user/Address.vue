@@ -1,7 +1,11 @@
 <template>
 <transition name='bounce'>
         <div class="address">
-        <BaseTitle title="地址列表" :back='back' @goBack='goBack'/>
+        <van-nav-bar
+            title="地址列表"
+            left-arrow
+            @click-left="goBack"
+        />
             <Scroll :data='list' class="scroll"  v-show="!showFlag">
                 <div>
                     <van-address-list
@@ -22,7 +26,6 @@
 </template>
 
 <script>
-import BaseTitle from 'pages/other/BaseTitle'
 import Scroll from 'pages/other/Scroll'
 import {mapActions,mapMutations} from 'vuex'
 import {loading} from 'js/mixin'
@@ -30,13 +33,11 @@ export default {
     name: 'Address',
     mixins: [loading],
     components: {
-        BaseTitle,
         Scroll,
     },
 
     data() {
         return {
-            back: true, // 是否显示返回按钮
             chosenAddressId: '1',
             list: [],
             isPay: false,

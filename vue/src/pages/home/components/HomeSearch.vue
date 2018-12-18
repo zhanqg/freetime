@@ -70,7 +70,6 @@ export default {
         },
 
         details(val) {
-            this.setBrowse(val)     // 加入最近浏览
             this.setGoodDetails(val)    
             this.setSearchHistory(this.value)     // 加入搜索历史记录
             this.$emit('details',val.id)
@@ -79,7 +78,7 @@ export default {
             setGoodDetails: 'GOODSDETAILS'
         }),
 
-        ...mapActions(['setBrowse','setTab','setSearchHistory','clearSearchHistory']),
+        ...mapActions(['setTab','setSearchHistory','clearSearchHistory']),
 
         keyWord(str,value) {
             let replaceReg = new RegExp(value, 'g');

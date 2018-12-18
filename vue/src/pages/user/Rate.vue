@@ -2,7 +2,11 @@
     <transition name='bounce'>
     <!-- 商品评论 -->
     <div class="rate-warp">
-        <BaseTitle :back='back' title="商品评分" @goBack='goBack'/>
+        <van-nav-bar
+                title="评价中心"
+                left-arrow
+                @click-left="goBack"
+            />
         <div class="goods">
             <img :src="goodsOne.image_path" alt="" srcset="">
             <div>
@@ -36,23 +40,17 @@
 </template>
 
 <script>
-import BaseTitle from 'pages/other/BaseTitle'
 export default {
     data() {
         return {
             rate: 5,
             message: '',
-            back: true,
             checked: false,
             goodsOne: '',
             id: '',  //商品id
             _id: '',   // 数据库单条id
             order_id: ''//  订单id
         }
-    },
-
-    components: {
-        BaseTitle,
     },
 
     methods: {

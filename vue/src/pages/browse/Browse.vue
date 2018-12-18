@@ -2,7 +2,11 @@
     <!-- 最近浏览 -->
 <transition name='bounce'>
     <div class="browse-warp">
-        <BaseTitle :back='back' title="最近浏览" @goBack='goBack'/>
+        <van-nav-bar
+                title="最近浏览"
+                left-arrow
+                @click-left="goBack"
+            />
         <Scroll :data='browse' class="scroll">
             <div>
                 <GoodsList :list='browse' :isBrowse='isBrowse' @close='close' @details='details'/>
@@ -18,7 +22,6 @@
 
 <script>
 import Scroll from 'pages/other/Scroll'
-import BaseTitle from 'pages/other/BaseTitle'
 import GoodsList from 'pages/other/GoodsList'
 import {mapGetters,mapActions,mapMutations} from 'vuex'
 
@@ -29,13 +32,11 @@ export default {
 
     components: {
         Scroll,
-        BaseTitle,
         GoodsList,
     },
 
     data() {
         return {
-            back: true,
             isBrowse: true
         }
     },
@@ -48,15 +49,13 @@ export default {
         close(item) {
             this.deleteOne(item.id)
         },
-        ...mapActions(['deleteOne','setBrowse']),
+        ...mapActions(['deleteOne']),
 
         details(item) {
+            
             this.setGoodDetails(item)
             this.$router.push({path:`/my/browse/details`,query: {id:item.id}})
-
-            setTimeout(() => {
-                this.setBrowse(item)     // 加入最近浏览
-            }, 300);
+            
         },
 
         ...mapMutations({

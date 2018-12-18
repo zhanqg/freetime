@@ -38,9 +38,7 @@ class ToolsService extends Service {
             height: 40,
             background: "#cc9966"
         });
-
         this.ctx.session.code = captcha.text;   /*验证码上面的信息*/
-
         return captcha;
     }
 }

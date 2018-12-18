@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <BaseTitle title="购物车"/>
+        <van-nav-bar title="购物车" :left-arrow='false' />
         <Scroll :data='shopList' class="scroll" ref="scroll" v-show="shopList && shopList.length">
             <ul class="ul" v-show="!showFlag">
                 <div class="pics border-bottom" v-show="shopList.length">
@@ -52,7 +52,6 @@
 
 <script>
 import Scroll from "pages/other/Scroll";
-import BaseTitle from "pages/other/BaseTitle";
 import { mapMutations, mapGetters } from "vuex";
 import { loading } from "js/mixin";
 export default {
@@ -91,7 +90,6 @@ export default {
     ...mapGetters(["userName"])
   },
   components: {
-    BaseTitle,
     Scroll
   },
   methods: {

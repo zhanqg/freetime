@@ -1,6 +1,6 @@
 <template>
   <div id="my-warpper">
-    <BaseTitle title="会员中心"/>
+    <van-nav-bar title="会员中心" :left-arrow='false' />
     <!-- <img class="user-poster" src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png"> -->
     <div class="avatar" v-if="!userName">
       <img src="http://img4.imgtn.bdimg.com/it/u=198369807,133263955&fm=27&gp=0.jpg" alt srcset>
@@ -34,7 +34,11 @@
       <van-cell icon="gift" title="最近浏览" is-link @click="browse"/>
     </van-cell-group>
     <van-popup v-model="show" position="right" class="popup" :overlay="false">
-      <BaseTitle title="个人资料" :back="back" @goBack="goBack"/>
+      <van-nav-bar
+        title="个人资料"
+        left-arrow
+        @click-left="goBack"
+      />
       <van-cell-group>
         <p @click="github">
           <van-field
@@ -119,13 +123,11 @@
 </template>
 
 <script>
-import BaseTitle from "pages/other/BaseTitle";
 import Cropper from "./components/Cropper";
 import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "My",
   components: {
-    BaseTitle,
     Cropper
   },
 
@@ -137,7 +139,6 @@ export default {
       defaultImg: 'this.src="' + require('img/vue.jpg') + '"',
       gender: "男",
       email: "",
-      back: true,
       currentDate: new Date(),
       columns: ["男", "女", "保密"],
       maxDate: new Date(),

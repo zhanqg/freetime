@@ -2,7 +2,11 @@
 <transition name='bounce2'>
     <!-- 新增和编辑地址 -->
     <div class="address-edit">
-        <BaseTitle title="地址列表" :back='back' @goBack='goBack'/>
+        <van-nav-bar
+            title="编辑地址"
+            left-arrow
+            @click-left="goBack"
+        />
         <div>
             <van-address-edit
                 :area-list="areaList"
@@ -20,7 +24,6 @@
 </template>
 
 <script>
-import BaseTitle from 'pages/other/BaseTitle'
 import {mapGetters,mapMutations,mapActions} from 'vuex'
 import {Toast} from 'vant'
 export default {
@@ -31,7 +34,6 @@ export default {
     data() {
         return {
             searchResult: [],
-            back: true,
             areaList: require('js/area.js').default,
             showDelete: false
         }
@@ -42,11 +44,6 @@ export default {
             this.showDelete = true
         }
     },
-
-    components: {
-        BaseTitle,
-    },
-
     methods: {
         async onSave(val) {
             // 以下参数在api接口查看详情

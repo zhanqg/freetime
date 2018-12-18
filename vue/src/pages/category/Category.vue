@@ -1,6 +1,6 @@
 <template>
     <div>
-        <BaseTitle title='商品分类'/>
+        <van-nav-bar title="商品分类" :left-arrow='false' fixed/>
         <div class="content" >
            <div class="left" ref="left">
                 <ul>
@@ -35,7 +35,6 @@
 import {mapGetters,mapMutations,mapActions} from 'vuex'
 import Scroll from 'pages/other/Scroll'
 import GoodsList from 'pages/other/GoodsList'
-import BaseTitle from 'pages/other/BaseTitle'
 import {loading} from 'js/mixin'
 export default {
     mixins: [loading],
@@ -63,7 +62,6 @@ export default {
     
     components: {
         Scroll,
-        BaseTitle,
         GoodsList,
     },
 
@@ -107,7 +105,6 @@ export default {
         },
 
         details(val) {
-            this.setBrowse(val)     // 加入最近浏览
             this.setGoodDetails(val)
             this.$router.push({ path: `/category/details`, query: { id: val.id } })
         },
@@ -116,7 +113,7 @@ export default {
             setGoodDetails: 'GOODSDETAILS'
         }),
 
-        ...mapActions(['setBrowse','setTab']),
+        ...mapActions(['setTab']),
 
         async getCategory() {
             if (!this.category.length) {
@@ -176,7 +173,7 @@ export default {
 .content
     display: flex
     position: fixed
-    top 40px
+    top 39px
     left 0
     right: 0
     bottom: 0

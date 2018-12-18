@@ -2,7 +2,11 @@
     <!-- 我的收藏 -->
 <transition name='bounce'>
     <div class="browse-warp">
-        <BaseTitle :back='back' title="我的收藏" @goBack='goBack'/>
+        <van-nav-bar
+            title="我的收藏"
+            left-arrow
+            @click-left="goBack"
+        />
         <Scroll  :pullup='true' @scrollToEnd='scrollToEnd'  :data='dataArr' class="scroll">
             <div>
                 <GoodsList  :list='dataArr' :isCollection='isCollection' @details='details' @close='close'/>
@@ -19,17 +23,15 @@
 
 <script>
 import Scroll from 'pages/other/Scroll'
-import BaseTitle from 'pages/other/BaseTitle'
 import GoodsList from 'pages/other/GoodsList'
 import {loading} from 'js/mixin'
-import {mapActions,mapMutations,mapGetters} from 'vuex'
+import {mapMutations,mapGetters} from 'vuex'
 import {page} from 'js/mixin'
 export default {
     name: 'Collection',
     mixins: [loading,page],
     components: {
         Scroll,
-        BaseTitle,
         GoodsList,
     },
 
@@ -39,7 +41,6 @@ export default {
 
     data() {
         return {
-            back: true,
             isCollection: true,
             list: [],
             isText: false,
@@ -96,9 +97,6 @@ export default {
         details(item) {
             this.setGoodDetails(item)
             this.$router.push({path:`/user/collection/details`,query: {id:item.cid}})
-            setTimeout(() => {
-                this.setBrowse(item)     // 加入最近浏览
-            }, 300);
         },
 
         // 这里是取消收藏
@@ -113,8 +111,6 @@ export default {
                 this.Toast('网络错误')
             }
         },
-
-        ...mapActions(['setBrowse']),
 
         ...mapMutations({
             setGoodDetails: 'GOODSDETAILS'

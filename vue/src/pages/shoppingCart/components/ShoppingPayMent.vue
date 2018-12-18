@@ -2,7 +2,11 @@
     <!-- 订单结算和选择商品页面 -->
 <transition name='bounce'>
     <div class="order">
-        <BaseTitle :back='back' title="订单结算" @goBack='goBack'/>
+        <van-nav-bar
+                title="订单结算"
+                left-arrow
+                @click-left="goBack"
+        />
                 <div class="address-warp">
                     <div class="address addnull" v-if="!defaultAdd || !defaultAdd._id && (!temporaryAddress || !temporaryAddress._id)" @click="goAddress">
                         点击添加收获地址
@@ -38,12 +42,10 @@
 
 <script>
 import GoodsList from 'pages/other/GoodsList'
-import BaseTitle from 'pages/other/BaseTitle'
 import {mapGetters,mapMutations} from 'vuex'
 import Scroll from 'pages/other/Scroll'
 export default {
     components: {
-        BaseTitle,
         GoodsList,
         Scroll,
     },
@@ -70,7 +72,6 @@ export default {
 
     data() {
         return {
-            back: true,
             caitiao: require('img/caitiao.jpg'),
             isOrder: true,
             isLoading: false,

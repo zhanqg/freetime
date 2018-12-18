@@ -1,7 +1,11 @@
 <template>
 <transition name='bounce'>
     <div class="city-warp">
-        <BaseTitle :back='back' title="城市列表" @goBack='goBack'/>
+        <van-nav-bar
+                title="城市列表"
+                left-arrow
+                @click-left="goBack"
+            />
         <div class="serach">
             <van-col span="24">
                 <van-search placeholder="请输入城市关键字" v-model="keyword" />
@@ -49,7 +53,6 @@
 </template>
 
 <script>
-import BaseTitle from "pages/other/BaseTitle";
 import CityRight from "./components/CityRight";
 import Scroll from "pages/other/Scroll";
 import city from "js/city";
@@ -57,14 +60,12 @@ import {mapActions,mapGetters} from 'vuex'
 import {throttle} from 'js/util'
 export default {
   components: {
-    BaseTitle,
     Scroll,
     CityRight
   },
 
   data() {
     return {
-      back: true,
       citys: city,
       touchStatus: false,
       citiTxt: "",

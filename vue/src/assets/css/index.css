@@ -242,3 +242,11 @@ input[type=checkbox]:checked::after {
 	padding: 3px;
     background: rgba(0, 0, 0, 0.3);
  }
+ .van-nav-bar {
+	 height: 40px;
+	 line-height: 40px;
+ }
+ .van-nav-bar__left, .van-nav-bar__right {
+	 height: 40px;
+	 line-height: 40px;
+ }

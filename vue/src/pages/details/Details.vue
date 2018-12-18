@@ -201,8 +201,10 @@ export default {
           this.$refs.swiperImg2.style.opacity = 1;
 
           if (data.goods.goodsOne) {
-            this.setBrowse(data.goods.goodsOne);
             this.goods = data.goods.goodsOne;
+            setTimeout(() => {
+              this.setBrowse(data.goods.goodsOne);
+            }, 300);
           }
           if (flag) {
             this.setNewData(data.goods.comment);

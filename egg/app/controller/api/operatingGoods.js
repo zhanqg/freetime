@@ -1,13 +1,17 @@
 'use strict';
 
-const BsseService = require('./base')
-class OperatingGoodsService extends BsseService {
+const BaseController = require('../base')
+class OperatingGoodsController extends BaseController {
     // 收藏商品
-    async collection(data) {
-        const { ctx } = this
-        const { _id } = ctx.session.userInfo
-        let goods = await ctx.model.Goods.findOne({ id: data.id })
-        let collection = new ctx.model.Collection({
+    async collection() {
+        const data = this.ctx.request.body
+        if (!data) {
+            this.error('缺少重要参数id')
+            return
+        }
+        const { _id } = this.ctx.session.userInfo
+        let goods = await this.ctx.model.Goods.findOne({ id: data.id })
+        let collection = new this.ctx.model.Collection({
             uid: _id,
             cid: goods.id,
             image_path: goods.image_path,
@@ -20,29 +24,39 @@ class OperatingGoodsService extends BsseService {
     }
 
     // 取消收藏
-    async cancelCollection(id) {
-        const { ctx } = this
-        const { _id } = ctx.session.userInfo
-        await ctx.model.Collection.deleteOne({ uid: _id, cid: id })
+    async cancelCollection() {
+        const { id } = this.ctx.request.body
+        if (!id) {
+            this.error('缺少重要参数id')
+            return
+        }
+        const { _id } = this.ctx.session.userInfo
+        await this.ctx.model.Collection.deleteOne({ uid: _id, cid: id })
         this.success('取消收藏成功')
     }
 
     // 加入购物车
-    async addShop(ids) {
+    async addShop() {
+        const { id } = this.ctx.request.body
         const { ctx } = this
         const { _id } = ctx.session.userInfo   // 用户id
-        const goodsData = await ctx.model.ShopList.findOne({ cid: ids, uid: _id })
+        if (!ctx.request.body.id) {
+            this.error('缺少重要参数id')
+            return
+        }
+        // await this.service.operatingGoods.addShop(this.ctx.request.body.id)
+        const goodsData = await ctx.model.ShopList.findOne({ cid: id, uid: _id })
 
         // 购物车已经有了这条商品，商品默认+1
         if (goodsData) {
-            await ctx.model.ShopList.findOneAndUpdate({ cid: ids, uid: _id }, {
+            await ctx.model.ShopList.findOneAndUpdate({ cid: id, uid: _id }, {
                 $set: {
                     count: goodsData.count += 1
                 }
             })
         } else {  // 说明没有这条数据
             // 查到这条商品数据
-            let goods = await ctx.model.Goods.findOne({ id: ids })
+            let goods = await ctx.model.Goods.findOne({ id: id })
             let newGoods = new ctx.model.ShopList({
                 uid: _id,
                 present_price: goods.present_price,
@@ -60,8 +74,13 @@ class OperatingGoodsService extends BsseService {
     }
 
     // 购物车增加减少
-    async editCart(data) {
+    async editCart() {
+        const data = this.ctx.request.body
         const { ctx } = this
+        if (!data) {
+            this.error('缺少重要参数')
+            return
+        }
         await ctx.model.ShopList.findOneAndUpdate({ uid: ctx.session.userInfo._id, cid: data.id }, {
             $set: {
                 'count': data.count,
@@ -72,15 +91,25 @@ class OperatingGoodsService extends BsseService {
     }
 
     // 购物车删除
-    async deleteShop(data) {
+    async deleteShop() {
+        const data = this.ctx.request.body
+        if (!data) {
+            this.error('缺少重要参数')
+            return
+        }
         const { ctx } = this
         await ctx.model.ShopList.deleteMany({ uid: ctx.session.userInfo._id, cid: data })
         this.success('删除成功')
     }
 
     // 保存收货地址
-    async address(data) {
+    async address() {
         const { ctx } = this
+        const data = ctx.request.body
+        if (!data) {
+            this.error('缺少重要参数')
+            return
+        }
         const { _id } = ctx.session.userInfo
         if (data.isDefault == true) {   // 设置默认地址
             await ctx.model.Address.updateMany({ uid: _id, isDefault: true }, {
@@ -99,7 +128,6 @@ class OperatingGoodsService extends BsseService {
                 uid: _id,
                 add_time: +new Date()
             })
-
             const address = new ctx.model.Address(datas)
             await address.save()
             // 保存后查询一次
@@ -118,15 +146,26 @@ class OperatingGoodsService extends BsseService {
     }
 
     // 删除单条收货地址
-    async deleteAddress(id) {
+    async deleteAddress() {
+        const { ctx } = this
+        const { id } = ctx.request.body
+        if (!id) {
+            this.error('缺少重要参数id')
+            return
+        }
         const { _id } = this.ctx.session.userInfo
         await this.ctx.model.Address.findOneAndDelete({ '_id': id, uid: _id })
         this.success('删除成功')
     }
 
     // 接受订单
-    async order(data) {
+    async order() {
+        const data = this.ctx.request.body
         const { ctx } = this
+        if (!data) {
+            this.error('缺少重要参数')
+            return
+        }
         const uid = ctx.session.userInfo._id
         // 订单信息
         let platform = '622'           // 订单头
@@ -196,8 +235,14 @@ class OperatingGoodsService extends BsseService {
     }
 
     // 商品评论
-    async comment(data) {
+    async comment() {
+        const data = this.ctx.request.body
         const { ctx } = this
+
+        if (!data.id || !data.content) {
+            this.error('缺少重要参数id或者内容')
+            return
+        }
         const userInfo = ctx.session.userInfo
         const datas = {
             comment_uid: userInfo._id,
@@ -216,9 +261,10 @@ class OperatingGoodsService extends BsseService {
                 'order_list.$.isComment': true
             }
         })
-
         this.success('提交成功')
     }
+
+
 }
 
-module.exports = OperatingGoodsService;
+module.exports = OperatingGoodsController;
