@@ -19,7 +19,7 @@ import 'css/border.css'
 import 'css/index.css' 
 import 'css/icon.styl'
 import 'css/cropper.css' 
-
+import './fn'
 Vue.config.productionTip = false
 
 new Vue({

@@ -41,11 +41,11 @@ export const recentlyBrowse = {
     setBrowse(data) {
         let newData = this.getBrowse()
         if (newData.length) {
-            for (let i = 0; i < newData.length; i++) {
-                if (newData[i].id == data.id) {
-                    newData.splice(i,1)
+            newData.forEach((item,index) => {
+                if (item.id == data.id) {
+                    newData.splice(index,1)
                 }
-            }
+            })
         }
         newData.unshift(data)
         if (newData.length > 30) {  // 最近浏览最多30条缓存
@@ -91,11 +91,11 @@ export const searchHistory = {
     setHistory(data) {
         let newData = this.getHistory()
         if (newData.length) {
-            for (let i = 0; i < newData.length; i++) {
-                if (newData[i] === data) {
-                    newData.splice(i,1)
+            newData.forEach((item,index) => {
+                if (item == data) {
+                    newData.splice(index,1)
                 }
-            }
+            })
         }
         newData.unshift(data)
         if (newData.length > 15) {  // 最近浏览最多30条缓存

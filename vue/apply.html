@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // // 全局变量​
+        // var avgScore = "global avgScore";
+
+        // // 全局函数
+        // function avg(arrayOfScores) {
+        //     // 分数相加并返回结果
+        //     var sumOfScores = arrayOfScores.reduce(function (prev, cur, index, array) {
+        //         return prev + cur;
+        //     });
+
+        //     // 这里的 "this" 会被绑定到全局对象上, 除非使用 Call 或者 Apply 明确指定 this 的指向
+        //     this.avgScore = sumOfScores / arrayOfScores.length;
+        // }
+
+        // var gameController = {
+        //     scores: [20, 34, 55, 46, 77],
+        //     avgScore: null
+        // }
+
+        // // 调用 avg 函数, this 指向 window 对象​
+        // avg(gameController.scores);
+        // // 证明 avgScore 已经被设置为 window 对象的属性​
+        // console.log(window.avgScore); // 46.4​
+        // console.log(gameController.avgScore); // null​
+
+        // // 重置全局变量
+        // avgScore = "global avgScore";
+
+        // // 使用 call() 方法明确将 "this" 绑定到 gameController 对象​
+        // avg.call(gameController, gameController.scores);
+
+        // console.log(window.avgScore); // 全局变量 avgScore 的值​
+        // console.log(gameController.avgScore); // 46.4
+        // var anArrayLikeObj = {0:"Martin", 1:78, 2:67, 3:["Letta", "Marieta", "Pauline"], length:4 };
+        // // let arr = [].slice.apply(anArrayLikeObj,[])
+        // // console.log(arr);
+        // // console.log([].includes.call('Martin'));
+        // // console.log(Array.prototype.indexOf.call(anArrayLikeObj, "Martin") === -1 ? false : true); // true​
+        // // console.log([].includes.call(anArrayLikeObj,'Martin'));
+        // // console.log([].reverse.call(anArrayLikeObj));
+        // [].push.apply(anArrayLikeObj,[1,2,3])
+        // console.log(anArrayLikeObj);
+        // var appController = {
+        //     scores: [900, 845, 809, 950],
+        //     avgScore: null,
+        //     avg: function () {
+        //         var sumOfScores = this.scores.reduce(function (prev, cur, index, array) {
+        //             return prev + cur;
+        //         });
+        //         this.avgScore = sumOfScores / this.scores.length;
+        //     }
+        // }
+        // var gameController = {
+        //     scores: [20, 34, 55, 46, 77],
+        //     avgScore: null,
+        //     players: [
+        //         { name: "Tommy", playerID: 987, age: 23 },
+        //         { name: "Pau", playerID: 87, age: 33 }
+        //     ]
+        // }
+
+        // // appController.avg.apply(gameController);
+        // // console.log(gameController.avgScore); // 46.4​
+        // // console.log(appController.avgScore);
+        // appController.maxNum = function () {
+        //     this.avgScore = Math.max.apply(null, this.scores);
+        // }
+
+        // appController.maxNum.apply(gameController);
+        // console.log(gameController.avgScore); // 77​
+        const car = {
+            maker: 'Ford',
+            model: 'Fiesta',
+            drive(...args) {
+                console.log(this);
+                console.log(`${this.maker} ${this.model} ${args}`)
+            }
+        }
+        const anotherCar = {
+            maker: 'Audi',
+            model: 'A4'
+        }
+        car.drive.apply(anotherCar,[10,200])
+    </script>
+</body>
+
+</html>
