@@ -286,7 +286,6 @@ export default {
             setTimeout(() => {
                 this.value = ''
             }, 300);
-            
         },
 
         tran(width) {
