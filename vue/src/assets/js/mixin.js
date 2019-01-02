@@ -1,5 +1,5 @@
 import { mapMutations, mapGetters,mapActions } from 'vuex'
-import BaseLoding from 'pages/other/BaseLoding'
+import BaseLoding from '@/components/public/BaseLoding'
 
 export const details = {
     methods: {
@@ -8,7 +8,7 @@ export const details = {
         }),
         details(val) {
             this.setGoodDetails(val)
-            this.$router.push({ path: `/home/details`, query: { id: val.goodsId || val.id} })
+            this.$router.push({ path: `/details`, query: { id: val.goodsId || val.id || val.cid} })
         }
     }
 }

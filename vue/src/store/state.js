@@ -1,6 +1,7 @@
 import {tab,address,recentlyBrowse,city,searchHistory} from 'js/cache'
 const state = {
     category: tab.getTab(),   //分类条目
+    categoryTabList:{}, // 分类页面tab对应数据缓存
     goodsDetails: {},   // 商品详情
     userName: null,       // 用户信息
     addressInfo: address.getAddress(),    //  保存要修改的地址

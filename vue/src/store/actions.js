@@ -4,6 +4,13 @@ export const setTab = function ({ commit }, tabs) {
     commit(types.CATEGORY, tab.setTab(tabs))
 }
 
+export const setCategoryTabList = ({commit,state},{id,list}) => {
+    let newData = state.categoryTabList
+    if (!newData[id]) {
+        newData[id] = list
+    }
+    commit(types.CATEGORYTABLIST,newData)
+}
 
 // 保存要修改的地址
 export const setAddress = function({ commit }, list) {

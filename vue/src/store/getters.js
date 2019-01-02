@@ -1,4 +1,5 @@
 export const category = state => state.category
+export const categoryTabList = state => state.categoryTabList
 export const goodsDetails = state => state.goodsDetails
 export const userName = state => state.userName
 export const addressInfo = state => state.addressInfo

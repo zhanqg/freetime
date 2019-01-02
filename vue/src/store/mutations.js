@@ -3,6 +3,9 @@ const matutaions = {
     [types.CATEGORY](state,category) {
         state.category = category
     },
+    [types.CATEGORYTABLIST](state,categoryTabList) {
+        state.categoryTabList = categoryTabList
+    },
     [types.GOODSDETAILS](state,goodsDetails) {
         state.goodsDetails = goodsDetails
     },

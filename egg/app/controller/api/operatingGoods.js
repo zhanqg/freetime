@@ -44,7 +44,6 @@ class OperatingGoodsController extends BaseController {
             this.error('缺少重要参数id')
             return
         }
-        // await this.service.operatingGoods.addShop(this.ctx.request.body.id)
         const goodsData = await ctx.model.ShopList.findOne({ cid: id, uid: _id })
 
         // 购物车已经有了这条商品，商品默认+1
