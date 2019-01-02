@@ -69,8 +69,6 @@
 - [ ] 手机接收验证码, 手机号注册
 - [ ] 添加微信和支付宝支付
 
-
-
 ## 项目截图
 ![home.png](./images/home.png)
 ![city.png](./images/city.png)

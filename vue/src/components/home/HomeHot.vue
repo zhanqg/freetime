@@ -36,7 +36,6 @@ ul
     flex-wrap wrap
     background #eee
     justify-content space-between
-    border-bottom 1px solid #eee
     .recommend-item
         flex 0 0 49.9%
         width 50%!important
