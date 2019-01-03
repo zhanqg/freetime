@@ -1,6 +1,5 @@
 <template>
     <!-- 我的收藏 -->
-<transition name='bounce'>
     <div class="browse-warp">
         <van-nav-bar
             title="我的收藏"
@@ -18,7 +17,6 @@
         </Scroll>
         <router-view/>
     </div>
-</transition>     
 </template>
 
 <script>

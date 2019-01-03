@@ -1,6 +1,5 @@
 <template>
     <!-- 我的订单列表 -->
-<transition name='bounce'>
     <div class="order-warp">
         <van-nav-bar
         title="我的订单"
@@ -37,7 +36,6 @@
         </van-tabs>
          <BaseLoding :showFlag='showFlag'/>
     </div>
-</transition>  
 </template>
 
 <script>

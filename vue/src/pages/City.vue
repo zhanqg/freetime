@@ -1,5 +1,4 @@
 <template>
-<transition name='bounce'>
     <div class="city-warp">
         <van-nav-bar
                 title="城市列表"
@@ -49,7 +48,6 @@
 
         <CityRight v-show="!keyword" @change='change' :cities='citys.data.cities'/>
     </div>
-</transition>   
 </template>
 
 <script>

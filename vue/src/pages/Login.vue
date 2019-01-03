@@ -1,5 +1,4 @@
 <template>
-<transition name='bounce'>
     <div class="login" > 
         <img src="../assets/img/login.jpg" alt="" srcset="" class="login-img">
         <div class="form">
@@ -29,7 +28,6 @@
         </div>
         <Back @back='back'/>
     </div>
-</transition>      
 </template>
 
 <script>

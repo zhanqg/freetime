@@ -1,6 +1,5 @@
 <template>
     <!-- 评价 -->
-    <transition name='bounce'>
         <div class="evaluate-warp">
             <van-nav-bar
                 title="评价中心"
@@ -60,7 +59,6 @@
             <!-- <router-view/> -->
             <!-- <BaseLoding :showFlag='showFlag'/> -->
         </div>
-    </transition> 
 </template>
 
 <script>
@@ -173,14 +171,18 @@ export default {
         this.alreadyEvaluated()
     },
 
-    beforeRouteUpdate (to, from, next) {
+    beforeRouteEnter (to, from, next){
         if (from.name === 'Rate') {
-            this.page = 1
-           this.tobeEvaluated()
-           this.alreadyEvaluated()
+           next(vm => {
+                vm.page = 1
+                vm.tobeEvaluated()
+                vm.alreadyEvaluated()
+            })
+        } else {
+            next()
         }
-        next()
-    },
+        
+    }
 }
 </script>
 <style lang="stylus" scoped>

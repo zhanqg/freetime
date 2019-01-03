@@ -21,26 +21,8 @@
     <div v-show="!showFlag"  class="content" @touchmove.prevent='touchmove' @touchstart.prevent='touchstart' @touchend.prevent='touchend'>
         <Scroll v-if="recommend" :pullup='true' @scrollToEnd='scrollToEnd2' :listenScroll='true' @scroll='scroll' :probeType='probeType'  :data='recommend.hotGoods' class="content-scroll" :bounce='bounce' ref="scroll">
             <div>
-                <div class="swiper">
-                    <van-row>
-                        <van-swipe :autoplay="6000">
-                            <van-swipe-item v-for="(val, index) in recommend.slides" :key="val.goodsId">
-                                <img :src="val.image" class="swiper-img"/>
-                            </van-swipe-item>
-                        </van-swipe>
-                    </van-row>    
-                </div>
-                <div class="panl">
-                    <ul v-show="recommend.category && recommend.category.length">
-                        <li v-for="(val,index) of recommend.category" :key="val.mallCategoryId" @click="item(val,index)">
-                            <img :src="val.image" alt="" srcset="">
-                            <p>{{val.mallCategoryName}}</p>
-                        </li>
-                    </ul>
-                    <div class="ad">
-                        <img :src="advertesPicture" alt="" srcset="">
-                    </div>
-                </div>
+                <HomeSwiper :slides='recommend.slides'/>
+                <HomePanl :category='recommend.category' @item='item' :advertesPicture='recommend.advertesPicture.PICTURE_ADDRESS'/>
                 <HomeRecommend :recommend='recommend.recommend'/>
                 <HomeFoor :floorName='floorName.floor1' :foor1='recommend.floor1' :num='num'/>
                 <HomeFoor :floorName='floorName.floor2' :foor1='recommend.floor2' :num='num+1'/>
@@ -64,6 +46,8 @@ import HomeRecommend from '@/components/home/HomeRecommend'
 import HomeFoor from '@/components/home/HomeFoor'
 import HomeHot from '@/components/home/HomeHot'
 import HomeSearch from '@/components/home/HomeSearch'
+import HomeSwiper from '@/components/home/HomeSwiper'
+import HomePanl from '@/components/home/HomePanl'
 import Scroll from '@/components/public/Scroll'
 import BaseRefresh from '@/components/home/BaseRefresh'
 import {mapActions,mapMutations,mapGetters} from 'vuex'
@@ -76,7 +60,6 @@ export default {
         return {
             value: '',
             recommend: '',
-            advertesPicture: '',
             num: 1,
             bounce: {
                 top:false,
@@ -104,6 +87,8 @@ export default {
         HomeHot,
         Scroll,
         BaseRefresh,
+        HomeSwiper,
+        HomePanl,
     },
 
     computed: {
@@ -155,7 +140,6 @@ export default {
                         if (data.code == 200) {
                             const datas = data.data
                             this.recommend = datas
-                            this.advertesPicture = datas.advertesPicture.PICTURE_ADDRESS
                             this.floorName = datas.floorName
                             setTimeout(() => {
                                 this.transformY = 0
@@ -211,7 +195,6 @@ export default {
                 if (data.code == 200) {
                     this.showFlag = false
                     this.recommend = data.data
-                    this.advertesPicture = data.data.advertesPicture.PICTURE_ADDRESS
                     this.floorName = data.data.floorName
                     this.setTab(data.data.category)
                 }
@@ -358,48 +341,9 @@ export default {
     .content-scroll {
         height: 100%;
         overflow: hidden;
-        .swiper {
-        height: 0;
-        padding-bottom: 53.33%;
-        overflow: hidden;
-    .swiper-img {
-        width: 100%;
-        height: 200px;
+
     }
-    }
-    .panl {
-        background: #EEEEEE;
-        padding: 15px 0 25px 0;
-        ul {
-            width: 95%;
-            margin: 0 auto;
-            border-radius: 10px;
-            padding: 15px 0px 7px 0px;
-            box-sizing: border-box;
-            display: flex;
-            background: #fff;
-            box-shadow: 3px 4px 20px rgba(45,45,45,.15);
-            li {
-                flex: 1;
-                text-align: center;
-                img {
-                    width: 70%;
-                    margin-bottom: 10px;
-                }
-                p {
-                    font-size: 14px
-                }
-            }
-        }
-        .ad {
-            width: 100%;
-            margin-top: 10px;
-            img {
-                width: 100%;
-            }
-        }
-    }
-    }
+
     
 }
      .search-box {

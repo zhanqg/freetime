@@ -210,7 +210,7 @@ export default {
         },
 
         collection() {
-            this.$router.push({ path: "/my/collection" });
+            this.$router.push({ path: "/collection" });
         },
 
         // 退出登录
@@ -228,11 +228,11 @@ export default {
 
         // 最近浏览
         browse() {
-            this.$router.push({ path: "/my/browse" });
+            this.$router.push({ path: "/browse" });
         },
 
         myOrder() {
-            this.$router.push({ path: "/my/order" });
+            this.$router.push({ path: "/order" });
         },
 
         // 修改用户资料
@@ -300,12 +300,12 @@ export default {
 
         status(i) {
             if (i == 4) {
-                this.$router.push({ path: "/my/evaluate" });
+                this.$router.push({ path: "/evaluate" });
             } else {
                 if (i == 5) {
                     i = 4
                 }
-                this.$router.push({ path: "/my/order", query: { status: i } });
+                this.$router.push({ path: "/order", query: { status: i } });
             }
         },
 

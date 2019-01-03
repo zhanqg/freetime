@@ -1,5 +1,4 @@
 <template>
-    <transition name='bounce'>
     <!-- 商品评论 -->
     <div class="rate-warp">
         <van-nav-bar
@@ -36,7 +35,6 @@
             <van-icon name="photograph" />
         </van-uploader> -->
     </div>
-    </transition> 
 </template>
 
 <script>
@@ -76,6 +74,7 @@ export default {
             const {data} = await this.Api.comment(datas)
             if (data.code == 200) {
                 this.$toast(data.msg)
+                this.message = ''
                 setTimeout(() => {
                     this.$router.go(-1)
                 }, 1500);

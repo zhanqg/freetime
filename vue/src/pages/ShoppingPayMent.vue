@@ -1,6 +1,5 @@
 <template>
     <!-- 订单结算和选择商品页面 -->
-<transition name='bounce'>
     <div class="order">
         <van-nav-bar
                 title="订单结算"
@@ -37,7 +36,6 @@
             />
         </div>
     </div>
-</transition>      
 </template>
 
 <script>

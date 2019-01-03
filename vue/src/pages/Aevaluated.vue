@@ -1,5 +1,4 @@
 <template>
-    <transition name='bounce'>
         <!-- 查看已评价 -->
         <div class="aevaluated-warp">
             <van-nav-bar
@@ -25,12 +24,12 @@
                 <van-button type="primary" size="large" @click='goBack'>返回</van-button>
             </div>
          </div>    
-    </transition> 
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
 export default {
+    name: 'Aevaluated',
     data() {
         return {
             evaluateOne:'',

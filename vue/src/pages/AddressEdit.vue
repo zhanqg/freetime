@@ -1,5 +1,4 @@
 <template>
-<transition name='bounce2'>
     <!-- 新增和编辑地址 -->
     <div class="address-edit">
         <van-nav-bar
@@ -20,7 +19,6 @@
             />
         </div>
     </div>
-</transition>  
 </template>
 
 <script>

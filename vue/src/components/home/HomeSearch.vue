@@ -33,7 +33,10 @@ export default {
     props: {
         list: {
             ttype: Array,
-            default: []
+            default:() => {
+                return []
+            },
+            
         },
         len: {
             type: Boolean,

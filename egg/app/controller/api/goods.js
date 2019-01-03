@@ -22,10 +22,8 @@ class GoodsController extends BaseController {
         const { ctx } = this
         const { mallSubId } = ctx.query
         if (!mallSubId) {
-            return ctx.body = {
-                code: -1,
-                msg: '缺少参数mallSubId'
-            }
+            this.error('缺少参数mallSubId')
+            return
         }
         const res = await ctx.model.Goods.find({ 'sub_id': mallSubId })
         if (res) {
@@ -45,10 +43,8 @@ class GoodsController extends BaseController {
         const { ctx } = this
         const { id } = ctx.query
         if (!id) {
-            return ctx.body = {
-                code: -1,
-                msg: '缺少参数id'
-            }
+            this.error('缺少参数id')
+            return
         }
         let pageSize = 5
         let page = ctx.query.page || 1
@@ -115,10 +111,8 @@ class GoodsController extends BaseController {
     async search() {
         let { value } = this.ctx.request.body
         if (!value) {
-            return ctx.body = {
-                code: -1,
-                msg: '缺少参数value'
-            }
+            this.error('缺少参数value')
+            return
         }
         let pageSize = 20
         let page = this.ctx.request.body.page || 1

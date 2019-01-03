@@ -27,15 +27,13 @@ const router = new Router({
         { path: '/category', name: 'Category', component: Category },// tab分类
         { path: '/shoppingCart', name: 'ShoppingCart', component: ShoppingCart },// tab购物车
         { path: '/details', name: 'Details', component: Details },      // 商品详情
-        { path: '/my', name: 'My', component: My, children:[            // tab个人中心
-            { path: 'order', component: MyOrder, name: 'MyOrder' },     // 我的订单
-            { path: 'collection', name: 'Collection', component: Collection},// 我的收藏
-            { path: 'browse', name: 'Browse', component: Browse },      // 我的浏览记录
-            { path: 'evaluate', component: Evaluate, name: 'Evaluate'}, // 我的评价记录
-            { path: 'aevaluated', component: Aevaluated, name: 'Aevaluated' },// 查看已经评价
-            { path: 'rate', component: Rate, name: 'Rate' },            // 评价商品
-        ]
-        },
+        { path: '/my', name: 'My', component: My },
+        { path: '/order', component: MyOrder, name: 'MyOrder' },     // 我的订单
+        { path: '/collection', name: 'Collection', component: Collection},// 我的收藏
+        { path: '/browse', name: 'Browse', component: Browse },      // 我的浏览记录
+        { path: '/evaluate', component: Evaluate, name: 'Evaluate'}, // 我的评价记录
+        { path: '/aevaluated', component: Aevaluated, name: 'Aevaluated' },// 查看已经评价
+        { path: '/rate', component: Rate, name: 'Rate' },            // 评价商品
         { path: '/address', name: 'Address', component: Address }, // 地址
         { path: '/addressEdit', name: 'AddressEdit', component: AddressEdit }, // 新增和编辑地址
         { path: '/login', name: 'Login', component: Login }, // 登入

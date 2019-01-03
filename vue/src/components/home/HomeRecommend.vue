@@ -1,6 +1,6 @@
 <template>
       <!-- swiper -->
-      <div class="swiper-warpper" v-show="recommend">
+      <div class="swiper-warpper">
         <div class="title border-bottom">商品推荐</div>
         <swiper :options="swiperOption">
             <swiper-slide v-for="val of recommend" :key="val.goodsId" class="recommend-item border-right">
@@ -26,7 +26,14 @@ import {details} from 'js/mixin'
 import {mapGetters} from 'vuex'
 export default {
     mixins: [details],
-    props:['recommend'],
+    props: {
+        recommend: {
+            type:Array,
+            default:() => {
+                return []
+            }
+        }
+    },
     name:'Recommend',
     computed: {
         ...mapGetters(['userName'])
