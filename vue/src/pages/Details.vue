@@ -142,6 +142,7 @@ import { ImagePreview } from "vant";
 import AdditionAndSubtraction from "@/components/details/AdditionAndSubtraction";
 export default {
   name: "Details",
+  props: ['id'], // 路由接受的参数query.id
   mixins: [loading, goBack, page],
   components: {
     Back,
@@ -353,7 +354,6 @@ export default {
   },
 
   created() {
-    this.id = this.$route.query.id;
     this.goodsItem(this.id);
     this.isCollection(
       this.goodsDetails.goodsId || this.goodsDetails.id || this.id
@@ -361,6 +361,7 @@ export default {
   },
 
   mounted() {
+    
     document.querySelector(".van-tabs__line").classList.add("swip");
     this.$refs.swiperImg.style.opacity = 0;
     this.$refs.swiperImg2.style.opacity = 0;

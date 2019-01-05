@@ -106,7 +106,7 @@ export default {
 
         // 查看已评价
         aevaluated(id,_id) {
-            this.$router.push({path:'/my/aevaluated',name:'Aevaluated',query:{id},params:{_id}})
+            this.$router.push({path:'/my/aevaluated',name:'Aevaluated',query:{id:_id}})
         },
 
         async tobeEvaluated() {

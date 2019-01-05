@@ -30,6 +30,7 @@
 import {mapGetters} from 'vuex'
 export default {
     name: 'Aevaluated',
+    props: ['id'],
     data() {
         return {
             evaluateOne:'',
@@ -64,9 +65,8 @@ export default {
     },
 
     async created() {
-        let _id = this.$route.params._id
         try {
-            const {data} = await this.Api.evaluateOne(_id)
+            const {data} = await this.Api.evaluateOne(this.id)
             if (data.code == 200) {
                 this.evaluateOne = data.evaluateOne
             }

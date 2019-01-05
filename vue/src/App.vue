@@ -60,7 +60,6 @@ export default {
             try {
                 const { data } = await this.Api.keeplogin();
                 if (data.code == 200) {
-
                     this.setName(data.userInfo);
                 }
             } catch (error) {
@@ -72,6 +71,7 @@ export default {
     mounted() {
     },
 
+   
     created() {
         this.keeplogin()
 

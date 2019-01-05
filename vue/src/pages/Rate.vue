@@ -39,13 +39,13 @@
 
 <script>
 export default {
+    props: ['id'],
     data() {
         return {
             rate: 5,
             message: '',
             checked: false,
             goodsOne: '',
-            id: '',  //商品id
             _id: '',   // 数据库单条id
             order_id: ''//  订单id
         }
@@ -84,7 +84,6 @@ export default {
     },
 
     async created() {
-        this.id = this.$route.query.id
         this._id = this.$route.params._id
         this.order_id = this.$route.params.order_id
         try {
