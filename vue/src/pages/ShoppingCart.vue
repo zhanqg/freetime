@@ -52,11 +52,10 @@
 
 <script>
 import Scroll from "@/components/public/Scroll";
-import { mapMutations, mapGetters } from "vuex";
-import { loading } from "js/mixin";
+import {loading,vuexData} from 'js/mixin'
 export default {
   name: "ShoppingCart",
-  mixins: [loading],
+  mixins: [loading,vuexData],
   data() {
     return {
       shopList: "",
@@ -86,8 +85,6 @@ export default {
       }
       return 0;
     },
-
-    ...mapGetters(["userName"])
   },
   components: {
     Scroll
@@ -212,10 +209,6 @@ export default {
       });
       this.setShopList(id);
     },
-
-    ...mapMutations({
-      setShopList: "SHOPORDERLIST"
-    }),
 
     goLogin() {
       console.log(1234);

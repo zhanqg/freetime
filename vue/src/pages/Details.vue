@@ -136,14 +136,13 @@
 <script>
 import Scroll from "@/components/public/Scroll";
 import Back from "@/components/public/Back";
-import { loading, goBack, page } from "js/mixin";
-import { mapGetters, mapActions, mapMutations } from "vuex";
+import { loading, goBack, page,vuexData } from "js/mixin";
 import { ImagePreview } from "vant";
 import AdditionAndSubtraction from "@/components/details/AdditionAndSubtraction";
 export default {
   name: "Details",
   props: ['id'], // 路由接受的参数query.id
-  mixins: [loading, goBack, page],
+  mixins: [loading, goBack, page,vuexData],
   components: {
     Back,
     AdditionAndSubtraction,
@@ -165,10 +164,6 @@ export default {
         bottom: false
       }
     };
-  },
-
-  computed: {
-    ...mapGetters(["goodsDetails", "userName"])
   },
 
   methods: {
@@ -336,12 +331,6 @@ export default {
       this.$router.push({ path: "/ShoppingPayMent" });
       this.setShopList(goods);
     },
-
-    ...mapMutations({
-      setShopList: "SHOPORDERLIST"
-    }),
-
-    ...mapActions(["setBrowse"]),
 
     // 预览图片
     showImagePreview() {

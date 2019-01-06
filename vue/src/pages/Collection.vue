@@ -23,18 +23,13 @@
 import Scroll from '@/components/public/Scroll'
 import GoodsList from '@/components/public/GoodsList'
 import {loading} from 'js/mixin'
-import {mapMutations,mapGetters} from 'vuex'
-import {page,details} from 'js/mixin'
+import {page,details,vuexData} from 'js/mixin'
 export default {
     name: 'Collection',
     mixins: [loading,page,details],
     components: {
         Scroll,
         GoodsList,
-    },
-
-    computed: {
-        ...mapGetters(['userName'])
     },
 
     data() {
@@ -103,10 +98,6 @@ export default {
                 this.$toast('网络错误')
             }
         },
-
-        ...mapMutations({
-            setGoodDetails: 'GOODSDETAILS'
-        }),
 
         // 上拉加载
         scrollToEnd() {

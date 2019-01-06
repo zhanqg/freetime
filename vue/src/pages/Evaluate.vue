@@ -63,16 +63,11 @@
 
 <script>
 import Scroll from '@/components/public/Scroll'
-import {page} from 'js/mixin'
-import {mapGetters} from 'vuex'
+import {page,vuexData} from 'js/mixin'
 export default {
-    mixins:[page],
+    mixins:[page,vuexData],
     components: {
         Scroll,
-    },
-    
-    computed: {
-        ...mapGetters(['userName'])
     },
 
     data() {

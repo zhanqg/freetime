@@ -13,7 +13,6 @@
 
 <script>
 import Title from '@/components/home/Title'
-import {mapMutations} from 'vuex'
 import {details} from 'js/mixin'
 export default {
     mixins: [details],

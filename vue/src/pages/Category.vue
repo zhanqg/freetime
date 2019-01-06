@@ -35,12 +35,9 @@
 import {mapGetters,mapMutations,mapActions} from 'vuex'
 import Scroll from '@/components/public/Scroll'
 import GoodsList from '@/components/public/GoodsList'
-import {loading,details} from 'js/mixin'
+import {loading,details,vuexData} from 'js/mixin'
 export default {
-    mixins: [loading,details],
-    computed: {
-        ...mapGetters(['category','categoryTabList'])
-    },
+    mixins: [loading,details,vuexData],
 
     data() {
         return {
@@ -108,11 +105,6 @@ export default {
             }
         },
 
-        ...mapMutations({
-            setGoodDetails: 'GOODSDETAILS'
-        }),
-
-        ...mapActions(['setTab','setCategoryTabList']),
 
         async getCategory() {
             if (!this.category.length) {

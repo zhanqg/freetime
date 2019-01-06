@@ -28,8 +28,9 @@
 
 <script>
 import Scroll from '@/components/public/Scroll'
-import {mapMutations,mapActions,mapGetters} from 'vuex'
+import {vuexData} from 'js/mixin'
 export default {
+    mixins:[vuexData],
     props: {
         list: {
             ttype: Array,
@@ -56,7 +57,6 @@ export default {
     },
 
     computed: {
-        ...mapGetters(['searchHistoryList']),
         historyList() {
             if (!this.searchHistoryList) {
                 return
@@ -76,12 +76,6 @@ export default {
             this.setSearchHistory(this.value)     // 加入搜索历史记录
             this.$emit('details',val.id)
         },
-        ...mapMutations({
-            setGoodDetails: 'GOODSDETAILS'
-        }),
-
-        ...mapActions(['setTab','setSearchHistory','clearSearchHistory']),
-
         keyWord(str,value) {
             let replaceReg = new RegExp(value, 'g');
             let replaceString = `<span style='color:red'>${value}</span>`

@@ -21,14 +21,10 @@
 <script>
 import Scroll from '@/components/public/Scroll'
 import GoodsList from '@/components/public/GoodsList'
-import {mapGetters,mapActions,mapMutations} from 'vuex'
-import {details} from 'js/mixin'
+import {details,vuexData} from 'js/mixin'
 export default {
-    mixins: [details],
-    computed: {
-        ...mapGetters(['browse'])
-    },
-
+    mixins: [details,vuexData],
+ 
     components: {
         Scroll,
         GoodsList,
@@ -48,11 +44,7 @@ export default {
         close(item) {
             this.deleteOne(item.id)
         },
-        ...mapActions(['deleteOne']),
-
-        ...mapMutations({
-            setGoodDetails: 'GOODSDETAILS'
-        }),
+      
     }
 }
 </script>

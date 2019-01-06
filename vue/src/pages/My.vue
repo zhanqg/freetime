@@ -126,9 +126,11 @@
 
 <script>
 import Cropper from "@/components/my/Cropper";
-import { mapGetters, mapMutations } from "vuex";
+import {goBack,vuexData} from 'js/mixin'
+
 export default {
     name: "My",
+    mixins:[vuexData],
     components: {
         Cropper
     },
@@ -170,11 +172,6 @@ export default {
             tempAvatar: '',   //裁剪的临时图片
         };
     },
-
-    computed: {
-        ...mapGetters(["userName"])
-    },
-
 
     methods: {
         goBack() {

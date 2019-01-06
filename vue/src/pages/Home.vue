@@ -50,12 +50,11 @@ import HomeSwiper from '@/components/home/HomeSwiper'
 import HomePanl from '@/components/home/HomePanl'
 import Scroll from '@/components/public/Scroll'
 import BaseRefresh from '@/components/home/BaseRefresh'
-import {mapActions,mapMutations,mapGetters} from 'vuex'
-import {loading} from 'js/mixin'
+import {loading,vuexData} from 'js/mixin'
 import {throttle} from 'js/util'
 import {page} from 'js/mixin'
 export default {
-    mixins: [loading,page],
+    mixins: [loading,page,vuexData],
     data() {
         return {
             value: '',
@@ -89,10 +88,6 @@ export default {
         BaseRefresh,
         HomeSwiper,
         HomePanl,
-    },
-
-    computed: {
-        ...mapGetters(['city'])
     },
 
     methods: {
@@ -178,11 +173,6 @@ export default {
             this.$router.push({path:`/details`,query: {id}})
         },
 
-        ...mapActions(['setTab']),
-
-        ...mapMutations({
-            setGoodDetails: 'GOODSDETAILS'
-        }),
 
         cityClick() {
             this.$router.push({path: '/city'})

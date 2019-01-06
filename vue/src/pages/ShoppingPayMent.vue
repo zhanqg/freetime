@@ -40,9 +40,10 @@
 
 <script>
 import GoodsList from '@/components/public/GoodsList'
-import {mapGetters,mapMutations} from 'vuex'
+import {vuexData} from 'js/mixin'
 import Scroll from '@/components/public/Scroll'
 export default {
+    mixins:[vuexData],
     components: {
         GoodsList,
         Scroll,
@@ -55,8 +56,6 @@ export default {
         
     },
     computed: {
-        ...mapGetters(['shopOrderList','temporaryAddress']),
-
         price() {
             let num = 0
             if (this.shopOrderList.length) {
@@ -139,10 +138,6 @@ export default {
             }
         },
 
-        ...mapMutations({
-            setShopList: 'SHOPORDERLIST',
-            setVuexAddress:'TEMPORARYADDRESS'
-        }),
 
         // 添加收货地址
         goAddress() {

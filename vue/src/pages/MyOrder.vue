@@ -41,11 +41,10 @@
 <script>
 import GoodsList from '@/components/public/GoodsList'
 import Scroll from '@/components/public/Scroll'
-import {mapGetters} from 'vuex'
-import {loading} from 'js/mixin'
+import {loading,vuexData} from 'js/mixin'
 export default {
     name: 'MyOarder',
-    mixins: [loading],
+    mixins: [loading,vuexData],
     data() {
         return {
             active: 0,
@@ -54,11 +53,6 @@ export default {
             tabs:['全部','待支付','待发货','待收货','已完成'],
         }
     },
-
-    computed: {
-        ...mapGetters(['userName']),
-    },
-
     components: {
         GoodsList,
         Scroll

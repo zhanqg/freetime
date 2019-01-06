@@ -27,8 +27,9 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {vuexData} from 'js/mixin'
 export default {
+    mixins:[vuexData],
     name: 'Aevaluated',
     props: ['id'],
     data() {
@@ -37,11 +38,6 @@ export default {
             size:14
         }
     },
-
-    computed: {
-        ...mapGetters(['userName'])
-    },
-
 
     methods: {
         goBack() {

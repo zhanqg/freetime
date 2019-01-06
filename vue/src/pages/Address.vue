@@ -25,11 +25,10 @@
 
 <script>
 import Scroll from '@/components/public/Scroll'
-import {mapActions,mapMutations} from 'vuex'
-import {loading} from 'js/mixin'
+import {loading,vuexData} from 'js/mixin'
 export default {
     name: 'Address',
-    mixins: [loading],
+    mixins: [loading,vuexData],
     components: {
         Scroll,
     },
@@ -80,13 +79,6 @@ export default {
                 this.setDefaultAddress(item._id)                
             }
         },
-        
-        ...mapActions(['setAddress']),
-        
-        ...mapMutations({
-            setAddress2: 'TEMPORARYADDRESS'
-        })
-        
     },
 
  

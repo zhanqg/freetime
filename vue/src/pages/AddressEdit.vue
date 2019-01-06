@@ -22,13 +22,10 @@
 </template>
 
 <script>
-import {mapGetters,mapMutations,mapActions} from 'vuex'
+import {vuexData} from 'js/mixin'
 import {$toast} from 'vant'
 export default {
-    computed: {
-        ...mapGetters(['addressInfo'])
-    },
-
+    mixins:[vuexData],
     data() {
         return {
             searchResult: [],
@@ -97,9 +94,6 @@ export default {
             }, 300);
         },
 
-        ...mapActions(['clearAddress']),
-
-        
     }
 }
 </script>

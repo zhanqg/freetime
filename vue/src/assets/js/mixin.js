@@ -13,6 +13,46 @@ export const details = {
     }
 }
 
+
+export const vuexData = {
+    computed: {
+        ...mapGetters([
+            'category',
+            'categoryTabList',
+            'goodsDetails',
+            'userName',
+            'addressInfo',
+            'browse',
+            'shopOrderList',
+            'temporaryAddress',
+            'city',
+            'active',
+            'searchHistoryList'
+        ])
+    },
+
+    methods: {
+        ...mapMutations({
+            setName: "USERNAME",
+            setGoodDetails: 'GOODSDETAILS',
+            setAddress2: 'TEMPORARYADDRESS',
+            setShopList: "SHOPORDERLIST",
+            setVuexAddress:'TEMPORARYADDRESS'
+        }),
+
+        ...mapActions([
+            'setTab',
+            'setCategoryTabList',
+            'setAddress',
+            'clearAddress',
+            'setBrowse',
+            'deleteOne',
+            'selectCity',
+            'setSearchHistory',
+            'clearSearchHistory'
+        ])
+    },
+}
 export const loading = {
     data() {
         return {

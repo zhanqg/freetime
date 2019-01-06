@@ -54,9 +54,11 @@
 import CityRight from "@/components/city/CityRight";
 import Scroll from "@/components/public/Scroll";
 import city from "js/city";
-import {mapActions,mapGetters} from 'vuex'
 import {throttle} from 'js/util'
+import {vuexData} from 'js/mixin'
+
 export default {
+    mixins:[vuexData],
   components: {
     Scroll,
     CityRight
@@ -95,7 +97,6 @@ export default {
         return arr
     },
 
-    ...mapGetters(['city']),
 
     noData() {
         return !this.cityList.length
@@ -103,7 +104,6 @@ export default {
   },
 
   methods: {
-    ...mapActions(['selectCity']),
 
     goBack() {
       this.$router.push({path:'/'});

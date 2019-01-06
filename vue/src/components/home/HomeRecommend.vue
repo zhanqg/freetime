@@ -22,10 +22,9 @@
 import Vue from 'vue';
 import VueAwesomeSwiper from 'vue-awesome-swiper' //轮播图
 Vue.use(VueAwesomeSwiper)
-import {details} from 'js/mixin'
-import {mapGetters} from 'vuex'
+import {details,vuexData} from 'js/mixin'
 export default {
-    mixins: [details],
+    mixins: [details,vuexData],
     props: {
         recommend: {
             type:Array,
@@ -35,10 +34,6 @@ export default {
         }
     },
     name:'Recommend',
-    computed: {
-        ...mapGetters(['userName'])
-    },
-
     data() {
       return {
         swiperOption: {

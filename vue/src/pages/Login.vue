@@ -32,11 +32,9 @@
 
 <script>
 import Back from "@/components/public/Back";
-
-import {mapMutations} from 'vuex'
-import {goBack} from 'js/mixin'
+import {goBack,vuexData} from 'js/mixin'
 export default {
-    mixins: [goBack],
+    mixins: [goBack,vuexData],
     data() {
         return {
             nickname:'',
@@ -109,10 +107,6 @@ export default {
                 
             }
         },
-
-        ...mapMutations({
-            setName: 'USERNAME'
-        })
     },
     // 判断如果已经登录，就不让进入这个页面
     beforeRouteEnter   (to, from, next) {
