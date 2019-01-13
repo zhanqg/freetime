@@ -22,7 +22,7 @@
                     <img :src="caitiao" width="100%" height="3px" alt="" class="caitiao">
                 <Scroll :data='shopOrderList' ref="scroll" class="scroll">
                     <div class="goods-list">
-                        <GoodsList :list='shopOrderList' :isOrder='isOrder'/>
+                        <GoodsList :list='shopOrderList' :isOrder='true'/>
                     </div>
                 </Scroll>
             </div>
@@ -70,7 +70,6 @@ export default {
     data() {
         return {
             caitiao: require('img/caitiao.jpg'),
-            isOrder: true,
             isLoading: false,
             list: [],
             defaultAdd:''

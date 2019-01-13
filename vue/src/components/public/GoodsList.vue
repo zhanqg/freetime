@@ -2,9 +2,9 @@
     <!-- 商品列表组件 -->
         <ul>
         <li v-for="(item,index) in list" :key="item._id || item.id" class="good-item border-bottom" @click="details(item)">
-            <img :src="item.image || item.image_path" :onerror="defaultImg" :class="{img2:isBrowse || isCollection || isOrder}">
+            <img :src="item.image || item.image_path" :onerror="defaultImg" :class="{img2:isBrowse || isCollection || isOrder || isSearch}">
             <div>
-                <p class="p1">{{item.name}}</p>
+                <p class="p1" v-html="keyWord(item.name,searchVal)"></p>
                 <p class="p2">
                     <span class="pic" v-if="isOrder">￥{{(item.present_price * item.count).toFixed(2)}}</span>
                     <span class="pic" v-else>￥{{item.present_price}}</span>
@@ -21,13 +21,20 @@
 </template>
 
 <script>
+import {details} from 'js/mixin'
+
 export default {
+    mixins:[details],
     props: {
         list: {
             type: null,
             default: []
         },
 
+        isSearch: {
+             type: Boolean,
+            default: false
+        },
         isBrowse: {
             type: Boolean,
             default: false
@@ -41,7 +48,13 @@ export default {
         isOrder: {
             type: Boolean,
             default: false
+        },
+
+        searchVal: {
+            type: '',
+            default: ''
         }
+
         
     },
 
@@ -58,14 +71,25 @@ export default {
     },
 
     methods: {
-        details(item) {
-            this.$emit('details',item)
-        },
+        // details(item) {
+        //     this.$emit('details',item)
+        // },
 
         // 清除单条浏览记录
         close(item,index) {
             this.$emit('close',item,index)
-        }
+        },
+
+        //搜索高亮
+        keyWord(str,value) {
+            if (this.isSearch) {
+                let replaceReg = new RegExp(value, 'g');
+                let replaceString = `<span style='color:red'>${value}</span>`
+                str = str.replace(replaceReg, replaceString);
+                return str
+            }
+            return str
+        },
     }
 }
 </script>

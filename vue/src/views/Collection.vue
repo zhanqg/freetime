@@ -8,7 +8,7 @@
         />
         <Scroll  :pullup='true' @scrollToEnd='scrollToEnd'  :data='dataArr' class="scroll">
             <div>
-                <GoodsList  :list='dataArr' :isCollection='isCollection' @details='details' @close='close'/>
+                <GoodsList  :list='dataArr' :isCollection='true'  @close='close'/>
             </div>
             <div v-if="!dataArr.length" class="null">
                  {{userName ?'暂无收藏~~' : '请先登录噢~~'}}
@@ -23,10 +23,10 @@
 import Scroll from '@/components/public/Scroll'
 import GoodsList from '@/components/public/GoodsList'
 import {loading} from 'js/mixin'
-import {page,details,vuexData} from 'js/mixin'
+import {page,vuexData} from 'js/mixin'
 export default {
     name: 'Collection',
-    mixins: [loading,page,details,vuexData],
+    mixins: [loading,page,vuexData],
     components: {
         Scroll,
         GoodsList,
@@ -34,7 +34,6 @@ export default {
 
     data() {
         return {
-            isCollection: true,
             list: [],
             isText: false,
             page: 1,

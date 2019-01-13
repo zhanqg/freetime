@@ -15,7 +15,7 @@
                                 <Scroll  v-show="!showFlag" :data='dataList' class="scroll" @scroll="scroll" :listenScroll='listenScroll' ref="scroll">
                                     <div>
                                         <van-tab v-for="val in list || category[0].bxMallSubDto" :title="val.mallSubName" :key="val.mallSubId">
-                                            <GoodsList :list='dataList' @details='details'/>
+                                            <GoodsList :list='dataList'/>
                                         </van-tab>
                                     </div>
                                 </Scroll>
@@ -35,9 +35,9 @@
 import {mapGetters,mapMutations,mapActions} from 'vuex'
 import Scroll from '@/components/public/Scroll'
 import GoodsList from '@/components/public/GoodsList'
-import {loading,details,vuexData} from 'js/mixin'
+import {loading,vuexData} from 'js/mixin'
 export default {
-    mixins: [loading,details,vuexData],
+    mixins: [loading,vuexData],
 
     data() {
         return {

@@ -2,10 +2,9 @@
 <transition name='bounce'>
     <div class="search-content">
         <Scroll :data='list' class="scroll" :pullup='true' @scrollToEnd='scrollToEnd'>
-            <ul>
-                <li class="item border-bottom"  v-for="val of list" @click="details(val)" :key="val.id" v-html="keyWord(val.name,value)">
-                </li>
-            </ul>
+                <!-- <li class="item border-bottom"  v-for="val of list" @click="details(val)" :key="val.id" v-html="keyWord(val.name,value)">
+                </li> -->
+            <GoodsList :isSearch='true' :list='list' :searchVal='value'/>
             <div class="empty" v-show="len">暂无搜索结果~~</div>
         </Scroll>
         <div class="history" v-if="!value && historyList && historyList.length">
@@ -28,8 +27,13 @@
 
 <script>
 import Scroll from '@/components/public/Scroll'
+import GoodsList from '@/components/public/GoodsList'
 import {vuexData} from 'js/mixin'
 export default {
+    components: {
+        GoodsList,
+        Scroll
+    },
     mixins:[vuexData],
     props: {
         list: {
@@ -67,21 +71,19 @@ export default {
     },
 
     methods: {
-        keyWords() {
-             return keyWord()
-        },
 
         details(val) {
             this.setGoodDetails(val)    
             this.setSearchHistory(this.value)     // 加入搜索历史记录
-            this.$emit('details',val.id)
         },
-        keyWord(str,value) {
-            let replaceReg = new RegExp(value, 'g');
-            let replaceString = `<span style='color:red'>${value}</span>`
-            str = str.replace(replaceReg, replaceString);
-            return str
-        },
+        // keyWord(str,value) {
+        //     console.log(str,value);
+            
+        //     let replaceReg = new RegExp(value, 'g');
+        //     let replaceString = `<span style='color:red'>${value}</span>`
+        //     str = str.replace(replaceReg, replaceString);
+        //     return str
+        // },
 
       
         more() {
@@ -113,9 +115,7 @@ export default {
         }
     },
 
-    components: {
-        Scroll
-    },
+    
 
     created() {
      

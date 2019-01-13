@@ -1462,21 +1462,6 @@
 		"image_path": "http://images.baixingliangfan.cn/compressedPic/20171226125208_9327.jpg"
 	},
 	{
-		"id": "2a4763fa31cb457481737b9ede14f841",
-		"goods_serlal_number": "6902890238461",
-		"shop_id": "402880e860166f3c0160167897d60002",
-		"sub_id": "402880e86016d1b5016016e3d09d0019",
-		"name": "双汇大肉块俄式风味香肠30g*8",
-		"orl_price": 10.5,
-		"present_price": 8.6,
-		"amount": 10000,
-		"detail": "<img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203140013_829.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203140013_6429.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203140013_8306.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203140014_5599.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203140014_8392.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203140014_1505.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203140014_6849.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203140014_5217.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203140014_7629.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203140014_8725.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203140015_5631.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203140015_8705.jpg\" width=\"100%\" height=\"auto\" alt=\"\" />",
-		"image": "http://baixing.kuaihejiu.com/shopGoodsImg/20171203/20171203135946_7143.jpg",
-		"create_time": 1512208899782,
-		"update_time": 1514198130209,
-		"image_path": "http://baixing.kuaihejiu.com/compressedPic/20171203135946_7143.jpg"
-	},
-	{
 		"id": "2a7d08edae8949aaae8c065b34755db1",
 		"goods_serlal_number": "9556345280078",
 		"shop_id": "402880e860166f3c0160167897d60002",
@@ -1656,21 +1641,7 @@
 		"update_time": 1523592477352,
 		"image_path": "http://images.baixingliangfan.cn/compressedPic/20180413120731_2887.jpg"
 	},
-	{
-		"id": "30654418eb8b4658a36d4f26c077a1ad",
-		"goods_serlal_number": "6956367338680",
-		"shop_id": "402880e860166f3c0160167897d60002",
-		"sub_id": "2c9f6c946077476a0160781eb392000d",
-		"name": "王老吉凉茶310ml",
-		"orl_price": 3.5,
-		"present_price": 2.4,
-		"amount": 10000,
-		"detail": "<img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203142414_8053.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203142415_3496.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203142415_1778.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203142415_9336.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203142415_484.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203142415_918.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203142415_3648.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203142415_4766.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203142416_3587.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203142416_2505.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203142416_475.jpg\" width=\"100%\" height=\"auto\" alt=\"\" />",
-		"image": "http://baixing.kuaihejiu.com/shopGoodsImg/20171203/20171203142402_7120.jpg",
-		"create_time": 1512208901352,
-		"update_time": 1527414674867,
-		"image_path": "http://baixing.kuaihejiu.com/compressedPic/20171203142402_7120.jpg"
-	},
+
 	{
 		"id": "307526e4da624247b85106cec555bd3f",
 		"goods_serlal_number": "8935043601971",
@@ -1731,21 +1702,7 @@
 		"update_time": 1522199055102,
 		"image_path": "http://images.baixingliangfan.cn/compressedPic/20180208122258_4913.jpg"
 	},
-	{
-		"id": "3194330cf25f43c3934dbb8c2a964ade",
-		"goods_serlal_number": "6948960101563",
-		"shop_id": "402880e860166f3c0160167897d60002",
-		"sub_id": "402880e86016d1b5016016e67b790023",
-		"name": "哈尔滨冰爽啤酒330ml",
-		"orl_price": 3,
-		"present_price": 2.5,
-		"amount": 10000,
-		"detail": "<img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203144929_5286.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203144930_8661.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203144930_8113.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203144930_9912.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203144930_7648.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203144930_1199.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203144930_1204.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203144931_1507.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203144931_4365.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203144931_9190.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203144932_9229.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171203/20171203144932_9151.jpg\" width=\"100%\" height=\"auto\" alt=\"\" />",
-		"image": "http://baixing.kuaihejiu.com/shopGoodsImg/20171205/20171205090617_3518.jpg",
-		"create_time": 1512208901137,
-		"update_time": 1522199338133,
-		"image_path": "http://baixing.kuaihejiu.com/compressedPic/20171205090617_3518.jpg"
-	},
+
 	{
 		"id": "31b1a7f324ec4fca9f595effa0e4e0bb",
 		"goods_serlal_number": "6925009911444",
@@ -1898,21 +1855,7 @@
 		"update_time": 1523426730680,
 		"image_path": "http://images.baixingliangfan.cn/compressedPic/20180223090837_8226.jpg"
 	},
-	{
-		"id": "35df1fdd5d8c468ca525cd7021bd32d8",
-		"goods_serlal_number": "6902952880294",
-		"shop_id": "402880e860166f3c0160167897d60002",
-		"sub_id": "402880e86016d1b5016016e713540024",
-		"name": "茅台飞天带杯53°500ml",
-		"orl_price": 1680,
-		"present_price": 1560,
-		"amount": 10000,
-		"detail": "<img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171202/20171202194744_65.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171202/20171202194744_1693.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171202/20171202194745_1613.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171202/20171202194745_9498.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171202/20171202194745_6495.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171202/20171202194745_3276.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171202/20171202194745_5132.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171202/20171202194746_1927.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171202/20171202194746_1209.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"http://baixing.kuaihejiu.com/shopGoodsDetailImg/20171202/20171202194746_6815.jpg\" width=\"100%\" height=\"auto\" alt=\"\" />",
-		"image": "http://baixing.kuaihejiu.com/shopGoodsImg/20171202/20171202194736_6485.jpg",
-		"create_time": 1512208901358,
-		"update_time": 1512436249545,
-		"image_path": "http://baixing.kuaihejiu.com/compressedPic/20171202194736_6485.jpg"
-	},
+
 	{
 		"id": "36360da2ec084316a100c2df1c714e37",
 		"goods_serlal_number": "2300000059892",

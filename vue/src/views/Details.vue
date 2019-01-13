@@ -123,8 +123,8 @@
         <div class="sku-layer" v-show="showBase" @click="showBase=false"></div>
       </transition>
       <van-goods-action class="van-goods-sku">
-        <van-goods-action-mini-btn icon="home" @click="goHome">首 页</van-goods-action-mini-btn>
-        <van-goods-action-mini-btn icon="cart" @click="onClickCart">购物车</van-goods-action-mini-btn>
+        <van-goods-action-mini-btn icon="wap-home" @click="goHome">首 页</van-goods-action-mini-btn>
+        <van-goods-action-mini-btn icon="shopping-cart-o" @click="onClickCart">购物车</van-goods-action-mini-btn>
         <van-goods-action-big-btn @click="addShops">加入购物车</van-goods-action-big-btn>
         <van-goods-action-big-btn primary @click="purchase">立即购买</van-goods-action-big-btn>
       </van-goods-action>

@@ -8,7 +8,7 @@
             />
         <Scroll :data='browse' class="scroll">
             <div>
-                <GoodsList :list='browse' :isBrowse='isBrowse' @close='close' @details='details'/>
+                <GoodsList :list='browse' :isBrowse='true' @close='close'/>
             </div>
             <div v-if="!browse.length" class="null">
                 暂无最近浏览~~
@@ -21,19 +21,13 @@
 <script>
 import Scroll from '@/components/public/Scroll'
 import GoodsList from '@/components/public/GoodsList'
-import {details,vuexData} from 'js/mixin'
+import {vuexData} from 'js/mixin'
 export default {
-    mixins: [details,vuexData],
+    mixins: [vuexData],
  
     components: {
         Scroll,
         GoodsList,
-    },
-
-    data() {
-        return {
-            isBrowse: true
-        }
     },
 
     methods: {

@@ -36,7 +36,7 @@
      <BaseLoding :showFlag='showFlag'/>
      <HomeSearch v-show="query" @scrollToEnd='scrollToEnd' :list='dataArr' @details='searchDetails' :len='len' :value='value' @vals='vals'/>
      <div v-show="searchLoading" class="van-loading van-loading--circular van-loading--white" style="color: white;z-index:999"><span class="van-loading__spinner van-loading__spinner--circular"><svg viewBox="25 25 50 50" class="van-loading__circular"><circle cx="50" cy="50" r="20" fill="none"></circle></svg></span></div>
-
+<router-view/>
  </div>
 
 </template>
@@ -152,7 +152,6 @@ export default {
                     }
                     
                 }  else {
-                    console.log('小于80');
                     this.transformY = 0
                     this.rotate = 0
                     this.isRotate = false

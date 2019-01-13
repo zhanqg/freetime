@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import GoodsList from '@/components/public/GoodsList'
 import Scroll from '@/components/public/Scroll'
 import {loading,vuexData} from 'js/mixin'
 export default {
@@ -54,7 +53,6 @@ export default {
         }
     },
     components: {
-        GoodsList,
         Scroll
     },
 
