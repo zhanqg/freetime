@@ -8,12 +8,15 @@ class UserController extends BaseController {
     async register() {
         const { ctx } = this
         const { nickname, password, verify } = ctx.request.body
-        if (!nickname || !password) {
+        if (!nickname || !password || !verify) {
             return ctx.body = {
                 code: -1,
                 msg: '请输入完整信息'
             }
         }
+        console.log(ctx.session);
+       
+                
         if (this.ctx.session.code.toUpperCase() !== verify.toUpperCase()) {
             return ctx.body = {
                 code: -2,
@@ -97,6 +100,8 @@ class UserController extends BaseController {
 
     // 保持登录
     async keepLogin() {
+        
+
         const { ctx } = this
         if (ctx.session.userInfo) {
             let userInfo = await this.ctx.model.Admin.findById(ctx.session.userInfo._id, USERSTR)
@@ -107,7 +112,7 @@ class UserController extends BaseController {
         } else {
             ctx.body = {
                 code: -1,
-                msg: '请登录'
+                msg: '请登录',
             }
         }
     }

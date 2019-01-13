@@ -3,6 +3,7 @@ const BaseController = require('../base')
 class GoodsController extends BaseController {
     // 首页商品查询
     async recommend() {
+        console.log(this.ctx.session);
         const { ctx } = this
         const res = await ctx.model.Recommend.findOne({})
         if (res) {

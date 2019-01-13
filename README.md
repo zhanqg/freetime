@@ -93,16 +93,20 @@
 
 ### 关于前端请求接口跨域问题，
 ```js
-> 在前端目录mall下的config/index.js文件下面的proxyTable里加上这样一段代码，既可跨域,只适用于开发环境，3000是端口号。
-proxyTable: {
-  '/':{
-    target:'http://localhost:3000',
-    changeOrigin: true,  //是否跨域
-    pathRewrite:{
-      '^/api':''
+> 在前端目录vue下的vue.config.js文件下面的里加上这样一段代码，既可跨域,只适用于开发环境，3000是端口号。
+
+devServer: {
+    proxy: {
+        '/api': {
+            target: 'http://localhost:3000',
+            ws: true,
+            changeOrigin: true,  //是否跨域
+            pathRewrite: {
+                '^/api': ''
+            }
+        }
     }
-  }
-},
+    },
 > 请求接口时这样写
 newDetails(id) {
      axios.get(`/api/details`)

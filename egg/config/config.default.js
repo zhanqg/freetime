@@ -50,10 +50,10 @@ module.exports = appInfo => {
     config.bodyParser = {
         jsonLimit: '100mb',
     }
-    config.cors = {
-        origin: '*',
-        allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
-    } 
+    // config.cors = {
+    //     origin: '*',
+    //     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+    // } 
     config.url = 'http://localhost:3000'
     config.uploadDir = 'app/public/avatar/'
     return config;

@@ -4,7 +4,7 @@ exports.mongoose = {
     package: 'egg-mongoose',
 }
 exports.cors = {
-    enable: true,
+    enable: false,
     package: 'egg-cors',
 };
 exports.ejs = {
