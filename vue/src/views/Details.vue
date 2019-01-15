@@ -104,13 +104,13 @@
                                                     />
                                                 </p>
                                                 <p class="cont">{{val.content}}</p>
-                                                <div class="content-img">
-                                                    <img v-for="img of val.images" :key="img" :src="img" >
+                                                <div class="img-content" :class="setImgContentClass(val.images.length)">
+                                                    <img v-for="img of val.images" class="img" :class="setImgClass(val.images.length)" :key="img" :src="img" >
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div v-show="!dataArr.length" class="nocomment">该商品暂无评论噢~~</div>
+                                    <div v-if="!dataArr.length" class="nocomment">该商品暂无评论噢~~</div>
                                 </div>
                             </van-tab>
                         </van-tabs>
@@ -205,6 +205,14 @@ export default {
 
         goHome() {
             this.$router.push({ path: "/home" });
+        },
+
+        setImgClass(len) {
+            return `img${len}`
+        },
+
+        setImgContentClass(len) {
+            return `img-content${len}`
         },
 
         // 请求商品详情
@@ -592,11 +600,12 @@ export default {
                 font-size: 14px;
                 line-height: 1.6;
             }
-            .content-img {
+            .img-content {
                 display: flex;
                 width: 100%;
                 flex-wrap: wrap;
-                img {
+                
+                .img {
                     flex: 0 0 80px;
                     width: 90px;
                     flex-wrap: wrap;
@@ -605,6 +614,17 @@ export default {
                     border-radius: 3px;
                     margin-bottom: 5px;
                     margin-right: 6px;
+                }
+                .img1 {
+                    flex: 1;
+                    height: 200px;
+                    margin-top: 10px;
+                }
+                .img2 {
+                    flex: 0 0 49%;
+                    height: 110px;
+                    margin: 0;
+                    margin-top: 10px;
                 }
             }
         }
@@ -654,7 +674,10 @@ export default {
     opacity: 0;
 }
 
-.comment:last-child .comment-content .desc::before {
+.active-1 .comment:last-child .comment-content .desc::before {
     border: none;
+}
+.img-content2 {
+    justify-content: space-between
 }
 </style>

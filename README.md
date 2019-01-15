@@ -64,7 +64,7 @@
 - [x] 商品搜索功能
 - [x] 用户资料修改
 - [x] egg.js重写后端
-- [x] 商品评论
+- [x] 商品评论,加图片评论
 - [x] 用户头像裁剪上传更改,手机端待优化
 - [ ] 手机接收验证码, 手机号注册
 - [ ] 添加微信和支付宝支付
@@ -84,6 +84,7 @@
 ![pinlun2.png](./images/pinlun2.png)
 ![detail.png](./images/detail.png)
 ![detailC.png](./images/detailC.png)
+![detailC1.png](./images/detailC1.png)
 ![chakan.png](./images/chakan.png)
 ![order.png](./images/order.png)
 ![broese.png](./images/broese.png)

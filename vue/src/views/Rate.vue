@@ -22,7 +22,7 @@
                     maxlength="120"
                 />
             </van-cell-group>
-            <Upload @getFiles="getImageList" @removeFiles="removeImage"/>
+            <Upload @getFiles="getImageList" @removeFiles="removeImage" ref="upload"/>
         </div>
         <div class="checkbox">
             <van-checkbox v-model="checked" checked-color="#e0322b">匿名评价</van-checkbox>
@@ -77,9 +77,12 @@ export default {
             const { data } = await this.Api.comment(datas);
             if (data.code == 200) {
                 this.$toast(data.msg);
-                this.message = "";
+                
                 setTimeout(() => {
+                    this.message = "";
                     this.$router.go(-1);
+                    this.imgList = []
+                    this.$refs.upload.clearFiles()
                 }, 1500);
             }
         },
@@ -87,11 +90,6 @@ export default {
             this.$nextTick(() => {
                 for (let i = 0, len = files.length; i < len; i++) {
                     this.imgList.push(files[i].src.split("base64,")[1]);
-                    //上传图片
-                    //   this._getFileCode({
-                    //     Base64Str: files[i].src.split("base64,")[1],
-                    //     AttachmentType: this.$enums.AttachmentType.Activity
-                    //   });
                 }
             });
         },

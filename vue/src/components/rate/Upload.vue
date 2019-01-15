@@ -137,6 +137,11 @@ export default {
                 this.$emit("getFiles", tempList);
             }, 300);
         },
+
+        clearFiles() {
+            this.files = []
+        },
+        
         // 图片压缩并保存到files
         getBase64(url) {
             let self = this;
