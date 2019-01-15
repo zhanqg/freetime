@@ -3,8 +3,7 @@ function resolve(dir) {
     return path.join(__dirname, dir)
 }
 module.exports = {
-    baseUrl: process.env.NODE_ENV === 'production' ? '/public/static/' : '/',
-    // publicPath: process.env.NODE_ENV === 'production' ? '/public/static/' : '/',
+    publicPath: process.env.NODE_ENV === 'production' ? '/public/static/' : '/',
     chainWebpack: config => {
         config.resolve.alias
             .set('js', resolve('src/assets/js'))

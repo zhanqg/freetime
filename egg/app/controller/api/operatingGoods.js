@@ -243,6 +243,14 @@ class OperatingGoodsController extends BaseController {
             return
         }
         const userInfo = ctx.session.userInfo
+        // 评论有没有上传图片
+        let images = []
+        if (data.image.length) {
+            for (let i = 0; i < data.image.length; i++) {
+                let img = await this.service.tools.getUploadFile(data.image[i])
+                images[i] = img.saveDir
+            }
+        }
         const datas = {
             comment_uid: userInfo._id,
             cid: data.id,
@@ -250,6 +258,7 @@ class OperatingGoodsController extends BaseController {
             rate: data.rate,
             anonymous: data.anonymous,
             content: data.content,
+            images
         }
         const comment = new ctx.model.Comment(datas)
         await comment.save()

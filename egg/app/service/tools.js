@@ -21,7 +21,12 @@ class ToolsService extends Service {
     async getUploadFile(_base64) {
         const { username, _id } = this.ctx.session.userInfo
         var paths = this.app.config.uploadDir + Date.now() + username + _id + '.png';//从app.js级开始找--在我的项目工程里是这样的
-        var base64 = _base64.replace(/^data:image\/\w+;base64,/, "");//去掉图片base64码前面部分data:image/png;base64
+        let base64
+        if (_base64.includes('data:image/')) {
+            base64 = _base64.replace(/^data:image\/\w+;base64,/, "");//去掉图片base64码前面部分data:image/png;base64
+        } else {
+            base64 = _base64
+        }
         var dataBuffer = new Buffer(base64, 'base64'); //把base64码转成buffer对象，
         await this.writeFile(paths, dataBuffer)
         return {

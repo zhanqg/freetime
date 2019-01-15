@@ -61,7 +61,7 @@ export default {
         },
 
         async submit() {
-            console.log(this.imgList);
+            // console.log(this.imgList);
             if (!this.message) {
                 return this.$toast("请输入需要提交的内容");
             }
@@ -71,7 +71,8 @@ export default {
                 content: this.message,
                 anonymous: this.checked,
                 _id: this._id,
-                order_id: this.order_id
+                order_id: this.order_id,
+                image: this.imgList
             };
             const { data } = await this.Api.comment(datas);
             if (data.code == 200) {

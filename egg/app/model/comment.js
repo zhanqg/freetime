@@ -13,6 +13,7 @@ module.exports = app => {
             type: String,
             required: true
         },
+        images: Array
     });
 
     return mongoose.model('Comment', CommentSchema, 'comment');
