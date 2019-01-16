@@ -72,23 +72,17 @@
 ## 项目截图
 ![home.png](./images/home.png)
 ![city.png](./images/city.png)
-![login.png](./images/login.png)
 ![search.png](./images/search.png)
 ![category.png](./images/category.png)
 ![shop.png](./images/shop.png)
-![addresse.png](./images/addresse.png)
 ![caijian.png](./images/caijian.png)
-![addresslist.png](./images/addresslist.png)
 ![ment.png](./images/ment.png)
-![pinlun.png](./images/pinlun.png)
 ![pinlun2.png](./images/pinlun2.png)
 ![detail.png](./images/detail.png)
 ![detailC.png](./images/detailC.png)
 ![detailC1.png](./images/detailC1.png)
 ![chakan.png](./images/chakan.png)
 ![order.png](./images/order.png)
-![broese.png](./images/broese.png)
-![collectiom.png](./images/collectiom.png)
 ![my.png](./images/my.png)
 
 
