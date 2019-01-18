@@ -127,7 +127,7 @@
                         <p class="goods-name">{{goods.name}}</p>
                         <p class="pic">
                             <span>￥</span>
-                            <span>{{(goods.present_price * newCount).toFixed(2)}}</span>
+                            <span>{{(goods.present_price * newCount) | toFixed}}</span>
                         </p>
                     </div>
                 </div>
@@ -201,6 +201,9 @@ export default {
 
         onClickCart() {
             this.$router.push("/shoppingCart");
+            this.$router.go(-1)
+            
+
         },
 
         goHome() {

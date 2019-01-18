@@ -4,7 +4,7 @@
         <Scroll :data='list' class="scroll" :pullup='true' @scrollToEnd='scrollToEnd'>
                 <!-- <li class="item border-bottom"  v-for="val of list" @click="details(val)" :key="val.id" v-html="keyWord(val.name,value)">
                 </li> -->
-            <GoodsList :isSearch='true' :list='list' :searchVal='value'/>
+            <GoodsList :isSearch='true' :list='list' :searchVal='value' @searchHistory='searchHistory'/>
             <div class="empty" v-show="len">暂无搜索结果~~</div>
         </Scroll>
         <div class="history" v-if="!value && historyList && historyList.length">
@@ -55,7 +55,7 @@ export default {
 
     data() {
         return {
-            limit:7,
+            limit:5,
             moreFlag: false
         }
     },
@@ -71,27 +71,15 @@ export default {
     },
 
     methods: {
-
-        details(val) {
-            this.setGoodDetails(val)    
+        searchHistory() {
             this.setSearchHistory(this.value)     // 加入搜索历史记录
         },
-        // keyWord(str,value) {
-        //     console.log(str,value);
-            
-        //     let replaceReg = new RegExp(value, 'g');
-        //     let replaceString = `<span style='color:red'>${value}</span>`
-        //     str = str.replace(replaceReg, replaceString);
-        //     return str
-        // },
-
-      
         more() {
-            if(this.limit==7){
+            if(this.limit==5){
                 this.moreFlag = true
                 this.limit = this.searchHistoryList.length;
               }else{
-                this.limit = 7;
+                this.limit = 5;
                 this.moreFlag = false
               }
         },

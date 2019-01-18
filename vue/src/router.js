@@ -12,7 +12,7 @@ const Category = resolve => {
 }
 const ShoppingCart = resolve => {
     import('./views/ShoppingCart').then(res => {
-        resolve(res) 
+        resolve(res)
     })
 }
 const My = resolve => {
@@ -84,12 +84,17 @@ const Browse = resolve => {
 import store from './store'
 Vue.use(Router)
 
+
+/**
+ * requireAuth 该页面登录了就不让进去
+ * keepAlive  需要缓存的页面
+ */
 const router = new Router({
     // mode: 'history',
     routes: [
         { path: '/', redirect: '/home' },             //  首页
-        { path: '/home', name: 'Home', component: Home, meta: { title: 'aaaaa' } },//  首页
-        { path: '/category', name: 'Category', component: Category },// tab分类
+        { path: '/home', name: 'Home', component: Home, meta: { keepAlive: true } },//  首页
+        { path: '/category', name: 'Category', component: Category ,meta: { keepAlive: true }},// tab分类
         { path: '/shoppingCart', name: 'ShoppingCart', component: ShoppingCart },// tab购物车
         { path: '/details', name: 'Details', component: Details, props: (route) => ({ id: route.query.id }) },      // 商品详情
         { path: '/my', name: 'My', component: My },                   // 个人中心
@@ -101,7 +106,7 @@ const router = new Router({
         { path: '/rate', component: Rate, name: 'Rate', props: (route) => ({ id: route.query.id }) },            // 评价商品
         { path: '/address', name: 'Address', component: Address }, // 地址
         { path: '/addressEdit', name: 'AddressEdit', component: AddressEdit }, // 新增和编辑地址
-        { path: '/login', name: 'Login', component: Login }, // 登入
+        { path: '/login', name: 'Login', component: Login, meta: { requireAuth: false } }, // 登入
         { path: '/city', component: City, name: 'City' },   // 城市选择
         { path: '/shoppingPayMent', name: 'ShoppingPayMent', component: ShoppingPayMent }, // 支付页面
         { path: '*', redirect: '/home' },   // 首页
@@ -109,6 +114,13 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+    // 如果已经登录了就不让进这个页面
+    if (store.state.userName && to.meta.requireAuth === false) {
+        next({ path: '/home' })
+    } else {
+        next()
+    }
+
     let active
     if (to.path === '/category') {
         active = 1

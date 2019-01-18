@@ -8,6 +8,9 @@ export const details = {
         }),
         details(val) {
             this.setGoodDetails(val)
+            if (this.$route.name === 'Home') {  //加入搜索历史记录
+                this.$emit('searchHistory')
+            }
             this.$router.push({ path: `/details`, query: { id: val.goodsId || val.id || val.cid} })
         }
     }

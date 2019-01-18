@@ -1,23 +1,23 @@
 <template>
   <div id="app">
     <transition name='fade'>
-      <keep-alive :exclude="noCatch">
-        <router-view/>
-      </keep-alive>
+        <keep-alive v-if="$route.meta.keepAlive">
+            <router-view ></router-view>
+        </keep-alive>
+        <router-view v-else></router-view>
     </transition>   
     <div class="tab" v-show="payMent">
-      <van-tabbar >
-        <van-tabbar-item @click="change(index)" v-for="(val,index) of item" :key="val.id" :icon="val.icon" :class="{'active':active==index}">
-          {{val.title}}
-        </van-tabbar-item>
-      </van-tabbar>
+        <van-tabbar >
+            <van-tabbar-item @click="change(index)" v-for="(val,index) of item" :key="val.id" :icon="val.icon" :class="{'active':active==index}">
+                {{val.title}}
+            </van-tabbar-item>
+        </van-tabbar>
     </div>
   </div>
 </template>
 
 <script>
 import {vuexData} from 'js/mixin'
-
 export default {
     mixins:[vuexData],
     name: "App",
@@ -25,7 +25,6 @@ export default {
         return {
             payMent: true,
             fade: null,
-            noCatch: "ShoppingCart,Address,Collection,My,Details,Evaluate,Aevaluated,MyOarder",    // 不被缓存的页面
             item: [
                 { id: 1, title: "商城", icon: "wap-home" },
                 { id: 2, title: "分类", icon: "wap-nav" },

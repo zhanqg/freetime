@@ -9,7 +9,7 @@
                         <label for="select" class="span">{{allCheck?'取消全选':'全选'}}</label>
                     </div>
                     <div class="total">
-                        <p>合计：<span>￥{{totalPrice}}</span></p>
+                        <p>合计：<span>￥{{totalPrice | toFixed}}</span></p>
                         <p v-if="deleteFlag">请确认订单</p>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                     <div class="right">
                         <p class="name">{{val.name}}</p>
                         <div>
-                            <p class="one"><span>￥</span>{{(val.present_price * val.count).toFixed(2)}}</p>
+                            <p class="one"><span>￥</span>{{(val.present_price * val.count) | toFixed}}</p>
                             <p class="two">
                                 <i class="iconfont icon-jian" @click="editCart('minu',val)"></i>
                                 <span>{{val.count}}</span>
@@ -81,7 +81,7 @@ export default {
             tatol += item.present_price * item.count;
           }
         });
-        return tatol.toFixed(2);
+        return tatol
       }
       return 0;
     },
