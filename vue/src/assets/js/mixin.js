@@ -4,7 +4,7 @@ import BaseLoding from '@/components/public/BaseLoding'
 export const details = {
     methods: {
         ...mapMutations({
-            setGoodDetails: 'GOODSDETAILS',
+            setGoodDetails: 'GOODS_DETAILS',
         }),
         details(val) {
             this.setGoodDetails(val)
@@ -37,10 +37,10 @@ export const vuexData = {
     methods: {
         ...mapMutations({
             setName: "USERNAME",
-            setGoodDetails: 'GOODSDETAILS',
-            setAddress2: 'TEMPORARYADDRESS',
-            setShopList: "SHOPORDERLIST",
-            setVuexAddress:'TEMPORARYADDRESS'
+            setGoodDetails: 'GOODS_DETAILS',
+            setAddress2: 'TEMP_ORARY_ADDRESS',
+            setShopList: "SHOP_ORDER_LIST",
+            setVuexAddress:'TEMP_ORARY_ADDRESS'
         }),
 
         ...mapActions([

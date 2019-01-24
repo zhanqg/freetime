@@ -9,17 +9,17 @@ export const setCategoryTabList = ({commit,state},{id,list}) => {
     if (!newData[id]) {
         newData[id] = list
     }
-    commit(types.CATEGORYTABLIST,newData)
+    commit(types.CATEGORY_TAB_LIST,newData)
 }
 
 // 保存要修改的地址
 export const setAddress = function({ commit }, list) {
-    commit(types.ADDRESSINFO, address.setAddress(list))
+    commit(types.ADDRESS_INFO, address.setAddress(list))
 }
 
 // 清楚要修改的地址
 export const clearAddress = function({ commit }) {
-    commit(types.ADDRESSINFO, address.clearAddress())
+    commit(types.ADDRESS_INFO, address.clearAddress())
 }
 
 // 最近浏览, 加入缓存
@@ -39,10 +39,10 @@ export const selectCity = function ({commit},citys) {
 
 // 搜索历史
 export const setSearchHistory = function({commit},data) {
-    commit(types.SEARCHHISTORYLIST, searchHistory.setHistory(data))
+    commit(types.SEARCH_HISTORY_LIST, searchHistory.setHistory(data))
 }
 
 // 清空搜索历史
 export const clearSearchHistory = function({commit}) {
-    commit(types.SEARCHHISTORYLIST, searchHistory.clearHistory())
+    commit(types.SEARCH_HISTORY_LIST, searchHistory.clearHistory())
 }

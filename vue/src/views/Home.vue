@@ -91,9 +91,6 @@ export default {
     },
 
     methods: {
-        onSearch() {
-            console.log('搜索');
-        },
         scroll(e) {
             Math.abs(e.y) == 0 ? this.touch.scroll = true : this.touch.scroll = false
             if (this.transformY > 0) {

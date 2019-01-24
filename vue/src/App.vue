@@ -1,31 +1,34 @@
 <template>
-  <div id="app">
-    <transition name='fade'>
-        <keep-alive v-if="$route.meta.keepAlive">
-            <router-view ></router-view>
-        </keep-alive>
-        <router-view v-else></router-view>
-    </transition>   
-    <div class="tab" v-show="payMent">
-        <van-tabbar >
-            <van-tabbar-item @click="change(index)" v-for="(val,index) of item" :key="val.id" :icon="val.icon" :class="{'active':active==index}">
-                {{val.title}}
-            </van-tabbar-item>
-        </van-tabbar>
+    <div id="app">
+        <transition name="fade">
+            <keep-alive v-if="$route.meta.keepAlive">
+                <router-view></router-view>
+            </keep-alive>
+            <router-view v-else></router-view>
+        </transition>
+        <div class="tab">
+            <van-tabbar>
+                <van-tabbar-item
+                    @click="change(index)"
+                    v-for="(val,index) of tabArr"
+                    :key="val.id"
+                    :icon="val.icon"
+                    :class="{'active':active==index}"
+                >{{val.title}}</van-tabbar-item>
+            </van-tabbar>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-import {vuexData} from 'js/mixin'
+import { vuexData } from "js/mixin";
+import axios from 'js/axios'
 export default {
-    mixins:[vuexData],
+    mixins: [vuexData],
     name: "App",
     data() {
         return {
-            payMent: true,
-            fade: null,
-            item: [
+            tabArr: [
                 { id: 1, title: "商城", icon: "wap-home" },
                 { id: 2, title: "分类", icon: "wap-nav" },
                 { id: 3, title: "购物车", icon: "shopping-cart" },
@@ -49,32 +52,32 @@ export default {
         },
 
         async keeplogin() {
-            try {
-                const { data } = await this.Api.keeplogin();
-                if (data.code == 200) {
-                    this.setName(data.userInfo);
-                }
-            } catch (error) {
-                this.$toast("网络错误");
-            }
-        },
+            // try {
+            //     const { data } = await this.Api.keeplogin();
+            //     if (data.code == 200) {
+            //         this.setName(data.userInfo);
+            //     }
+            // } catch (error) {
+            //     this.$toast("网络错误");
+            // }
+            const res = await axios.post('/api/keeplogin')
+            
+            // axios.post('/api/keeplogin').then(res => {
+            //     console.log(res);
+            // })
+        }
     },
 
-    mounted() {
-    },
-
-   
     created() {
-        this.keeplogin()
-    
+        this.keeplogin();
     }
 };
 </script>
 <style>
 .van-tabbar-item--active {
-      color: transparent;
+    color: transparent;
 }
- .fade-enter {
+.fade-enter {
     opacity: 0;
 }
 
@@ -83,15 +86,12 @@ export default {
 }
 
 .fade-enter-active {
-    transition: opacity .2s;
+    transition: opacity 0.2s;
 }
 
 .fade-leave-active {
     opacity: 0;
     transition: opacity 0s;
 }
-
-
-
 </style>
 

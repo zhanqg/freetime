@@ -3,25 +3,25 @@ const matutaions = {
     [types.CATEGORY](state,category) {
         state.category = category
     },
-    [types.CATEGORYTABLIST](state,categoryTabList) {
+    [types.CATEGORY_TAB_LIST](state,categoryTabList) {
         state.categoryTabList = categoryTabList
     },
-    [types.GOODSDETAILS](state,goodsDetails) {
+    [types.GOODS_DETAILS](state,goodsDetails) {
         state.goodsDetails = goodsDetails
     },
     [types.USERNAME](state,userName) {
         state.userName = userName
     },
-    [types.ADDRESSINFO](state,addressInfo) {
+    [types.ADDRESS_INFO](state,addressInfo) {
         state.addressInfo = addressInfo
     },
     [types.BROWSE](state,browse) {
         state.browse = browse
     },
-    [types.SHOPORDERLIST](state,shopOrderList) {
+    [types.SHOP_ORDER_LIST](state,shopOrderList) {
         state.shopOrderList = shopOrderList
     },
-    [types.TEMPORARYADDRESS](state,temporaryAddress) {
+    [types.TEMP_ORARY_ADDRESS](state,temporaryAddress) {
         state.temporaryAddress = temporaryAddress
     },
     [types.CITY](state,city) {
@@ -30,7 +30,7 @@ const matutaions = {
     [types.ACTIVE](state,active) {
         state.active = active
     },
-    [types.SEARCHHISTORYLIST](state,searchHistoryList) {
+    [types.SEARCH_HISTORY_LIST](state,searchHistoryList) {
         state.searchHistoryList = searchHistoryList
     }
 }

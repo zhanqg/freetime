@@ -17,6 +17,7 @@ import 'css/index.css'
 import 'css/icon.styl'
 import 'css/cropper.css'
 Vue.config.productionTip = false
+
 // NProgress.configure({
 //     easing: 'ease',  // 动画方式    
 //     speed: 500,  // 递增进度条的速度    
