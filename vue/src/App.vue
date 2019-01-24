@@ -1,10 +1,10 @@
 <template>
     <div id="app">
         <transition name="fade">
-            <keep-alive v-if="$route.meta.keepAlive">
+            <keep-alive>
                 <router-view></router-view>
             </keep-alive>
-            <router-view v-else></router-view>
+            <!-- <router-view v-else></router-view> -->
         </transition>
         <div class="tab">
             <van-tabbar>
@@ -52,23 +52,19 @@ export default {
         },
 
         async keeplogin() {
-            // try {
-            //     const { data } = await this.Api.keeplogin();
-            //     if (data.code == 200) {
-            //         this.setName(data.userInfo);
-            //     }
-            // } catch (error) {
-            //     this.$toast("网络错误");
-            // }
-            const res = await axios.post('/api/keeplogin')
-            
-            // axios.post('/api/keeplogin').then(res => {
-            //     console.log(res);
-            // })
+            try {
+                const { data } = await this.Api.keeplogin();
+                if (data.code == 200) {
+                    this.setName(data.userInfo);
+                }
+            } catch (error) {
+                this.$toast("网络错误");
+            }
         }
     },
 
     created() {
+        
         this.keeplogin();
     }
 };

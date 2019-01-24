@@ -15,8 +15,8 @@ class UserController extends BaseController {
             }
         }
         console.log(ctx.session);
-       
-                
+
+
         if (this.ctx.session.code.toUpperCase() !== verify.toUpperCase()) {
             return ctx.body = {
                 code: -2,
@@ -100,21 +100,20 @@ class UserController extends BaseController {
 
     // 保持登录
     async keepLogin() {
-        
-
-        const { ctx } = this
-        if (ctx.session.userInfo) {
-            let userInfo = await this.ctx.model.Admin.findById(ctx.session.userInfo._id, USERSTR)
-            ctx.body = {
-                code: 200,
-                userInfo
-            }
-        } else {
-            ctx.body = {
-                code: -1,
-                msg: '请登录',
-            }
-        }
+        // const { ctx } = this
+        // if (ctx.session.userInfo) {
+        //     let userInfo = await this.ctx.model.Admin.findById(ctx.session.userInfo._id, USERSTR)
+        //     ctx.body = {
+        //         code: 200,
+        //         userInfo
+        //     }
+        // } else {
+        //     ctx.body = {
+        //         code: 200,
+        //         isLogin: false,
+        //         msg: '请登录',
+        //     }
+        // }
     }
 
     // 退出登录
@@ -201,7 +200,7 @@ class UserController extends BaseController {
     async setDefaultAddress() {
         const { ctx } = this
         const { _id } = ctx.session.userInfo
-        const {id} = ctx.request.body
+        const { id } = ctx.request.body
         await ctx.model.Address.updateMany({ uid: _id, isDefault: true }, {
             $set: {
                 'isDefault': false,
@@ -220,7 +219,7 @@ class UserController extends BaseController {
     async isCollection() {
         const { ctx } = this
         const { _id } = this.ctx.session.userInfo
-        const {id} = this.ctx.request.body    // 商品id
+        const { id } = this.ctx.request.body    // 商品id
         const result = await ctx.model.Collection.findOne({ cid: id, uid: _id })
         if (!result) {
             ctx.body = {
@@ -319,7 +318,7 @@ class UserController extends BaseController {
             }
 
         ])
-        const count = await ctx.model.Comment.find({ comment_uid: uid}).count()
+        const count = await ctx.model.Comment.find({ comment_uid: uid }).count()
         ctx.body = {
             code: 200,
             data: {

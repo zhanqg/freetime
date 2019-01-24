@@ -9,7 +9,7 @@ class GoodsController extends BaseController {
         if (res) {
             return ctx.body = {
                 code: 200,
-                data: res
+                data: res,
             }
         }
         ctx.body = {
