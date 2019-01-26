@@ -129,6 +129,17 @@ const keyWord = (str, value) => {
     return str
 }
 
+// 深度拷贝
+const cloneObj = (obj) => {
+    if (!obj || typeof obj !== 'object') return
+    const newObj = new obj.constructor() // 拷贝原型链上的
+    for (const key in Object.getOwnPropertyDescriptors(obj)) { // 拷贝自己的成员
+        newObj[key] = cloneObj(obj[key])
+    }
+    return newObj
+}
+
+
 export {
     chunk,              //数组分块
     throttle,           //函数节流

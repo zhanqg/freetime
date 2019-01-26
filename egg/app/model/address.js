@@ -1,4 +1,4 @@
-// 用户地址表
+// 用户表
 module.exports = app => {
     const mongoose = app.mongoose;
     const Schema = mongoose.Schema;

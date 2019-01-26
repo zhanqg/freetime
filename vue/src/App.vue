@@ -22,7 +22,6 @@
 
 <script>
 import { vuexData } from "js/mixin";
-import axios from 'js/axios'
 export default {
     mixins: [vuexData],
     name: "App",
@@ -66,6 +65,7 @@ export default {
     created() {
         
         this.keeplogin();
+        
     }
 };
 </script>
