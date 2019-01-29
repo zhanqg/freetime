@@ -275,25 +275,26 @@ export default {
 
         scrollToEnd2() {
             this.$refs.scroll.refresh()
-        }
+        },
     },
     
     created() {
         this.getHome()
         // 节流函数处理
-        this.$watch('value',throttle((newQuery) => {
+        this.$watch('value',throttle(() => {
             this.dataArr = []
             if (this.value) {
                 this.page = 1
                 this.search(this.value,false)
             } 
-        },500,1000))
+        },800))
     },
 
     watch: {
         city() {
             this.getHome()
         },
+     
     }
 }
 </script>

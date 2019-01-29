@@ -17,7 +17,7 @@
                         <label for="inputEmail3" class="col-sm-2 control-label">验证码：</label>
                         <input type="text" placeholder="请输入验证码" v-model="verifyTxt"  class="form-control verify-input" maxlength="4"  autocomplete="off">
                         <div class="col-sm-10">
-                            <img :src="verify" alt="" ref="eleVerify" onclick="javascript:this.src='/api/verify?mt='+Math.random()" srcset="" title="看不清？点击刷新">
+                            <img :src="verify" ref="eleVerify" @click="replaceVerify" title="看不清？点击刷新">
                         </div>
                     </div>
 
@@ -45,7 +45,7 @@ export default {
             timer:0,
             regLoding:false,
             loginLoding: false,
-            verify: this.Api.averify() , 
+            verify: this.Api.getAverify() , 
             verifyTxt: ''
         }
     },
@@ -55,6 +55,10 @@ export default {
 
    
     methods: {
+        // 更换验证码
+        async replaceVerify() {
+            this.$refs.eleVerify['src'] =  process.env.NODE_ENV === 'production' ? `/v1/verify?mt=${Math.random()}` : `/api/v1/verify?mt=${Math.random()}`
+        },
         login(flag) {
             if (!this.nickname || !this.password) {
                 this.$toast('请输入用户名或者密码');

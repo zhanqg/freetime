@@ -123,7 +123,8 @@ export default class Api {
     // ===============================================================================================================
     /**
      * 用户相关(user文件夹下)所有接口
-     * getAverify           登录注册验证码
+     * getAverify           获取登录注册默认验证码
+     * replaceVerify        更换验证码
      * getAddress           查询用户收货地址 
      * getDefaultAddress    查询默认收货地址
      * setDefaultAddress    设置默认收货地址    参数：id：地址id
@@ -139,9 +140,13 @@ export default class Api {
      * tobeEvaluated        查询待评价      参数： page：页面
      * evaluateOne          查询单条评论    参数： id：商品id，_id：数据库的那条id
      */
-    static averify() {
+    static getAverify() { 
         // let {data} = await axios.get('/verify')
-        return '/verify'
+        return process.env.NODE_ENV === 'production' ? '/v1/verify' : '/api/v1/verify'
+    }
+
+    static replaceVerify() {
+        return axios.get(`/verify?mt=${Math.random()}`)
     }
 
     static getAddress() {

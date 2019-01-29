@@ -100,20 +100,20 @@ class UserController extends BaseController {
 
     // 保持登录
     async keepLogin() {
-        // const { ctx } = this
-        // if (ctx.session.userInfo) {
-        //     let userInfo = await this.ctx.model.Admin.findById(ctx.session.userInfo._id, USERSTR)
-        //     ctx.body = {
-        //         code: 200,
-        //         userInfo
-        //     }
-        // } else {
-        //     ctx.body = {
-        //         code: 200,
-        //         isLogin: false,
-        //         msg: '请登录',
-        //     }
-        // }
+        const { ctx } = this
+        if (ctx.session.userInfo) {
+            let userInfo = await this.ctx.model.Admin.findById(ctx.session.userInfo._id, USERSTR)
+            ctx.body = {
+                code: 200,
+                userInfo
+            }
+        } else {
+            ctx.body = {
+                code: -1,
+                isLogin: false,
+                msg: '请登录',
+            }
+        }
     }
 
     // 退出登录
