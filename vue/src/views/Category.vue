@@ -24,11 +24,7 @@
                             ref="scroll"
                         >
                             <div>
-                                <van-tab
-                                    v-for="val in list"
-                                    :title="val.mallSubName"
-                                    :key="val.mallSubId"
-                                >
+                                <van-tab v-for="val in list" :title="val.mallSubName" :key="val.mallSubId">
                                     <GoodsList :list="dataList"/>
                                 </van-tab>
                             </div>
@@ -86,9 +82,7 @@ export default {
 
         onClick(index) {
             this.dataList = [];
-            const mallSubId = this.category[this.leftTabIndex].bxMallSubDto[
-                index
-            ].mallSubId;
+            const mallSubId = this.category[this.leftTabIndex].bxMallSubDto[index].mallSubId;
             this.dataList = this.categoryTabList.hasOwnProperty(mallSubId)
                 ? (this.dataList = this.categoryTabList[mallSubId])
                 : this.getList(mallSubId);
@@ -112,26 +106,28 @@ export default {
                     });
                 }
             } catch (error) {
-                console.log(error);
-
                 this.showFlag = false;
                 this.$toast("网络错误");
             }
         },
 
         async getCategory() {
-            const { data } = await this.Api.recommend();
-            if (data.code == 200) {
-                this.list = data.data.category[0].bxMallSubDto;
-                this.setTab(data.data.category);
+            if (!this.category.length) {
+                const { data } = await this.Api.recommend();
+                if (data.code == 200) {
+                    this.list = data.data.category[0].bxMallSubDto;
+                    this.setTab(data.data.category);
+                }
+            } else {
+                this.list = this.category[0].bxMallSubDto
             }
+            
         },
 
         categorys() {
             const id = this.$route.params.id;
             const index = this.$route.params.index;
             const val = this.$route.params.val;
-            console.log(id, index, val);
 
             if ((id && index) || (index == 0 && val)) {
                 this.list = val.bxMallSubDto;

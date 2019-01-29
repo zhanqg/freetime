@@ -86,6 +86,11 @@ export default {
                             this.$router.go(-1)
                         }, 1500);
                         
+                    } else if(data.code == -2) {
+                        setTimeout(() => {
+                            this.replaceVerify()
+                        }, 600);
+                        
                     }
                     this.regLoding = false
                     this.$toast(data.msg);
@@ -103,6 +108,10 @@ export default {
                         setTimeout(() => {
                             this.$router.go(-1)
                         }, 1500);
+                    }else if(data.code == -2) {
+                       setTimeout(() => {
+                            this.replaceVerify()
+                        }, 600);
                     }
                     this.loginLoding = false
                     this.$toast(data.msg);

@@ -1,10 +1,10 @@
 <template>
     <div id="app">
         <transition name="fade">
-            <keep-alive>
+            <keep-alive v-if="$route.meta.keepAlive">
                 <router-view></router-view>
             </keep-alive>
-            <!-- <router-view v-else></router-view> -->
+            <router-view v-else></router-view>
         </transition>
         <div class="tab">
             <van-tabbar>
@@ -63,9 +63,7 @@ export default {
     },
 
     created() {
-        
         this.keeplogin();
-        
     }
 };
 </script>

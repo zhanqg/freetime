@@ -19,8 +19,8 @@
                                  </div>
                                  
                              </div>
-                             <h6 v-if="!evaluateList.length" class="noevaluate">
-                                     {{userName? '暂无待评价商品~~': '请先登录'}}
+                             <h6 v-if="!evaluateList.length" class="null">
+                                     {{userName? '暂无待评价商品~~': '请先登录噢~~'}}
                               </h6>
                          </div>
                          <div v-show="loading" class="van-loading van-loading--circular van-loading--white" style="color: white;"><span class="van-loading__spinner van-loading__spinner--circular"><svg viewBox="25 25 50 50" class="van-loading__circular"><circle cx="50" cy="50" r="20" fill="none"></circle></svg></span></div>
@@ -203,10 +203,6 @@ export default {
         .warp
             padding 0px 10px
             box-sizing border-box
-            .noevaluate
-                text-align center
-                color #333
-                margin-top 50px
             .item
                 display flex
                 margin-top 15px
