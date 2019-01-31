@@ -121,6 +121,7 @@ router.beforeEach((to, from, next) => {
         next()
     }
 
+    // 底部4个tab的class
     let active
     if (to.path === '/category') {
         active = 1
