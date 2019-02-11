@@ -7,6 +7,7 @@ import state from './state'
 import mutations from './mutations'
 import createLogger from 'vuex/dist/logger'     //实时查看修改日志
 Vue.use(Vuex)
+
 const debug = process.env.NODE_ENV !== 'production' // 判断当前环境
 export default new Vuex.Store({
     actions,

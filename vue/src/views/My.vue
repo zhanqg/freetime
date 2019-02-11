@@ -66,7 +66,7 @@ export default {
                 { status: 2, icon: "free-postage", title: "待发货" },
                 { status: 3, icon: "points", title: "待收货" },
                 { status: 4, icon: "thumb-circle-o", title: "评价" },
-                { status: 5, icon: "like-o", title: "已完成" }
+                { status: 5, icon: "like-o", title: "已完成" },
             ]
         };
     },

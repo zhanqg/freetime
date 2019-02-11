@@ -3,6 +3,7 @@ const Compression = require('compression-webpack-plugin')
 function resolve(dir) {
     return path.join(__dirname, dir)
 }
+
 const debug = process.env.NODE_ENV === 'production'
 module.exports = {
     publicPath: debug ? '/public/static/' : '/',
@@ -14,6 +15,7 @@ module.exports = {
     },
     devServer: {
         port: 8090,
+        open: false, // 是否自动打开浏览器页面
         proxy: {
             '/api': {
                 target: 'http://localhost:3000',

@@ -6,7 +6,7 @@ import Api from './Api'
 Vue.prototype.Api = Api           // 请求接口类
 import './vant'                   // 有赞组件库
 import FastClick from 'fastclick' // 解决300毫秒延时
-FastClick.attach(document.body) 
+FastClick.attach(document.body)
 // import NProgress from 'nprogress' // 路由进度条
 // import 'nprogress/nprogress.css'
 import 'vant/lib/index.css'
@@ -16,8 +16,15 @@ import 'css/border.css'
 import 'css/index.css'
 import 'css/icon.styl'
 import 'css/cropper.css'
+
 Vue.config.productionTip = false
 
+
+// 如果是非线上环境，加载 VConsole
+if (process.env.NODE_ENV !== 'production') {
+    var VConsole = require('vconsole/dist/vconsole.min.js');
+    var vConsole = new VConsole();
+}
 // NProgress.configure({
 //     easing: 'ease',  // 动画方式    
 //     speed: 500,  // 递增进度条的速度    
@@ -38,7 +45,7 @@ Vue.config.productionTip = false
 //     NProgress.done()
 // })
 
-Vue.filter('toFixed',function(val) {
+Vue.filter('toFixed', function (val) {
     val = Number(val)
     return val.toFixed(2)
 })
