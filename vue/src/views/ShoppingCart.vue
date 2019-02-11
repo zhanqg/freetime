@@ -142,7 +142,7 @@ export default {
         },
 
         goshop() {
-            this.$router.push({ path: "/home" });
+            this.$router.push({ name: "Home" });
         },
 
         // 加减商品
@@ -207,7 +207,7 @@ export default {
         // 提交订单
         placeOrder() {
             let id = [];
-            this.$router.push({ path: "/ShoppingPayMent" });
+            this.$router.push({ name: "ShoppingPayMent" });
             this.shopList.forEach(item => {
                 if (item.check) {
                     id.push(item);
@@ -217,8 +217,7 @@ export default {
         },
 
         goLogin() {
-            console.log(1234);
-            this.$router.push({ path: "/login" });
+            this.$router.push({ name: "Login" });
         }
     },
     created() {

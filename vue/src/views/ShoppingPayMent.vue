@@ -140,12 +140,12 @@ export default {
 
         // 添加收货地址
         goAddress() {
-            this.$router.push({path: '/address'})
+            this.$router.push({name: 'Address'})
         },
 
         // 选择地址
         editAddress() {
-            this.$router.push({path:'/address'})
+            this.$router.push({name:'Address'})
         }
     }
 }

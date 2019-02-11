@@ -46,7 +46,7 @@ export default {
 
         async addCard(id) {
             if (!this.userName) {
-                this.$router.push({ path: "/login" });
+                this.$router.push({ name: "Login" });
                 return;
             }
             try {

@@ -62,7 +62,7 @@ export default {
                             this.clearAddress('')
                         }, 1000);
                     } else {
-                        this.$router.push('/login')
+                        this.$router.push({name: 'Login'})
                     }
                 
             } catch (error) {
@@ -80,7 +80,7 @@ export default {
                         this.clearAddress('')
                     }, 1000);
                 }else {
-                    this.$router.push('/login')
+                    this.$router.push({name: 'Login'})
                 }
             } catch (error) {
                 this.$toast('网络错误')

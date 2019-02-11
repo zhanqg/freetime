@@ -96,12 +96,12 @@ export default {
 
         // 评价
         rate(id,_id,order_id) {
-            this.$router.push({path:'/my/rate',name:'Rate',query:{id},params:{_id,order_id}})
+            this.$router.push({name:'Rate',query:{id},params:{_id,order_id}})
         },
 
         // 查看已评价
         aevaluated(id,_id) {
-            this.$router.push({path:'/my/aevaluated',name:'Aevaluated',query:{id:_id}})
+            this.$router.push({name:'Aevaluated',query:{id:_id}})
         },
 
         async tobeEvaluated() {

@@ -1,5 +1,4 @@
 import axios from 'axios'
-const ERR_OK = 200
 const server = axios.create({
     baseURL: process.env.NODE_ENV === 'production' ? '/v1' : '/api/v1',
     timeout: 2000,  // 超时

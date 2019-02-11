@@ -106,7 +106,7 @@ export default {
   methods: {
 
     goBack() {
-      this.$router.push({path:'/'});
+      this.$router.push({name:'Home'});
     },
 
     onSearch() {},

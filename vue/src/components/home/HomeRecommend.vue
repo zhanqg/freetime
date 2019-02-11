@@ -52,7 +52,7 @@ export default {
         // 加入购物车
         async addShops(val) {
             if (!this.userName) {
-                this.$router.push({path:'/login'})
+                this.$router.push({name:'Login'})
                 return
             }
             try {

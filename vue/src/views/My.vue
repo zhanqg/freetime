@@ -77,19 +77,19 @@ export default {
         },
 
         login() {
-            this.$router.push({ path: "/login" });
+            this.$router.push({ name: "Login" });
         },
 
         address() {
             if (this.userName) {
-                this.$router.push({ path: "/address" });
+                this.$router.push({ name: "Address" });
             } else {
-                this.$router.push({ path: "/login" });
+                this.$router.push({ name: "Login" });
             }
         },
 
         collection() {
-            this.$router.push({ path: "/collection" });
+            this.$router.push({ name: "Collection" });
         },
 
         // 退出登录
@@ -107,21 +107,21 @@ export default {
 
         // 最近浏览
         goBrowse() {
-            this.$router.push({ path: "/browse" });
+            this.$router.push({ name: "Browse" });
         },
 
         myOrder() {
-            this.$router.push({ path: "/order" });
+            this.$router.push({ name: "MyOrder" });
         },
 
         status(i) {
             if (i == 4) {
-                this.$router.push({ path: "/evaluate" });
+                this.$router.push({ name: "Evaluate" });
             } else {
                 if (i == 5) {
                     i = 4;
                 }
-                this.$router.push({ path: "/order", query: { status: i } });
+                this.$router.push({ name: "MyOrder", query: { status: i } });
             }
         }
     },

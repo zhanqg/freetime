@@ -44,7 +44,7 @@ export default {
 
     methods: {
         onAdd() {
-            this.$router.push('/addressEdit')
+            this.$router.push({name: 'AddressEdit'})
         },
 
         goBack() {
@@ -53,7 +53,7 @@ export default {
 
         onEdit(item, index) {
             this.setAddress(item)
-            this.$router.push('/addressEdit')
+            this.$router.push({name: 'AddressEdit'})
         },
 
         async setDefaultAddress(id) {

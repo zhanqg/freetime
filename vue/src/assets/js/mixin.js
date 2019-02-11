@@ -11,7 +11,7 @@ export const details = {
             if (this.$route.name === 'Home') {  //加入搜索历史记录
                 this.$emit('searchHistory')
             }
-            this.$router.push({ path: `/details`, query: { id: val.goodsId || val.id || val.cid} })
+            this.$router.push({ name: `Details`, query: { id: val.goodsId || val.id || val.cid} })
         }
     }
 }
@@ -74,7 +74,7 @@ export const goBack = {
         back() {
             window.history.length > 1
                 ? this.$router.go(-1)
-                : this.$router.push('/home')
+                : this.$router.push({name: 'Home'})
 
         }
     },

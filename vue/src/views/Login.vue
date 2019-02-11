@@ -57,7 +57,7 @@ export default {
     methods: {
         // 更换验证码
         async replaceVerify() {
-            this.$refs.eleVerify['src'] =  process.env.NODE_ENV === 'production' ? `/v1/verify?mt=${Math.random()}` : `/api/v1/verify?mt=${Math.random()}`
+            this.$refs.eleVerify['src'] =  this.Api.getAverify()
         },
         login(flag) {
             if (!this.nickname || !this.password) {

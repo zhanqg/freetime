@@ -43,29 +43,45 @@ const router = new Router({
         { path: '/city', component: City, name: 'City' },   // 城市选择
         { path: '/shoppingPayMent', name: 'ShoppingPayMent', component: ShoppingPayMent }, // 支付页面
         { path: '*', redirect: '/home' },   // 首页
-    ],
+    ]
 })
 
+// 设置title
+const TITLE = {
+    Home: '首页',
+    Category: '商品分类',
+    ShoppingCart: '购物车',
+    Details: '商品详情',
+    My: '个人中心',
+    MyOrder: '我的订单',
+    Collection: '我的收藏',
+    Browse: '浏览历史',
+    Evaluate: '评价中心',
+    Aevaluated: '查看评价',
+    Rate: '评价商品',
+    Address: '地址列表',
+    AddressEdit: '地址编辑',
+    Login: '注册登录',
+    City: '城市选择',
+    ShoppingPayMent: '订单结算',
+}
+
+// 设置点击高亮的tab
+const ACTIVE = {
+    Home: 0,
+    Category: 1,
+    ShoppingCart: 2,
+    My: 3,
+}
 router.beforeEach((to, from, next) => {
+    document.title = TITLE[to.name] 
+    store.commit('ACTIVE', ACTIVE[to.name])
     // 如果已经登录了就不让进这个页面
     if (store.state.userName && to.meta.requireAuth === false) {
         next({ path: '/home' })
     } else {
         next()
     }
-
-    // 底部4个tab的class
-    let active
-    if (to.path === '/category') {
-        active = 1
-    } else if (to.path === '/shoppingCart') {
-        active = 2
-    } else if (to.path === '/my') {
-        active = 3
-    } else if (to.path === '/home') {
-        active = 0
-    }
-    store.commit('ACTIVE', active)
     next()
 })
 export default router

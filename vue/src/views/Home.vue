@@ -161,17 +161,17 @@ export default {
                 goodsId: val.goodsId
             }
             this.setGoodDetails(id)
-            this.$router.push({path:`/details`,query: {id:val.goodsId}})
+            this.$router.push({name:`Details`,query: {id:val.goodsId}})
         },
         
         searchDetails(id) {
             this.$refs.input.blur()
-            this.$router.push({path:`/details`,query: {id}})
+            this.$router.push({name:`Details`,query: {id}})
         },
 
 
         cityClick() {
-            this.$router.push({path: '/city'})
+            this.$router.push({name: 'City'})
         },
 
         async getHome() {

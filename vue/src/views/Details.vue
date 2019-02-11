@@ -200,14 +200,14 @@ export default {
         },
 
         onClickCart() {
-            this.$router.push("/shoppingCart");
+            this.$router.push({name:'ShoppingCart'});
             this.$router.go(-1)
             
 
         },
 
         goHome() {
-            this.$router.push({ path: "/home" });
+            this.$router.push({ name: "Home" });
         },
 
         setImgClass(len) {
@@ -288,7 +288,7 @@ export default {
         // 点击收藏
         async collection() {
             if (!this.userName) {
-                this.$router.push({ path: "/login" });
+                this.$router.push({ name: "Login" });
                 return;
             }
             if (this.isCollectionFlag) {
@@ -323,7 +323,7 @@ export default {
         // 加入购物车
         async addShops() {
             if (!this.userName) {
-                this.$router.push({ path: "/login" });
+                this.$router.push({ name: "Login" });
                 return;
             }
             try {
@@ -350,7 +350,7 @@ export default {
         // 立即购买
         PurchaseImmediately() {
             if (!this.userName) {
-                this.$router.push({ path: "/login" });
+                this.$router.push({ name: "Login" });
                 return;
             }
             let goods = [
@@ -366,7 +366,7 @@ export default {
                     count: this.newCount
                 }
             ];
-            this.$router.push({ path: "/ShoppingPayMent" });
+            this.$router.push({ name: "ShoppingPayMent" });
             this.setShopList(goods);
         },
 

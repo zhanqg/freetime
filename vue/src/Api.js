@@ -141,12 +141,7 @@ export default class Api {
      * evaluateOne          查询单条评论    参数： id：商品id，_id：数据库的那条id
      */
     static getAverify() { 
-        // let {data} = await axios.get('/verify')
-        return process.env.NODE_ENV === 'production' ? '/v1/verify' : '/api/v1/verify'
-    }
-
-    static replaceVerify() {
-        return axios.get(`/verify?mt=${Math.random()}`)
+        return process.env.NODE_ENV === 'production' ? `/v1/verify?mt=${Math.random()}` : `/api/v1/verify?mt=${Math.random()}`
     }
 
     static getAddress() {
