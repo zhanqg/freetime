@@ -17,15 +17,13 @@ export default {
     props: {
         category: {
             type: Array,
-            default: () => {
+            default(){
                 return []
             }
         },
         advertesPicture: {
             type: String,
-            default: () => {
-                return ''
-            }
+            default: ''
         }
     },
 

@@ -6,14 +6,14 @@
             </keep-alive>
             <router-view v-else></router-view>
         </transition>
-        <div class="tab">
+        <div class="tab" v-if="active">
             <van-tabbar>
                 <van-tabbar-item
-                    @click="change(index)"
+                    @click="change(index+1)"
                     v-for="(val,index) of tabArr"
                     :key="val.id"
                     :icon="val.icon"
-                    :class="{'active':active==index}"
+                    :class="{'active':active==index+1}"
                 >{{val.title}}</van-tabbar-item>
             </van-tabbar>
         </div>
@@ -37,17 +37,10 @@ export default {
     },
 
     methods: {
+        // 切换路由
         change(i) {
-            const rout = this.$router;
-            if (i == 0) {
-                rout.push({ path: "/" });
-            } else if (i == 1) {
-                rout.push({ path: "/category" });
-            } else if (i == 2) {
-                rout.push({ path: "/shoppingCart" });
-            } else {
-                rout.push({ path: "/my" });
-            }
+            const pageName = ["Home", "Category", "ShoppingCart", "My"];
+            this.$router.push({ name: pageName[i - 1] });
         },
 
         async keeplogin() {

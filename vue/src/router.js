@@ -68,10 +68,10 @@ const TITLE = {
 
 // 设置点击高亮的tab
 const ACTIVE = {
-    Home: 0,
-    Category: 1,
-    ShoppingCart: 2,
-    My: 3,
+    Home: 1,
+    Category: 2,
+    ShoppingCart: 3,
+    My: 4,
 }
 router.beforeEach((to, from, next) => {
     document.title = TITLE[to.name] 

@@ -28,7 +28,9 @@ export default {
     props: {
         list: {
             type: null,
-            default: []
+            default() {
+                return []
+            }
         },
 
         isSearch: {
@@ -51,7 +53,7 @@ export default {
         },
 
         searchVal: {
-            type: '',
+            type: null,
             default: ''
         }
 
