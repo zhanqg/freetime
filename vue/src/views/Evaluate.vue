@@ -65,6 +65,7 @@
 import Scroll from '@/components/public/Scroll'
 import {page,vuexData} from 'js/mixin'
 export default {
+    name: "Evaluate",
     mixins:[page,vuexData],
     components: {
         Scroll,

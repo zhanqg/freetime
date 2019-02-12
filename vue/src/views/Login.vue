@@ -36,6 +36,7 @@
 import Back from "@/components/public/Back";
 import {goBack,vuexData} from 'js/mixin'
 export default {
+    name: "Login",
     mixins: [goBack,vuexData],
     data() {
         return {

@@ -44,8 +44,8 @@ import Scroll from "@/components/public/Scroll";
 import GoodsList from "@/components/public/GoodsList";
 import { loading, vuexData } from "js/mixin";
 export default {
+    name: 'Category',
     mixins: [loading, vuexData],
-
     data() {
         return {
             leftTabIndex: 0,

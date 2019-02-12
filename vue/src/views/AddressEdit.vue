@@ -25,6 +25,7 @@
 import {vuexData} from 'js/mixin'
 import {$toast} from 'vant'
 export default {
+    name: 'AddressEdit',
     mixins:[vuexData],
     data() {
         return {
