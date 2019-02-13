@@ -17,6 +17,7 @@ const Aevaluated = () => import('./views/Aevaluated')
 const Rate = () => import('./views/Rate')
 const Browse = () => import('./views/Browse')
 import store from './store'
+Router.prototype.animate = 0    // 定义路由跳转动画
 Vue.use(Router)
 /**
  * requireAuth 该页面登录了就不让进去
@@ -29,7 +30,7 @@ const router = new Router({
         { path: '/home', name: 'Home', component: Home, meta: { keepAlive: true } },//  首页
         { path: '/category', name: 'Category', component: Category, meta: { keepAlive: true } },// tab分类
         { path: '/shoppingCart', name: 'ShoppingCart', component: ShoppingCart },// tab购物车
-        { path: '/details', name: 'Details', component: Details, props: (route) => ({ id: route.query.id }) },      // 商品详情
+        { path: '/details', name: 'Details', component: Details, props: (route) => ({ id: route.query.id }), meta: { slide: 1 } },      // 商品详情
         { path: '/my', name: 'My', component: My },                   // 个人中心
         { path: '/order', component: MyOrder, name: 'MyOrder' },     // 我的订单
         { path: '/collection', name: 'Collection', component: Collection },// 我的收藏
@@ -74,7 +75,7 @@ const ACTIVE = {
     My: 4,
 }
 router.beforeEach((to, from, next) => {
-    document.title = TITLE[to.name] 
+    document.title = TITLE[to.name]
     store.commit('ACTIVE', ACTIVE[to.name])
     // 如果已经登录了就不让进这个页面
     if (store.state.userName && to.meta.requireAuth === false) {

@@ -21,10 +21,10 @@ Vue.config.productionTip = false
 
 
 // 如果是非线上环境，加载 VConsole
-if (process.env.NODE_ENV !== 'production') {
-    var VConsole = require('vconsole/dist/vconsole.min.js');
-    var vConsole = new VConsole();
-}
+// if (process.env.NODE_ENV !== 'production') {
+//     var VConsole = require('vconsole/dist/vconsole.min.js');
+//     var vConsole = new VConsole();
+// }
 // NProgress.configure({
 //     easing: 'ease',  // 动画方式    
 //     speed: 500,  // 递增进度条的速度    

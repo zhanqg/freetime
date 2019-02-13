@@ -1,10 +1,10 @@
 <template>
     <div id="app">
-        <transition name="fade">
+        <transition :name="animate">
             <keep-alive v-if="$route.meta.keepAlive">
-                <router-view></router-view>
+                <router-view id="view"></router-view>
             </keep-alive>
-            <router-view v-else></router-view>
+            <router-view v-else id="view"></router-view>
         </transition>
         <div class="tab" v-if="active">
             <van-tabbar>
@@ -32,7 +32,8 @@ export default {
                 { id: 2, title: "分类", icon: "wap-nav" },
                 { id: 3, title: "购物车", icon: "shopping-cart" },
                 { id: 4, title: "我的", icon: "contact" }
-            ]
+            ],
+            animate: ""
         };
     },
 
@@ -57,6 +58,32 @@ export default {
 
     created() {
         this.keeplogin();
+    },
+    watch: {
+        $route(to, from) {
+            /*
+                0: 不做动画
+                1: 左切换
+                2: 右切换
+                3: 上切换
+                4: 下切换
+                 */
+            let animate = this.$router.animate || to.meta.slide;
+            if (!animate) {
+                this.animate = "fade";
+            } else {
+                this.animate = animate === 1
+                        ? "slide-left"
+                        : animate === 2
+                        ? "slide-right"
+                        : animate === 3
+                        ? "slide-top"
+                        : animate === 4
+                        ? "slide-bottom"
+                        : "fade";
+            }
+            this.$router.animate = 0;
+        }
     }
 };
 </script>
@@ -79,6 +106,34 @@ export default {
 .fade-leave-active {
     opacity: 0;
     transition: opacity 0s;
+}
+#view {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+.slide-left-enter,
+.slide-right-leave-active {
+    opacity: 0;
+    transform: translate(100%, 0);
+}
+.slide-left-leave-active,
+.slide-right-enter {
+    opacity: 0;
+    transform: translate(-100%, 0);
+}
+.slide-top-enter,
+.slide-bottom-leave-active {
+    opacity: 0;
+    transform: translate(0, 100%);
+}
+.slide-top-leave-active,
+.slide-bottom-enter {
+    opacity: 0;
+    transform: translate(0, -100%);
 }
 </style>
 

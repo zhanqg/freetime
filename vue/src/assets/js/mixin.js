@@ -72,10 +72,10 @@ export const loading = {
 export const goBack = {
     methods: {
         back() {
+            this.$router.animate = 2
             window.history.length > 1
                 ? this.$router.go(-1)
                 : this.$router.push({name: 'Home'})
-
         }
     },
 }
