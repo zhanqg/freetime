@@ -39,6 +39,7 @@
 <script>
 import Upload from "@/components/rate/Upload";
 export default {
+    name: "Rate",
     props: ["id"],
     data() {
         return {

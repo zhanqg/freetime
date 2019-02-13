@@ -43,6 +43,7 @@ import GoodsList from '@/components/public/GoodsList'
 import {vuexData} from 'js/mixin'
 import Scroll from '@/components/public/Scroll'
 export default {
+    name: "ShoppingPayMent",
     mixins:[vuexData],
     components: {
         GoodsList,

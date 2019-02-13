@@ -10,22 +10,24 @@
             <van-tab :title="val" v-for="(val,index) in tabs" :key="index">
                 <Scroll v-show="!showFlag" :data='list' ref="scroll" class="scroll">
                     <div class="wap">
-                        <div class="list-warp" v-if="value.status==currentActive" v-for="(value,index) in list" :key="val.order_id"> 
-                            <div class='top border-bottom'>
-                                <div>订单编号: {{value.order_id}}</div>
-                                <div class="order-ok">{{status(value.status)}}</div>
-                            </div>
-                            <div class="list" v-for="(val,index) in value.order_list" :key="val._id">
-                                <img class="good-img" :src="val.image_path" :onerror="defaultImg">
-                                <div class="good-title">{{val.name}}</div>
-                                <div class="good-count">
-                                    <p>￥{{val.mallPrice}}</p>
-                                    <p class="count">x{{val.count}}</p>
+                        <div v-for="value in list" :key="value.order_id" > 
+                            <div v-if="value.status==currentActive"  class="list-warp" >
+                                <div class='top border-bottom'>
+                                    <div>订单编号: {{value.order_id}}</div>
+                                    <div class="order-ok">{{status(value.status)}}</div>
                                 </div>
+                                <div class="list" v-for="val in value.order_list" :key="val._id">
+                                    <img class="good-img" :src="val.image_path" :onerror="defaultImg">
+                                    <div class="good-title">{{val.name}}</div>
+                                    <div class="good-count">
+                                        <p>￥{{val.mallPrice}}</p>
+                                        <p class="count">x{{val.count}}</p>
+                                    </div>
+                                </div>
+                                <div class="timre bottom border-top">创建时间: {{value.add_time}}</div>
+                                <div class="bottom">收货地址: {{value.address}}</div>
+                                <div class="bottom">共 {{value.order_list.length}} 件商品   合计: {{value.mallPrice}}</div>
                             </div>
-                            <div class="timre bottom border-top">创建时间: {{value.add_time}}</div>
-                            <div class="bottom">收货地址: {{value.address}}</div>
-                            <div class="bottom">共 {{value.order_list.length}} 件商品   合计: {{value.mallPrice}}</div>
                         </div>
                     </div>
                     <div v-if="!list.length && !showFlag" class="null">

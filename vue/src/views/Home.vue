@@ -54,6 +54,7 @@ import {loading,vuexData} from 'js/mixin'
 import {throttle} from 'js/util'
 import {page} from 'js/mixin'
 export default {
+    name: "Home",
     mixins: [loading,page,vuexData],
     data() {
         return {
