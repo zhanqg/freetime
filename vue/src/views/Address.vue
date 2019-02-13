@@ -3,7 +3,7 @@
         <van-nav-bar
             title="地址列表"
             left-arrow
-            @click-left="goBack"
+            @click-left="back"
         />
             <Scroll :data='list' class="scroll"  v-show="!showFlag">
                 <div>
@@ -25,10 +25,10 @@
 
 <script>
 import Scroll from '@/components/public/Scroll'
-import {loading,vuexData} from 'js/mixin'
+import {loading,vuexData,goBack} from 'js/mixin'
 export default {
     name: 'Address',
-    mixins: [loading,vuexData],
+    mixins: [loading,vuexData,goBack],
     components: {
         Scroll,
     },
@@ -38,17 +38,12 @@ export default {
             chosenAddressId: '1',
             list: [],
             isPay: false,
-               
         }
     },
 
     methods: {
         onAdd() {
             this.$router.push({name: 'AddressEdit'})
-        },
-
-        goBack() {
-            this.$router.go(-1)
         },
 
         onEdit(item, index) {

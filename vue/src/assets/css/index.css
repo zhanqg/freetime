@@ -277,3 +277,6 @@ input[type=checkbox]:checked::after {
 .van-tabbar-item--active {
     color: #7d7e80;
 }
+.van-goods-action {
+    z-index: 10001;
+}

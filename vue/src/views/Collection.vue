@@ -4,7 +4,7 @@
         <van-nav-bar
             title="我的收藏"
             left-arrow
-            @click-left="goBack"
+            @click-left="back"
         />
         <Scroll  :pullup='true' @scrollToEnd='scrollToEnd'  :data='dataArr' class="scroll">
             <div>
@@ -23,10 +23,10 @@
 import Scroll from '@/components/public/Scroll'
 import GoodsList from '@/components/public/GoodsList'
 import {loading} from 'js/mixin'
-import {page,vuexData} from 'js/mixin'
+import {page,vuexData,goBack} from 'js/mixin'
 export default {
     name: 'Collection',
-    mixins: [loading,page,vuexData],
+    mixins: [loading,page,vuexData,goBack],
     components: {
         Scroll,
         GoodsList,
@@ -52,10 +52,6 @@ export default {
         
     },
     methods: {
-        goBack() {
-            this.$router.go(-1)
-        },
-
         async getCollection(flag) {
             if (!this.userName) {
                 this.showFlag = false

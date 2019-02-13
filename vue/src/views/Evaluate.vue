@@ -4,7 +4,7 @@
             <van-nav-bar
                 title="评价中心"
                 left-arrow
-                @click-left="goBack"
+                @click-left="back"
             />
             <img :src="evaluateImg" class="evaluateImg" alt="">
             <van-tabs v-model="currentActive" >
@@ -63,10 +63,10 @@
 
 <script>
 import Scroll from '@/components/public/Scroll'
-import {page,vuexData} from 'js/mixin'
+import {page,vuexData,goBack} from 'js/mixin'
 export default {
     name: "Evaluate",
-    mixins:[page,vuexData],
+    mixins:[page,vuexData,goBack],
     components: {
         Scroll,
     },
@@ -91,10 +91,6 @@ export default {
     },
 
     methods: {
-        goBack() {
-            this.$router.go(-1)
-        },
-
         // 评价
         rate(id,_id,order_id) {
             this.$router.push({name:'Rate',query:{id},params:{_id,order_id}})

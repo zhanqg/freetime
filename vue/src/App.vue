@@ -6,6 +6,7 @@
             </keep-alive>
             <router-view v-else id="view"></router-view>
         </transition>
+        
         <div class="tab" v-if="active">
             <van-tabbar>
                 <van-tabbar-item
@@ -61,33 +62,31 @@ export default {
     },
     watch: {
         $route(to, from) {
-            /*
-                0: 不做动画
-                1: 左切换
-                2: 右切换
-                3: 上切换
-                4: 下切换
-                 */
-            let animate = this.$router.animate || to.meta.slide;
-            if (!animate) {
+            let animate = this.$router.animate;
+            let tabPages = ["My", "ShoppingCart", "Category", "Home"];
+            if (tabPages.includes(to.name) && animate != 2) {
                 this.animate = "fade";
+                // this.$nextTick(() => {
+                //  document.getElementById('view').setAttribute('id','')
+                        
+
+                // })
             } else {
-                this.animate = animate === 1
-                        ? "slide-left"
-                        : animate === 2
-                        ? "slide-right"
-                        : animate === 3
-                        ? "slide-top"
-                        : animate === 4
-                        ? "slide-bottom"
-                        : "fade";
+                this.animate = "slide-left";
+            }
+            if (animate == 1) {
+                this.animate = "slide-right";
             }
             this.$router.animate = 0;
         }
-    }
+    },
 };
 </script>
 <style>
+#app {
+    width: 100%;
+    height: 100%;
+}
 .van-tabbar-item--active {
     color: transparent;
 }
@@ -100,7 +99,7 @@ export default {
 }
 
 .fade-enter-active {
-    transition: opacity 0.2s;
+    transition: opacity 0.3s;
 }
 
 .fade-leave-active {
@@ -108,9 +107,6 @@ export default {
     transition: opacity 0s;
 }
 #view {
-    position: absolute;
-    left: 0;
-    top: 0;
     width: 100%;
     height: 100%;
     transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);

@@ -59,7 +59,8 @@ export default {
                     if (data.code == 200) {
                         this.$toast(data.msg);
                         setTimeout(() => {
-                            this.$router.go(-1)
+                            // this.$router.go(-1)
+                            this.goBack()
                             this.clearAddress('')
                         }, 1000);
                     } else {
@@ -77,7 +78,8 @@ export default {
                 if (data.code == 200) {
                     this.$toast(data.msg);
                     setTimeout(() => {
-                        this.$router.go(-1)
+                        // this.$router.go(-1)
+                        this.goBack()
                         this.clearAddress('')
                     }, 1000);
                 }else {
@@ -90,6 +92,7 @@ export default {
         
         goBack() {
             this.$router.go(-1)
+            this.$router.animate = 1
             setTimeout(() => {
                 this.clearAddress('')
             }, 300);

@@ -1,6 +1,6 @@
 <template>
     <div class="city-warp">
-        <van-nav-bar title="城市列表" left-arrow @click-left="goBack"/>
+        <van-nav-bar title="城市列表" left-arrow @click-left="back"/>
         <div class="serach">
             <van-col span="24">
                 <van-search placeholder="请输入城市关键字" v-model="keyword"/>
@@ -67,11 +67,11 @@ import CityRight from "@/components/city/CityRight";
 import Scroll from "@/components/public/Scroll";
 import city from "js/city";
 import { throttle } from "js/util";
-import { vuexData } from "js/mixin";
+import { vuexData,goBack } from "js/mixin";
 
 export default {
     name: "City",
-    mixins: [vuexData],
+    mixins: [vuexData,goBack],
     components: {
         Scroll,
         CityRight
@@ -116,15 +116,11 @@ export default {
     },
 
     methods: {
-        goBack() {
-            this.$router.push({ name: "Home" });
-        },
-
         onSearch() {},
 
         selectCiti(val) {
             this.selectCity(val);
-            this.goBack();
+            this.back();
         },
 
         change(txt) {

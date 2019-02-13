@@ -4,7 +4,7 @@
         <van-nav-bar
         title="我的订单"
         left-arrow
-        @click-left="goBack"
+        @click-left="back"
       />
         <van-tabs v-model="currentActive" @change='change'>
             <van-tab :title="val" v-for="(val,index) in tabs" :key="index">
@@ -42,10 +42,10 @@
 
 <script>
 import Scroll from '@/components/public/Scroll'
-import {loading,vuexData} from 'js/mixin'
+import {loading,vuexData,goBack} from 'js/mixin'
 export default {
     name: 'MyOarder',
-    mixins: [loading,vuexData],
+    mixins: [loading,vuexData,goBack],
     data() {
         return {
             currentActive: 0,
@@ -62,9 +62,7 @@ export default {
         change(i) {
             this.currentActive = i
         },
-        goBack() {
-            this.$router.go(-1)
-        },
+     
         status(status) {
             if (status == 1) {
                 return '待支付'

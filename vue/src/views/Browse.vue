@@ -4,7 +4,7 @@
         <van-nav-bar
                 title="最近浏览"
                 left-arrow
-                @click-left="goBack"
+                @click-left="back"
             />
         <Scroll :data='browse' class="scroll">
             <div>
@@ -21,20 +21,16 @@
 <script>
 import Scroll from '@/components/public/Scroll'
 import GoodsList from '@/components/public/GoodsList'
-import {vuexData} from 'js/mixin'
+import {vuexData,goBack} from 'js/mixin'
 export default {
     name: 'Browse',
-    mixins: [vuexData],
+    mixins: [vuexData,goBack],
     components: {
         Scroll,
         GoodsList,
     },
 
     methods: {
-        goBack() {
-            this.$router.go(-1)
-        },
-
         close(item) {
             this.deleteOne(item.id)
         },

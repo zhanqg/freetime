@@ -72,7 +72,7 @@ export const loading = {
 export const goBack = {
     methods: {
         back() {
-            this.$router.animate = 2
+            this.$router.animate = 1
             window.history.length > 1
                 ? this.$router.go(-1)
                 : this.$router.push({name: 'Home'})
@@ -103,9 +103,6 @@ export const page = {
         // 是否还有更多数据加载
         hasMore() {
             // 说明没有数据要加载了
-            console.log(this.dataArr.length);
-            console.log(this.total);
-            
             if (this.dataArr.length >= this.total) {
                 return false
             }
