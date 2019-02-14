@@ -1,7 +1,7 @@
 <template>
     <!-- 查看已评价 -->
     <div class="aevaluated-warp">
-        <van-nav-bar title="评价详情" left-arrow @click-left="goBack"/>
+        <van-nav-bar title="评价详情" left-arrow @click-left="back"/>
         <div v-if="evaluateOne" class="evaluateOne">
             <img :src="evaluateOne.user[0].avatar" alt srcset>
             <div class="middle">
@@ -21,7 +21,7 @@
             </p>
         </div>
         <div class="btn">
-            <van-button type="primary" size="large" @click="goBack">返回</van-button>
+            <van-button type="primary" size="large" @click="back">返回</van-button>
         </div>
     </div>
 </template>
@@ -40,10 +40,6 @@ export default {
     },
 
     methods: {
-        goBack() {
-            this.$router.go(-1);
-        },
-
         async addCard(id) {
             if (!this.userName) {
                 this.$router.push({ name: "Login" });

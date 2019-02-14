@@ -1,6 +1,5 @@
 <template>
- <div>
-    <div class="home">
+    <div class="home page-tab">
         <div class="header">
             <van-row>
                 <div @click="cityClick" >
@@ -30,14 +29,17 @@
                 <HomeHot :hot='recommend.hotGoods'/>
             </div>
         </Scroll>
+        <dir v-show="touch.init">
          <BaseRefresh :opacity='opac' :transformY='transformY' :rotate='rotate' :isRotate='isRotate' :trans='trans'/>
+
+        </dir>
      </div>
+        <!-- <BaseLoding :showFlag='showFlag'/> -->
+        <HomeSearch v-show="query" @scrollToEnd='scrollToEnd' :list='dataArr' @details='searchDetails' :len='len' :value='value' @vals='vals'/>
+        <div v-show="searchLoading" class="van-loading van-loading--circular van-loading--white" style="color: white;z-index:999"><span class="van-loading__spinner van-loading__spinner--circular"><svg viewBox="25 25 50 50" class="van-loading__circular"><circle cx="50" cy="50" r="20" fill="none"></circle></svg></span></div>
+        <router-view/>
 </div>
-     <BaseLoding :showFlag='showFlag'/>
-     <HomeSearch v-show="query" @scrollToEnd='scrollToEnd' :list='dataArr' @details='searchDetails' :len='len' :value='value' @vals='vals'/>
-     <div v-show="searchLoading" class="van-loading van-loading--circular van-loading--white" style="color: white;z-index:999"><span class="van-loading__spinner van-loading__spinner--circular"><svg viewBox="25 25 50 50" class="van-loading__circular"><circle cx="50" cy="50" r="20" fill="none"></circle></svg></span></div>
-<router-view/>
- </div>
+
 
 </template>
 
@@ -50,12 +52,11 @@ import HomeSwiper from '@/components/home/HomeSwiper'
 import HomePanl from '@/components/home/HomePanl'
 import Scroll from '@/components/public/Scroll'
 import BaseRefresh from '@/components/home/BaseRefresh'
-import {loading,vuexData} from 'js/mixin'
+import {vuexData,page} from 'js/mixin'
 import {throttle} from 'js/util'
-import {page} from 'js/mixin'
 export default {
     name: "Home",
-    mixins: [loading,page,vuexData],
+    mixins: [page,vuexData],
     data() {
         return {
             value: '',
@@ -90,7 +91,6 @@ export default {
         HomeSwiper,
         HomePanl,
     },
-
     methods: {
         scroll(e) {
             Math.abs(e.y) == 0 ? this.touch.scroll = true : this.touch.scroll = false
@@ -156,7 +156,6 @@ export default {
                 }
             }
         },
-
         details(val) {
             let id = {
                 goodsId: val.goodsId
@@ -169,12 +168,9 @@ export default {
             this.$refs.input.blur()
             this.$router.push({name:`Details`,query: {id}})
         },
-
-
         cityClick() {
             this.$router.push({name: 'City'})
         },
-
         async getHome() {
             try {
                 this.showFlag = true
@@ -190,7 +186,6 @@ export default {
                 this.$toast('网络错误')
             }
         },
-
         // 跳转到商品分类
         item(val,index) {
             const id = val.bxMallSubDto[0].mallSubId
@@ -203,7 +198,6 @@ export default {
                 }
             })
         },
-
         //搜索
         async search(value,flag) {
             try {
@@ -232,19 +226,16 @@ export default {
             }
             
         },
-
         // 取消搜索
         onCancel() {
             this.value = ''
             
         },
-
         focus(){
             let width =  '85%'
             this.tran(width)
             this.query = true
         },
-
         closeSearch(){
             let width =  '100%'
             this.tran(width)
@@ -253,16 +244,13 @@ export default {
                 this.value = ''
             }, 300);
         },
-
         tran(width) {
             this.$refs.searchBox.style.width = width;
             this.$refs.searchBox.style['transitionDuration'] = '.3s'
         },
-
         vals(val) {
             this.value = val
         } ,
-
         scrollToEnd() {
             if (this.dataArr.length >= 20) {
                 if (this.hasMore()) {
@@ -273,7 +261,6 @@ export default {
                 }
             }
         },
-
         scrollToEnd2() {
             this.$refs.scroll.refresh()
         },
@@ -290,17 +277,17 @@ export default {
             } 
         },800))
     },
-
     watch: {
         city() {
             this.getHome()
         },
-     
+        
     }
 }
 </script>
 <style lang="less" scoped>
 @color: #F2F2F2;
+
 .header {
     line-height: 44px;
     position: relative;
@@ -329,9 +316,7 @@ export default {
     .content-scroll {
         height: 100%;
         overflow: hidden;
-
     }
-
     
 }
      .search-box {

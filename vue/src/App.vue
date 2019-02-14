@@ -7,7 +7,7 @@
             <router-view v-else id="view"></router-view>
         </transition>
         
-        <div class="tab" v-if="active">
+        <div class="tab" v-show="active">
             <van-tabbar>
                 <van-tabbar-item
                     @click="change(index+1)"
@@ -66,11 +66,6 @@ export default {
             let tabPages = ["My", "ShoppingCart", "Category", "Home"];
             if (tabPages.includes(to.name) && animate != 2) {
                 this.animate = "fade";
-                // this.$nextTick(() => {
-                //  document.getElementById('view').setAttribute('id','')
-                        
-
-                // })
             } else {
                 this.animate = "slide-left";
             }

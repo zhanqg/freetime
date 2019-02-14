@@ -1,7 +1,7 @@
 <template>
     <!-- 商品评论 -->
     <div class="rate-warp">
-        <van-nav-bar title="评价中心" left-arrow @click-left="goBack"/>
+        <van-nav-bar title="评价中心" left-arrow @click-left="back"/>
         <div class="goods">
             <img :src="goodsOne.image_path" alt srcset>
             <div>
@@ -38,8 +38,10 @@
 
 <script>
 import Upload from "@/components/rate/Upload";
+import {vuexData} from 'js/mixin'
 export default {
     name: "Rate",
+    mixins:[vuexData],
     props: ["id"],
     data() {
         return {
@@ -57,9 +59,6 @@ export default {
         Upload
     },
     methods: {
-        goBack() {
-            this.$router.go(-1);
-        },
 
         async submit() {
             // console.log(this.imgList);

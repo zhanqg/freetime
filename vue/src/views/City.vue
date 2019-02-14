@@ -67,11 +67,11 @@ import CityRight from "@/components/city/CityRight";
 import Scroll from "@/components/public/Scroll";
 import city from "js/city";
 import { throttle } from "js/util";
-import { vuexData,goBack } from "js/mixin";
+import { vuexData } from "js/mixin";
 
 export default {
     name: "City",
-    mixins: [vuexData,goBack],
+    mixins: [vuexData],
     components: {
         Scroll,
         CityRight

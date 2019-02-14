@@ -22,11 +22,10 @@
 <script>
 import Scroll from '@/components/public/Scroll'
 import GoodsList from '@/components/public/GoodsList'
-import {loading} from 'js/mixin'
-import {page,vuexData,goBack} from 'js/mixin'
+import {page,vuexData} from 'js/mixin'
 export default {
     name: 'Collection',
-    mixins: [loading,page,vuexData,goBack],
+    mixins: [page,vuexData],
     components: {
         Scroll,
         GoodsList,

@@ -21,10 +21,10 @@
 </template>
 
 <script>
-import {details} from 'js/mixin'
+import {vuexData} from 'js/mixin'
 
 export default {
-    mixins:[details],
+    mixins:[vuexData],
     props: {
         list: {
             type: null,
@@ -73,10 +73,7 @@ export default {
     },
 
     methods: {
-        // details(item) {
-        //     this.$emit('details',item)
-        // },
-
+  
         // 清除单条浏览记录
         close(item,index) {
             this.$emit('close',item,index)

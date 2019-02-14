@@ -34,10 +34,10 @@
 
 <script>
 import Back from "@/components/public/Back";
-import {goBack,vuexData} from 'js/mixin'
+import {vuexData} from 'js/mixin'
 export default {
     name: "Login",
-    mixins: [goBack,vuexData],
+    mixins: [vuexData],
     data() {
         return {
             nickname:'',

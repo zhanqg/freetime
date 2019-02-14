@@ -1,23 +1,14 @@
-import { mapMutations, mapGetters,mapActions } from 'vuex'
+import { mapMutations, mapGetters, mapActions } from 'vuex'
 import BaseLoding from '@/components/public/BaseLoding'
-
-export const details = {
-    methods: {
-        ...mapMutations({
-            setGoodDetails: 'GOODS_DETAILS',
-        }),
-        details(val) {
-            this.setGoodDetails(val)
-            if (this.$route.name === 'Home') {  //加入搜索历史记录
-                this.$emit('searchHistory')
-            }
-            this.$router.push({ name: `Details`, query: { id: val.goodsId || val.id || val.cid} })
-        }
-    }
-}
-
-
 export const vuexData = {
+    data() {
+        return {
+            showFlag: true,     //是否显示lodding
+        }
+    },
+    components: {
+        BaseLoding,
+    },
     computed: {
         ...mapGetters([
             'category',
@@ -40,7 +31,7 @@ export const vuexData = {
             setGoodDetails: 'GOODS_DETAILS',
             setAddress2: 'TEMP_ORARY_ADDRESS',
             setShopList: "SHOP_ORDER_LIST",
-            setVuexAddress:'TEMP_ORARY_ADDRESS'
+            setVuexAddress: 'TEMP_ORARY_ADDRESS'
         }),
 
         ...mapActions([
@@ -53,32 +44,27 @@ export const vuexData = {
             'selectCity',
             'setSearchHistory',
             'clearSearchHistory'
-        ])
-    },
-}
-export const loading = {
-    data() {
-        return {
-            showFlag: true,     //是否显示lodding
-        }
-    },
+        ]),
 
-    components: {
-        BaseLoding,
-    },
-}
-
-// 返回上一页或者首页
-export const goBack = {
-    methods: {
+        //返回上一页或者首页
         back() {
             this.$router.animate = 1
             window.history.length > 1
                 ? this.$router.go(-1)
-                : this.$router.push({name: 'Home'})
+                : this.$router.push({ name: 'Home' })
+        },
+
+        // 商品详情页
+        details(val) {
+            this.setGoodDetails(val)
+            if (this.$route.name === 'Home') {  //加入搜索历史记录
+                this.$emit('searchHistory')
+            }
+            this.$router.push({ name: `Details`, query: { id: val.goodsId || val.id || val.cid } })
         }
     },
 }
+
 
 export const page = {
     data() {
@@ -92,7 +78,7 @@ export const page = {
     methods: {
         // newArr, 第二页请求到的数据
         setNewData(newArr) {
-            this.dataArr  = this.dataArr.concat(newArr)
+            this.dataArr = this.dataArr.concat(newArr)
         },
 
         // 起始的记录数

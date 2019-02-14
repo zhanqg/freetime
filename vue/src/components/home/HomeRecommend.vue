@@ -22,9 +22,9 @@
 import Vue from 'vue';
 import VueAwesomeSwiper from 'vue-awesome-swiper' //轮播图
 Vue.use(VueAwesomeSwiper)
-import {details,vuexData} from 'js/mixin'
+import {vuexData} from 'js/mixin'
 export default {
-    mixins: [details,vuexData],
+    mixins: [vuexData],
     props: {
         recommend: {
             type:Array,

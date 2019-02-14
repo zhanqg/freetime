@@ -2,6 +2,10 @@
     align-items: center
 }
 
+.page-tab {
+    height: 100%;
+    width: 100%;
+}
 .van-tabs__wrap--scrollable .van-tab {
     flex: 0 0 20%;
     flex-basis: 20% !important;
@@ -278,5 +282,6 @@ input[type=checkbox]:checked::after {
     color: #7d7e80;
 }
 .van-goods-action {
-    z-index: 10001;
+    position: absolute;
+    bottom: 50px;
 }

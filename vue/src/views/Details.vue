@@ -163,13 +163,13 @@
 <script>
 import Scroll from "@/components/public/Scroll";
 import Back from "@/components/public/Back";
-import { loading, goBack, page, vuexData } from "js/mixin";
+import {  page, vuexData } from "js/mixin";
 import { ImagePreview } from "vant";
 import AdditionAndSubtraction from "@/components/details/AdditionAndSubtraction";
 export default {
     name: "Details",
     props: ["id"], // 路由接受的参数query.id
-    mixins: [loading, goBack, page, vuexData],
+    mixins: [ page, vuexData],
     components: {
         Back,
         AdditionAndSubtraction,
@@ -205,9 +205,6 @@ export default {
 
         onClickCart() {
             this.$router.push({name:'ShoppingCart'});
-            this.$router.go(-1)
-            
-
         },
 
         goHome() {

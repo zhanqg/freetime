@@ -25,10 +25,10 @@
 
 <script>
 import Scroll from '@/components/public/Scroll'
-import {loading,vuexData,goBack} from 'js/mixin'
+import {vuexData} from 'js/mixin'
 export default {
     name: 'Address',
-    mixins: [loading,vuexData,goBack],
+    mixins: [vuexData],
     components: {
         Scroll,
     },

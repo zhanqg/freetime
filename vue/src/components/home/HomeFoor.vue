@@ -18,9 +18,9 @@
 </template>
 <script>
 import Title from '@/components/home/Title'
-import {details} from 'js/mixin'
+import {vuexData} from 'js/mixin'
 export default {
-    mixins: [details],
+    mixins: [vuexData],
     props:['floorName','foor1','num'],
     components: {
         Title

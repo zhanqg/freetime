@@ -1,5 +1,5 @@
 <template>
-    <div id="my-warpper">
+    <div class="page-tab my">
         <van-nav-bar title="会员中心" :left-arrow="false"/>
         <div class="avatar" v-if="!userName">
             <img
@@ -45,7 +45,7 @@
 
 <script>
 import UserInfo from "@/components/my/UserInfo";
-import { goBack, vuexData } from "js/mixin";
+import { vuexData } from "js/mixin";
 
 export default {
     name: "My",
@@ -58,7 +58,6 @@ export default {
         return {
             show: false,
             defaultImg: 'this.src="' + require("img/vue.jpg") + '"',
-            loading: false,
             orderNum: "", //订单数量，
             // 0,待付款 1，待发货 2，待收货 3，评价 4，已完成
             tabs: [
@@ -140,6 +139,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.my {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
 .avatar {
     width: 100%;
     display: flex;

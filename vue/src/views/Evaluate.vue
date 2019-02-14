@@ -63,10 +63,10 @@
 
 <script>
 import Scroll from '@/components/public/Scroll'
-import {page,vuexData,goBack} from 'js/mixin'
+import {page,vuexData} from 'js/mixin'
 export default {
     name: "Evaluate",
-    mixins:[page,vuexData,goBack],
+    mixins:[page,vuexData],
     components: {
         Scroll,
     },

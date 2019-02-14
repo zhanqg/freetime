@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card page-tab">
         <van-nav-bar title="购物车" :left-arrow="false"/>
         <Scroll :data="shopList" class="scroll" ref="scroll" v-show="shopList && shopList.length">
             <ul class="ul" v-show="!showFlag">
@@ -58,10 +58,10 @@
 
 <script>
 import Scroll from "@/components/public/Scroll";
-import { loading, vuexData } from "js/mixin";
+import { vuexData } from "js/mixin";
 export default {
     name: "ShoppingCart",
-    mixins: [loading, vuexData],
+    mixins: [vuexData],
     data() {
         return {
             shopList: "",

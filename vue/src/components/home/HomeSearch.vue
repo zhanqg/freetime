@@ -52,14 +52,12 @@ export default {
             default: ''
         }
     },
-
     data() {
         return {
             limit:5,
             moreFlag: false
         }
     },
-
     computed: {
         historyList() {
             if (!this.searchHistoryList) {
@@ -69,7 +67,6 @@ export default {
         }
         
     },
-
     methods: {
         searchHistory() {
             this.setSearchHistory(this.value)     // 加入搜索历史记录
@@ -83,11 +80,9 @@ export default {
                 this.moreFlag = false
               }
         },
-
         vals(val) {
             this.$emit('vals',val)
         },
-
         deletes() {
                 // 清空搜索历史记录
             $dialog.confirm({
@@ -96,15 +91,12 @@ export default {
                 }).then(() => {
                      this.clearSearchHistory() 
                 })
-
         },
         scrollToEnd() {
             this.$emit('scrollToEnd')
         }
     },
-
     
-
     created() {
      
     },
@@ -168,4 +160,3 @@ export default {
         margin-top 100px
         color #999        
 </style>
-

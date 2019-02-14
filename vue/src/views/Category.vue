@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class='page-tab category'>
         <van-nav-bar title="商品分类" :left-arrow="false" fixed/>
         <div class="content">
             <div class="left" ref="left">
@@ -42,10 +42,10 @@
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import Scroll from "@/components/public/Scroll";
 import GoodsList from "@/components/public/GoodsList";
-import { loading, vuexData } from "js/mixin";
+import { vuexData } from "js/mixin";
 export default {
     name: 'Category',
-    mixins: [loading, vuexData],
+    mixins: [ vuexData],
     data() {
         return {
             leftTabIndex: 0,
@@ -165,6 +165,13 @@ export default {
 </script>
 
 <style scoped lang="stylus">
+.category {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
 .content {
     display: flex;
     position: fixed;
