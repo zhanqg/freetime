@@ -23,7 +23,7 @@
                     <div class="left">
                         <input type="checkbox" v-model="val.check" @change="itemChange(val)">
                     </div>
-                    <div class="middle">
+                    <div class="middle border">
                         <img :src="val.image_path" :onerror="defaultImg">
                     </div>
                     <div class="right">
@@ -270,7 +270,6 @@ export default {
                 .middle {
                     width: 80px;
                     flex: 0 0 80px;
-                    border: 1px solid #eee;
                     padding: 1px;
                     box-sizing: border-box;
 

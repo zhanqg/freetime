@@ -2,7 +2,9 @@
     <!-- 商品列表组件 -->
         <ul>
         <li v-for="(item,index) in list" :key="item._id || item.id" class="good-item border-bottom" @click="details(item)">
-            <img :src="item.image || item.image_path" :onerror="defaultImg" :class="{img2:isBrowse || isCollection || isOrder || isSearch}">
+            <div class='border left' :class="{img2:isBrowse || isCollection || isOrder || isSearch}">
+                <img :src="item.image || item.image_path" :onerror="defaultImg" >
+            </div>
             <div>
                 <p class="p1" v-html="keyWord(item.name,searchVal)"></p>
                 <p class="p2">
@@ -108,11 +110,13 @@ ul
             height 0
         &:last-child:before
             border-bottom 0    
-        img 
+        .left 
             flex 0 0 30%
             width 30%
             height 90%
-            border 1px solid #eee
+            img 
+                width 100%
+                height 100%
         .img2
             flex 0 0 25%
             width 25%

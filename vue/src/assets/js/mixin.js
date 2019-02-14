@@ -49,9 +49,11 @@ export const vuexData = {
         //返回上一页或者首页
         back() {
             this.$router.animate = 1
-            window.history.length > 1
-                ? this.$router.go(-1)
-                : this.$router.push({ name: 'Home' })
+            if (window.history.length <= 2) {
+                this.$router.push({ name: 'Home' })
+            } else {
+                this.$router.go(-1)
+            }
         },
 
         // 商品详情页

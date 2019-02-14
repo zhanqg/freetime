@@ -30,7 +30,7 @@ const router = new Router({
         { path: '/home', name: 'Home', component: Home, meta: { keepAlive: true } },//  首页
         { path: '/category', name: 'Category', component: Category, meta: { keepAlive: true } },// tab分类
         { path: '/shoppingCart', name: 'ShoppingCart', component: ShoppingCart },// tab购物车
-        { path: '/details', name: 'Details', component: Details, props: (route) => ({ id: route.query.id }) },      // 商品详情
+        { path: '/details', name: 'Details', component: Details, props: (route) => ({ id: route.query.id }),meta: { keepAlive: true }  },      // 商品详情
         { path: '/my', name: 'My', component: My },                   // 个人中心
         { path: '/order', component: MyOrder, name: 'MyOrder' },     // 我的订单
         { path: '/collection', name: 'Collection', component: Collection },// 我的收藏
@@ -75,6 +75,7 @@ const ACTIVE = {
     My: 4,
 }
 router.beforeEach((to, from, next) => {
+    sessionStorage.setItem('testKey', '这是一个测试的value值');
     document.title = TITLE[to.name]
     store.commit('ACTIVE', ACTIVE[to.name])
     // 如果已经登录了就不让进这个页面
@@ -85,4 +86,5 @@ router.beforeEach((to, from, next) => {
     }
     next()
 })
+
 export default router

@@ -41,7 +41,7 @@
                 </van-swipe>
                 <div v-show="!showFlag">
                     <van-cell-group>
-                        <van-cell>
+                        <van-cell class='titlename'>
                             <div class="goods-title">{{ goods.name }}</div>
                             <div class="goods-price">￥{{ goods.present_price }}</div>
                         </van-cell>
@@ -387,7 +387,16 @@ export default {
             this.goodsDetails.goodsId || this.goodsDetails.id || this.id
         );
     },
+    activated() {
+        this.goodsItem(this.id);
+    },
 
+    deactivated() {
+        setTimeout(() => {
+            this.goods = {}
+            this.dataArr = []
+        }, 500);
+    },
     mounted() {
         document.querySelector(".van-tabs__line").classList.add("swip");
         this.$refs.swiperImg.style.opacity = 0;
@@ -410,6 +419,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.titlename:not(:last-child):after {
+    left: 0;
+}
 .scroll {
     position: fixed;
     top: 0px;
