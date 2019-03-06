@@ -30,6 +30,10 @@ module.exports = appInfo => {
             url: 'mongodb://127.0.0.1/shop4',
             options: {},
         },
+        open() {
+            console.log('难看');
+            
+        }
     }
 
     // 关闭默认的安全校验

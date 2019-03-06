@@ -75,7 +75,7 @@ class GoodsController extends BaseController {
             }
 
         ])
-        const count = await ctx.model.Comment.find({ cid: id }).count()
+        const count = await ctx.model.Comment.find({ cid: id }).countDocuments()
         if (comment.length) {
             comment.forEach(item => {
                 if (item.anonymous) {
@@ -118,7 +118,7 @@ class GoodsController extends BaseController {
         let pageSize = 20
         let page = this.ctx.request.body.page || 1
         let skip = (page - 1) * pageSize
-        const count = await this.ctx.model.Goods.find({ 'name': { $regex: value } }).count()
+        const count = await this.ctx.model.Goods.find({ 'name': { $regex: value } }).countDocuments()
         const list = await this.ctx.model.Goods.find({ 'name': { $regex: value } }).skip(skip).limit(pageSize)
         this.ctx.body = {
             code: 200,

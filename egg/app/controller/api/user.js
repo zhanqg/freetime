@@ -318,7 +318,7 @@ class UserController extends BaseController {
             }
 
         ])
-        const count = await ctx.model.Comment.find({ comment_uid: uid }).count()
+        const count = await ctx.model.Comment.find({ comment_uid: uid }).countDocuments()
         ctx.body = {
             code: 200,
             data: {
@@ -406,7 +406,7 @@ class UserController extends BaseController {
         let page = ctx.query.page || 1
         let skip = (page - 1) * pageSize
         const list = await ctx.model.Collection.find({ uid: _id }).sort({ 'add_time': -1 }).skip(skip).limit(pageSize)
-        const count = await ctx.model.Collection.find({ uid: _id }).count()
+        const count = await ctx.model.Collection.find({ uid: _id }).countDocuments()
         ctx.body = {
             code: 200,
             data: {
